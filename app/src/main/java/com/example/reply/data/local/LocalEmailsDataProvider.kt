@@ -218,7 +218,6 @@ object LocalEmailsDataProvider {
             "Your update on Google Play Store is live!",
             """
               Your update, 0.1.1, is now live on the Play Store and available for your alpha users to start testing.
-
               Your alpha testers will be automatically notified. If you'd rather send them a link directly, go to your Google Play Console and follow the instructions for obtaining an open alpha testing link.
           """.trimIndent(),
             mailbox = MailboxType.TRASH,
@@ -231,7 +230,6 @@ object LocalEmailsDataProvider {
             "(No subject)",
             """
             Hey, 
-
             Wanted to email and see what you thought of
           """.trimIndent(),
             createAt = "3 hours ago",
