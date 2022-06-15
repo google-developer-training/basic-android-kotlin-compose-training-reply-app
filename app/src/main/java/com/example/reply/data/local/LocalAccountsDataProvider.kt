@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2022 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,146 +24,101 @@ import com.example.reply.data.Account
  * all [Account]s of the current user's contacts.
  */
 object LocalAccountsDataProvider {
+    val defaultAccount = Account(-1, "", "", "", R.drawable.avatar_1)
 
-    val allUserAccounts = mutableListOf(
+    val userAccount =
         Account(
-            1L,
-            0L,
-            "Jeff",
-            "Hansen",
-            "hikingfan@gmail.com",
-            "hkngfan@outside.com",
-            R.drawable.avatar_10,
-            true
-        ),
-        Account(
-            2L,
-            0L,
-            "Jeff",
-            "H",
-            "jeffersonloveshiking@gmail.com",
-            "jeffersonloveshiking@work.com",
-            R.drawable.avatar_2
-        ),
-        Account(
-            3L,
-            0L,
-            "Jeff",
-            "Hansen",
-            "jeffersonc@google.com",
-            "jeffersonc@gmail.com",
-            R.drawable.avatar_9
+            id = 1,
+            firstName = "Angie",
+            lastName = "Awesomeville",
+            email = "aawesomeville@example.com",
+            avatar = R.drawable.avatar_0
         )
-    )
 
     private val allUserContactAccounts = listOf(
         Account(
-            4L,
-            1L,
-            "Tracy",
-            "Alvarez",
-            "tracealvie@gmail.com",
-            "tracealvie@gravity.com",
-            R.drawable.avatar_1
+            id = 2,
+            firstName = "Tracy",
+            lastName = "Alvarez",
+            email = "tracealvie@example.com",
+            avatar = R.drawable.avatar_1
         ),
         Account(
-            5L,
-            2L,
-            "Allison",
-            "Trabucco",
-            "atrabucco222@gmail.com",
-            "atrabucco222@work.com",
-            R.drawable.avatar_3
+            id = 3,
+            firstName = "Maeve",
+            lastName = "Trabucco",
+            email = "mtrabucco222@example.com",
+            avatar = R.drawable.avatar_2
         ),
         Account(
-            6L,
-            3L,
-            "Ali",
-            "Connors",
-            "aliconnors@gmail.com",
-            "aliconnors@android.com",
-            R.drawable.avatar_5
+            id = 4,
+            firstName = "Ali",
+            lastName = "Connors",
+            email = "aliconnors@example.com",
+            avatar = R.drawable.avatar_3
         ),
         Account(
-            7L,
-            4L,
-            "Alberto",
-            "Williams",
-            "albertowilliams124@gmail.com",
-            "albertowilliams124@chromeos.com",
-            R.drawable.avatar_0
+            id = 5,
+            firstName = "Steve",
+            lastName = "Nilam",
+            email = "snilam124@example.com",
+            avatar = R.drawable.avatar_4
         ),
         Account(
-            8L,
-            5L,
-            "Kim",
-            "Alen",
-            "alen13@gmail.com",
-            "alen13@mountainview.gov",
-            R.drawable.avatar_7
+            id = 6,
+            firstName = "Eric",
+            lastName = "Alen",
+            email = "ealen13@example.com",
+            avatar = R.drawable.avatar_5
         ),
         Account(
-            9L,
-            6L,
-            "Google",
-            "Express",
-            "express@google.com",
-            "express@gmail.com",
-            R.drawable.avatar_express
+            id = 7,
+            firstName = "Shipping",
+            lastName = "Express",
+            email = "express-commerce@example.org",
+            avatar = R.drawable.avatar_parcel
         ),
         Account(
-            10L,
-            7L,
-            "Sandra",
-            "Adams",
-            "sandraadams@gmail.com",
-            "sandraadams@textera.com",
-            R.drawable.avatar_2
+            id = 8,
+            firstName = "Sandra",
+            lastName = "Adams",
+            email = "sandraadams@example.com",
+            avatar = R.drawable.avatar_6
         ),
         Account(
-            11L,
-            8L,
-            "Trevor",
-            "Hansen",
-            "trevorhandsen@gmail.com",
-            "trevorhandsen@express.com",
-            R.drawable.avatar_8
+            id = 9,
+            firstName = "Li",
+            lastName = "Yang",
+            email = "li.yang1988@example.com",
+            avatar = R.drawable.avatar_7
         ),
         Account(
-            12L,
-            9L,
-            "Sean",
-            "Holt",
-            "sholt@gmail.com",
-            "sholt@art.com",
-            R.drawable.avatar_6
+            id = 10,
+            firstName = "Truffle",
+            lastName = "Culinary Club",
+            email = "tcc@example.com",
+            avatar = R.drawable.avatar_8
         ),
         Account(
-            13L,
-            10L,
-            "Frank",
-            "Hawkins",
-            "fhawkank@gmail.com",
-            "fhawkank@thisisme.com",
-            R.drawable.avatar_4
+            id = 11,
+            firstName = "Stef",
+            lastName = "Chow",
+            email = "schow@example.com",
+            avatar = R.drawable.avatar_9
+        ),
+        Account(
+            id = 12,
+            firstName = "SpamMaster",
+            lastName = "Bad",
+            email = "spam@example.com",
+            avatar = R.drawable.avatar_spam
         )
     )
-
-    /**
-     * Get the current user's default account.
-     */
-    fun getDefaultUserAccount() = allUserAccounts.first()
-
-    /**
-     * Whether or not the given [Account.id] uid is an account owned by the current user.
-     */
-    fun isUserAccount(uid: Long): Boolean = allUserAccounts.any { it.uid == uid }
-
 
     /**
      * Get the contact of the current user with the given [accountId].
      */
-    fun getContactAccountByUid(accountId: Long): Account {
+    fun getContactAccountById(accountId: Int): Account {
         return allUserContactAccounts.firstOrNull { it.id == accountId }
             ?: allUserContactAccounts.first()
     }

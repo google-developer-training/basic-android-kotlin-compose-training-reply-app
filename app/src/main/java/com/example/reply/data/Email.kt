@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2022 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,30 +16,26 @@
 
 package com.example.reply.data
 
-import com.example.reply.data.local.LocalAccountsDataProvider
-
 /**
- * A simple data class to represent an Email.
+ * A simple data class to represent an Email
  */
 data class Email(
-    val id: Long,
+    /** Unique ID of the email **/
+    val id: Int,
+    /** Sender of the email **/
     val sender: Account,
+    /** Recipient(s) of the email **/
     val recipients: List<Account> = emptyList(),
+    /** Title of the email **/
     val subject: String = "",
+    /** Content of the email **/
     val body: String = "",
-    val attachments: List<EmailAttachment> = emptyList(),
-    var isImportant: Boolean = false,
-    var isStarred: Boolean = false,
-    var mailbox: MailboxType = MailboxType.INBOX,
-    var createAt: String,
-    val threads: List<Email> = emptyList()
-) {
-    val senderPreview: String = "${sender.fullName} - 4 hrs ago"
-    val hasBody: Boolean = body.isNotBlank()
-    val hasAttachments: Boolean = attachments.isNotEmpty()
-    val recipientsPreview: String = recipients
-        .map { it.firstName }
-        .fold("") { name, acc -> "$acc, $name" }
-    val nonUserAccountRecipients = recipients
-        .filterNot { LocalAccountsDataProvider.isUserAccount(it.uid) }
-}
+    /** Which mailbox it is in **/
+    var mailbox: MailboxType = MailboxType.Inbox,
+    /**
+     * Relative duration in which it was created. (e.g. 20 mins ago)
+     * It should be calculated from relative time in the future.
+     * For now it's hard coded to a [String] value.
+     */
+    var createdAt: String
+)

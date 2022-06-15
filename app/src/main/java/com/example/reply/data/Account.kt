@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2022 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,18 +19,20 @@ package com.example.reply.data
 import androidx.annotation.DrawableRes
 
 /**
- * A class which represents an account which can belong to a user. A single user can have
- * multiple accounts.
+ * A class which represents an account
  */
 data class Account(
-    val id: Long,
-    val uid: Long,
+    /** Unique ID of a user **/
+    val id: Int,
+    /** User's first name **/
     val firstName: String,
+    /** User's last name **/
     val lastName: String,
+    /** User's email address **/
     val email: String,
-    val altEmail: String,
-    @DrawableRes val avatar: Int,
-    var isCurrentAccount: Boolean = false
+    /** User's avatar image resource id **/
+    @DrawableRes val avatar: Int
 ) {
+    /** User's full name **/
     val fullName: String = "$firstName $lastName"
 }
