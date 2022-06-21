@@ -57,10 +57,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.reply.R
-import com.example.reply.ui.utils.DevicePosture
 import com.example.reply.ui.utils.ReplyContentType
 import com.example.reply.ui.utils.ReplyNavigationType
 import kotlinx.coroutines.launch
@@ -68,16 +66,11 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReplyApp(
-    windowSize: WindowWidthSizeClass,
-    foldingDevicePosture: DevicePosture,
-    replyHomeUIState: ReplyHomeUIState
+    replyHomeUIState: ReplyHomeUIState,
+    windowSize: WindowWidthSizeClass
 ) {
     /**
-     * This will help us select type of navigation and content type depending on window size and
-     * fold state of the device.
-     *
-     * In the state of folding device If it's half fold in BookPosture we want to avoid content
-     * at the crease/hinge
+     * This will help us select type of navigation and content type depending on window size
      */
     val navigationType: ReplyNavigationType
     val contentType: ReplyContentType
@@ -89,18 +82,11 @@ fun ReplyApp(
         }
         WindowWidthSizeClass.Medium -> {
             navigationType = ReplyNavigationType.NAVIGATION_RAIL
-            contentType = if (foldingDevicePosture != DevicePosture.NormalPosture) {
-                ReplyContentType.LIST_AND_DETAIL
-            } else {
-                ReplyContentType.LIST_ONLY
-            }
+            contentType = ReplyContentType.LIST_ONLY
+
         }
         WindowWidthSizeClass.Expanded -> {
-            navigationType = if (foldingDevicePosture is DevicePosture.BookPosture) {
-                ReplyNavigationType.NAVIGATION_RAIL
-            } else {
-                ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER
-            }
+            navigationType = ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER
             contentType = ReplyContentType.LIST_AND_DETAIL
         }
         else -> {
@@ -108,7 +94,6 @@ fun ReplyApp(
             contentType = ReplyContentType.LIST_ONLY
         }
     }
-
     ReplyNavigationWrapperUI(navigationType, contentType, replyHomeUIState)
 }
 
@@ -193,7 +178,6 @@ fun ReplyAppContent(
 }
 
 @Composable
-@Preview
 fun ReplyNavigationRail(
     onDrawerClicked: () -> Unit = {},
 ) {
@@ -247,7 +231,6 @@ fun ReplyNavigationRail(
 }
 
 @Composable
-@Preview
 fun ReplyBottomNavigationBar() {
     NavigationBar(modifier = Modifier.fillMaxWidth()) {
         NavigationBarItem(
