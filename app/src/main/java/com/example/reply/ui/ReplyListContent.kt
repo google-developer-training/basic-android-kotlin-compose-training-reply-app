@@ -121,18 +121,6 @@ fun ReplyEmailListItem(
                         color = MaterialTheme.colorScheme.outline
                     )
                 }
-                IconButton(
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.surface)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.StarBorder,
-                        contentDescription = "Favorite",
-                        tint = MaterialTheme.colorScheme.outline
-                    )
-                }
             }
 
             Text(
@@ -186,18 +174,6 @@ fun ReplyEmailThreadItem(
                         text = "20 mins ago",
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.outline
-                    )
-                }
-                IconButton(
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.surface)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.StarBorder,
-                        contentDescription = "Favorite",
-                        tint = MaterialTheme.colorScheme.outline
                     )
                 }
             }
