@@ -19,6 +19,7 @@ package com.example.reply.ui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,16 +28,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,6 +43,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.reply.R
 import com.example.reply.data.Email
@@ -57,7 +55,7 @@ fun ReplyListOnlyContent(
 ) {
     LazyColumn(modifier = modifier) {
         item {
-            ReplySearchBar(modifier = Modifier.fillMaxWidth())
+            ReplyTopBar(modifier = Modifier.fillMaxWidth())
         }
         items(replyHomeUIState.emails) { email ->
             ReplyEmailListItem(email = email)
@@ -74,7 +72,7 @@ fun ReplyListAndDetailContent(
     Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         LazyColumn(modifier = modifier.weight(1f)) {
             item {
-                ReplySearchBar(modifier = Modifier.fillMaxWidth())
+                ReplyTopBar(modifier = Modifier.fillMaxWidth())
             }
             items(replyHomeUIState.emails) { email ->
                 ReplyEmailListItem(email = email)
@@ -241,34 +239,36 @@ fun ReplyProfileImage(
 }
 
 @Composable
-fun ReplySearchBar(modifier: Modifier = Modifier) {
-    Row(
+fun ReplyTopBar(modifier: Modifier = Modifier) {
+    Column(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .background(MaterialTheme.colorScheme.surface, CircleShape),
-        verticalAlignment = Alignment.CenterVertically
+            .padding(bottom = 12.dp)
+            .background(MaterialTheme.colorScheme.primaryContainer)
     ) {
-        Icon(
-            imageVector = Icons.Default.Search,
-            contentDescription = stringResource(id = R.string.search),
-            modifier = Modifier.padding(start = 16.dp),
-            tint = MaterialTheme.colorScheme.outline
-        )
-        Text(
-            text = stringResource(id = R.string.search_replies),
-            modifier = Modifier
-                .weight(1f)
+        Box(
+            modifier = modifier
+                .fillMaxWidth()
                 .padding(16.dp),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.outline
-        )
-        ReplyProfileImage(
-            drawableResource = R.drawable.avatar_6,
-            description = stringResource(id = R.string.profile),
-            modifier = Modifier
-                .padding(12.dp)
-                .size(32.dp)
-        )
+        ) {
+            Box(
+                modifier = Modifier.align(Alignment.Center),
+            ) {
+                Text(
+                    text = stringResource(id = R.string.app_name).uppercase(),
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            }
+            Box(modifier = Modifier.align(Alignment.CenterEnd)) {
+                ReplyProfileImage(
+                    drawableResource = R.drawable.avatar_6,
+                    description = stringResource(id = R.string.profile),
+                    modifier = Modifier
+                        .size(48.dp)
+                )
+            }
+        }
+        Divider(thickness = 2.dp, color = MaterialTheme.colorScheme.onPrimaryContainer)
     }
+
 }
