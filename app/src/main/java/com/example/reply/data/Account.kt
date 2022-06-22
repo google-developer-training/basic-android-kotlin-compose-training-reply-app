@@ -28,9 +28,7 @@ data class Account(
     val firstName: String,
     val lastName: String,
     val email: String,
-    val altEmail: String,
-    @DrawableRes val avatar: Int,
-    var isCurrentAccount: Boolean = false
+    @DrawableRes val avatar: Int
 ) {
     val fullName: String = "$firstName $lastName"
 }

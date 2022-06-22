@@ -16,9 +16,7 @@
 
 package com.example.reply.data.local
 
-import com.example.reply.R
 import com.example.reply.data.Email
-import com.example.reply.data.EmailAttachment
 import com.example.reply.data.MailboxType
 
 /**
@@ -39,8 +37,7 @@ object LocalEmailsDataProvider {
 
                 As always, thank you for shopping with us and we hope you love our specially formulated Cucumber Mask!
             """.trimIndent(),
-            createAt = "20 mins ago",
-            isStarred = true,
+            createAt = "20 mins ago"
         ),
         Email(
             1L,
@@ -64,13 +61,6 @@ object LocalEmailsDataProvider {
             listOf(LocalAccountsDataProvider.getDefaultUserAccount()),
             "Bonjour from Paris",
             "Here are some great shots from my trip...",
-            listOf(
-                EmailAttachment(R.drawable.paris_1, "Bridge in Paris"),
-                EmailAttachment(R.drawable.paris_2, "Bridge in Paris at night"),
-                EmailAttachment(R.drawable.paris_3, "City street in Paris"),
-                EmailAttachment(R.drawable.paris_4, "Street with bike in Paris")
-            ),
-            true,
             createAt = "1 hour ago",
         ),
         Email(
@@ -105,7 +95,6 @@ object LocalEmailsDataProvider {
                 Maybe we can jump on the phone later today if you have a second.
             """.trimIndent(),
             createAt = "2 hours ago",
-            isStarred = true,
         ),
         Email(
             5L,
@@ -180,53 +169,5 @@ object LocalEmailsDataProvider {
             createAt = "3 hours ago",
             mailbox = MailboxType.Spam,
         )
-    )
-
-    /**
-     * Get an [Email] with the given [id].
-     */
-    fun get(id: Long): Email? {
-        return allEmails.firstOrNull { it.id == id }
-    }
-
-    /**
-     * Create a new, blank [Email].
-     */
-    fun create(): Email {
-        return Email(
-            System.nanoTime(), // Unique ID generation.
-            LocalAccountsDataProvider.getDefaultUserAccount(),
-            createAt = "Just now",
-        )
-    }
-
-    /**
-     * Create a new [Email] that is a reply to the email with the given [replyToId].
-     */
-    fun createReplyTo(replyToId: Long): Email {
-        val replyTo = get(replyToId) ?: return create()
-        return Email(
-            id = System.nanoTime(),
-            sender = replyTo.recipients.firstOrNull()
-                ?: LocalAccountsDataProvider.getDefaultUserAccount(),
-            recipients = listOf(replyTo.sender) + replyTo.recipients,
-            subject = replyTo.subject,
-            isStarred = replyTo.isStarred,
-            isImportant = replyTo.isImportant,
-            createAt = "Just now",
-        )
-    }
-
-
-    /**
-     * Get a list of [EmailFolder]s by which [Email]s can be categorized.
-     */
-    fun getAllFolders() = listOf(
-        "Receipts",
-        "Pine Elementary",
-        "Taxes",
-        "Vacation",
-        "Mortgage",
-        "Grocery coupons"
     )
 }

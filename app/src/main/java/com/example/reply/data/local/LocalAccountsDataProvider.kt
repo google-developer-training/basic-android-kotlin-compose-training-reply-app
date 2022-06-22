@@ -32,9 +32,7 @@ object LocalAccountsDataProvider {
             "Jeff",
             "Hansen",
             "hikingfan@gmail.com",
-            "hkngfan@outside.com",
-            R.drawable.avatar_10,
-            true
+            R.drawable.avatar_10
         ),
         Account(
             2L,
@@ -42,7 +40,6 @@ object LocalAccountsDataProvider {
             "Jeff",
             "H",
             "jeffersonloveshiking@gmail.com",
-            "jeffersonloveshiking@work.com",
             R.drawable.avatar_2
         ),
         Account(
@@ -51,7 +48,6 @@ object LocalAccountsDataProvider {
             "Jeff",
             "Hansen",
             "jeffersonc@google.com",
-            "jeffersonc@gmail.com",
             R.drawable.avatar_9
         )
     )
@@ -63,7 +59,6 @@ object LocalAccountsDataProvider {
             "Tracy",
             "Alvarez",
             "tracealvie@gmail.com",
-            "tracealvie@gravity.com",
             R.drawable.avatar_1
         ),
         Account(
@@ -72,7 +67,6 @@ object LocalAccountsDataProvider {
             "Allison",
             "Trabucco",
             "atrabucco222@gmail.com",
-            "atrabucco222@work.com",
             R.drawable.avatar_3
         ),
         Account(
@@ -81,7 +75,6 @@ object LocalAccountsDataProvider {
             "Ali",
             "Connors",
             "aliconnors@gmail.com",
-            "aliconnors@android.com",
             R.drawable.avatar_5
         ),
         Account(
@@ -90,7 +83,6 @@ object LocalAccountsDataProvider {
             "Alberto",
             "Williams",
             "albertowilliams124@gmail.com",
-            "albertowilliams124@chromeos.com",
             R.drawable.avatar_0
         ),
         Account(
@@ -99,7 +91,6 @@ object LocalAccountsDataProvider {
             "Kim",
             "Alen",
             "alen13@gmail.com",
-            "alen13@mountainview.gov",
             R.drawable.avatar_7
         ),
         Account(
@@ -108,7 +99,6 @@ object LocalAccountsDataProvider {
             "Google",
             "Express",
             "express@google.com",
-            "express@gmail.com",
             R.drawable.avatar_express
         ),
         Account(
@@ -117,7 +107,6 @@ object LocalAccountsDataProvider {
             "Sandra",
             "Adams",
             "sandraadams@gmail.com",
-            "sandraadams@textera.com",
             R.drawable.avatar_2
         ),
         Account(
@@ -126,7 +115,6 @@ object LocalAccountsDataProvider {
             "Trevor",
             "Hansen",
             "trevorhandsen@gmail.com",
-            "trevorhandsen@express.com",
             R.drawable.avatar_8
         ),
         Account(
@@ -135,7 +123,6 @@ object LocalAccountsDataProvider {
             "Sean",
             "Holt",
             "sholt@gmail.com",
-            "sholt@art.com",
             R.drawable.avatar_6
         ),
         Account(
@@ -144,7 +131,6 @@ object LocalAccountsDataProvider {
             "Frank",
             "Hawkins",
             "fhawkank@gmail.com",
-            "fhawkank@thisisme.com",
             R.drawable.avatar_4
         )
     )
@@ -153,11 +139,6 @@ object LocalAccountsDataProvider {
      * Get the current user's default account.
      */
     fun getDefaultUserAccount() = allUserAccounts.first()
-
-    /**
-     * Whether or not the given [Account.id] uid is an account owned by the current user.
-     */
-    fun isUserAccount(uid: Long): Boolean = allUserAccounts.any { it.uid == uid }
 
 
     /**
