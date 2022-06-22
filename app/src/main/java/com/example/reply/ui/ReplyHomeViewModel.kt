@@ -18,14 +18,12 @@ package com.example.reply.ui
 
 import androidx.lifecycle.ViewModel
 import com.example.reply.data.Email
-import com.example.reply.data.EmailsRepository
-import com.example.reply.data.EmailsRepositoryImpl
 import com.example.reply.data.MailboxType
 import com.example.reply.data.local.LocalEmailsDataProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class ReplyHomeViewModel(private val emailsRepository: EmailsRepository = EmailsRepositoryImpl()) :
+class ReplyHomeViewModel :
     ViewModel() {
 
     // UI state exposed to the UI
