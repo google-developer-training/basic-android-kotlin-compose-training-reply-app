@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -37,6 +38,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -69,17 +75,22 @@ fun ReplyListOnlyContent(
 fun ReplyListAndDetailContent(
     replyHomeUIState: ReplyHomeUIState,
     mailboxType: MailboxType,
-    modifier: Modifier = Modifier,
-    selectedItemIndex: Int = 0
+    modifier: Modifier = Modifier
 ) {
     val emails = getEmailsForMailbox(mailboxType, replyHomeUIState)
+    var selectedItemIndex by rememberSaveable {
+        mutableStateOf(0)
+    }
+    val onCardClick: (Int) -> () -> Unit =
+        { selectedCardIndex -> { selectedItemIndex = selectedCardIndex } }
+
     Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         LazyColumn(modifier = modifier.weight(1f)) {
             item {
                 ReplyTopBar(modifier = Modifier.fillMaxWidth())
             }
-            items(emails) { email ->
-                ReplyEmailListItem(email = email)
+            itemsIndexed(emails) { index, email ->
+                ReplyEmailListItem(email = email, onCardClick = onCardClick(index))
             }
         }
         LazyColumn(modifier = modifier.weight(1f)) {
@@ -94,9 +105,13 @@ fun ReplyListAndDetailContent(
 @Composable
 fun ReplyEmailListItem(
     email: Email,
-    modifier: Modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+    modifier: Modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+    onCardClick: () -> Unit = {}
 ) {
-    Card(modifier = modifier) {
+    Card(
+        modifier = modifier,
+        onClick = onCardClick
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
