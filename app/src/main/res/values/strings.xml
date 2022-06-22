@@ -17,9 +17,9 @@
     <string name="app_name">Reply</string>
     <string name="navigation_drawer">Navigation Drawer</string>
     <string name="tab_inbox">Inbox</string>
-    <string name="tab_article">Articles</string>
-    <string name="tab_dm">Direct Messages</string>
-    <string name="tab_groups">Groups</string>
+    <string name="tab_sent">Sent</string>
+    <string name="tab_drafts">Drafts</string>
+    <string name="tab_spam">Spam</string>
 
     <string name="profile">Profile</string>
     <string name="reply">Reply</string>

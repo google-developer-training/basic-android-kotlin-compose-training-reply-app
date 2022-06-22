@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.StateFlow
 class ReplyHomeViewModel :
     ViewModel() {
 
-    // UI state exposed to the UI
+    /** UI state exposed to the UI **/
     private val _uiState = MutableStateFlow(ReplyHomeUIState())
     val uiState: StateFlow<ReplyHomeUIState> = _uiState
 

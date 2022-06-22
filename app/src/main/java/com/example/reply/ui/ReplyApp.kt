@@ -27,14 +27,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Article
-import androidx.compose.material.icons.filled.Chat
+import androidx.compose.material.icons.filled.Drafts
 import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MenuOpen
-import androidx.compose.material.icons.outlined.Chat
-import androidx.compose.material.icons.outlined.People
-import androidx.compose.material.icons.outlined.Videocam
+import androidx.compose.material.icons.filled.Report
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -107,7 +105,7 @@ private fun ReplyNavigationWrapperUI(
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    val selectedDestination = ReplyDestinations.INBOX
+    val selectedDestination = MailboxType.Inbox
 
     if (navigationType == ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER) {
         PermanentNavigationDrawer(
@@ -210,23 +208,27 @@ fun ReplyNavigationRail(
             onClick = {/*TODO*/ },
             icon = {
                 Icon(
-                    imageVector = Icons.Default.Article,
-                    stringResource(id = R.string.tab_article)
+                    imageVector = Icons.Default.Send,
+                    stringResource(id = R.string.tab_sent)
                 )
             }
         )
         NavigationRailItem(
             selected = false,
             onClick = { /*TODO*/ },
-            icon = { Icon(imageVector = Icons.Outlined.Chat, stringResource(id = R.string.tab_dm)) }
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Drafts, stringResource(id = R.string.tab_drafts)
+                )
+            }
         )
         NavigationRailItem(
             selected = false,
             onClick = { /*TODO*/ },
             icon = {
                 Icon(
-                    imageVector = Icons.Outlined.People,
-                    stringResource(id = R.string.tab_groups)
+                    imageVector = Icons.Default.Report,
+                    stringResource(id = R.string.tab_spam)
                 )
             }
         )
@@ -251,8 +253,8 @@ fun ReplyBottomNavigationBar() {
             onClick = { /*TODO*/ },
             icon = {
                 Icon(
-                    imageVector = Icons.Default.Article,
-                    contentDescription = stringResource(id = R.string.tab_inbox)
+                    imageVector = Icons.Default.Send,
+                    contentDescription = stringResource(id = R.string.tab_sent)
                 )
             }
         )
@@ -261,8 +263,8 @@ fun ReplyBottomNavigationBar() {
             onClick = { /*TODO*/ },
             icon = {
                 Icon(
-                    imageVector = Icons.Outlined.Chat,
-                    contentDescription = stringResource(id = R.string.tab_inbox)
+                    imageVector = Icons.Default.Drafts,
+                    contentDescription = stringResource(id = R.string.tab_drafts)
                 )
             }
         )
@@ -271,8 +273,8 @@ fun ReplyBottomNavigationBar() {
             onClick = { /*TODO*/ },
             icon = {
                 Icon(
-                    imageVector = Icons.Outlined.Videocam,
-                    contentDescription = stringResource(id = R.string.tab_inbox)
+                    imageVector = Icons.Default.Report,
+                    contentDescription = stringResource(id = R.string.tab_spam)
                 )
             }
         )
@@ -282,7 +284,7 @@ fun ReplyBottomNavigationBar() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavigationDrawerContent(
-    selectedDestination: String,
+    selectedDestination: MailboxType,
     modifier: Modifier = Modifier,
     onDrawerClicked: () -> Unit = {}
 ) {
@@ -314,7 +316,7 @@ fun NavigationDrawerContent(
         }
 
         NavigationDrawerItem(
-            selected = selectedDestination == ReplyDestinations.INBOX,
+            selected = selectedDestination == MailboxType.Inbox,
             label = {
                 Text(
                     text = stringResource(id = R.string.tab_inbox),
@@ -333,17 +335,17 @@ fun NavigationDrawerContent(
             onClick = { /*TODO*/ }
         )
         NavigationDrawerItem(
-            selected = selectedDestination == ReplyDestinations.ARTICLES,
+            selected = selectedDestination == MailboxType.Sent,
             label = {
                 Text(
-                    text = stringResource(id = R.string.tab_article),
+                    text = stringResource(id = R.string.tab_sent),
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )
             },
             icon = {
                 Icon(
-                    imageVector = Icons.Default.Article,
-                    contentDescription = stringResource(id = R.string.tab_article)
+                    imageVector = Icons.Default.Send,
+                    contentDescription = stringResource(id = R.string.tab_sent)
                 )
             },
             colors = NavigationDrawerItemDefaults.colors(
@@ -352,17 +354,17 @@ fun NavigationDrawerContent(
             onClick = { /*TODO*/ }
         )
         NavigationDrawerItem(
-            selected = selectedDestination == ReplyDestinations.DM,
+            selected = selectedDestination == MailboxType.Drafts,
             label = {
                 Text(
-                    text = stringResource(id = R.string.tab_dm),
+                    text = stringResource(id = R.string.tab_drafts),
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )
             },
             icon = {
                 Icon(
-                    imageVector = Icons.Default.Chat,
-                    contentDescription = stringResource(id = R.string.tab_dm)
+                    imageVector = Icons.Default.Drafts,
+                    contentDescription = stringResource(id = R.string.tab_drafts)
                 )
             },
             colors = NavigationDrawerItemDefaults.colors(
@@ -371,17 +373,17 @@ fun NavigationDrawerContent(
             onClick = { /*TODO*/ }
         )
         NavigationDrawerItem(
-            selected = selectedDestination == ReplyDestinations.GROUPS,
+            selected = selectedDestination == MailboxType.Spam,
             label = {
                 Text(
-                    text = stringResource(id = R.string.tab_groups),
+                    text = stringResource(id = R.string.tab_spam),
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )
             },
             icon = {
                 Icon(
-                    imageVector = Icons.Default.Article,
-                    contentDescription = stringResource(id = R.string.tab_groups)
+                    imageVector = Icons.Default.Report,
+                    contentDescription = stringResource(id = R.string.tab_spam)
                 )
             },
             colors = NavigationDrawerItemDefaults.colors(
