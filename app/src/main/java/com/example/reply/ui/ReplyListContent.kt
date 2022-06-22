@@ -47,17 +47,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.reply.R
 import com.example.reply.data.Email
+import com.example.reply.data.MailboxType
 
 @Composable
 fun ReplyListOnlyContent(
     replyHomeUIState: ReplyHomeUIState,
+    mailboxType: MailboxType,
     modifier: Modifier = Modifier
 ) {
+    val emails = getEmailsForMailbox(mailboxType, replyHomeUIState)
     LazyColumn(modifier = modifier) {
         item {
             ReplyTopBar(modifier = Modifier.fillMaxWidth())
         }
-        items(replyHomeUIState.emails) { email ->
+        items(emails) { email ->
             ReplyEmailListItem(email = email)
         }
     }
@@ -66,20 +69,22 @@ fun ReplyListOnlyContent(
 @Composable
 fun ReplyListAndDetailContent(
     replyHomeUIState: ReplyHomeUIState,
+    mailboxType: MailboxType,
     modifier: Modifier = Modifier,
     selectedItemIndex: Int = 0
 ) {
+    val emails = getEmailsForMailbox(mailboxType, replyHomeUIState)
     Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         LazyColumn(modifier = modifier.weight(1f)) {
             item {
                 ReplyTopBar(modifier = Modifier.fillMaxWidth())
             }
-            items(replyHomeUIState.emails) { email ->
+            items(emails) { email ->
                 ReplyEmailListItem(email = email)
             }
         }
         LazyColumn(modifier = modifier.weight(1f)) {
-            items(replyHomeUIState.emails[selectedItemIndex].threads) { email ->
+            items(emails[selectedItemIndex].threads) { email ->
                 ReplyEmailThreadItem(email = email)
             }
         }
@@ -270,5 +275,17 @@ fun ReplyTopBar(modifier: Modifier = Modifier) {
         }
         Divider(thickness = 2.dp, color = MaterialTheme.colorScheme.onPrimaryContainer)
     }
+}
 
+private fun getEmailsForMailbox(
+    mailboxType: MailboxType,
+    replyHomeUIState: ReplyHomeUIState
+): List<Email> {
+    val emails = when (mailboxType) {
+        MailboxType.Inbox -> replyHomeUIState.inboxEmails
+        MailboxType.Sent -> replyHomeUIState.sentEmails
+        MailboxType.Drafts -> replyHomeUIState.draftsEmails
+        MailboxType.Spam -> replyHomeUIState.spamEmails
+    }
+    return emails
 }

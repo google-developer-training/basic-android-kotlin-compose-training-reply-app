@@ -17,41 +17,46 @@
 package com.example.reply.ui
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.reply.data.Email
 import com.example.reply.data.EmailsRepository
 import com.example.reply.data.EmailsRepositoryImpl
+import com.example.reply.data.MailboxType
+import com.example.reply.data.local.LocalEmailsDataProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.launch
 
 class ReplyHomeViewModel(private val emailsRepository: EmailsRepository = EmailsRepositoryImpl()) :
     ViewModel() {
 
     // UI state exposed to the UI
-    private val _uiState = MutableStateFlow(ReplyHomeUIState(loading = true))
+    private val _uiState = MutableStateFlow(ReplyHomeUIState())
     val uiState: StateFlow<ReplyHomeUIState> = _uiState
 
     init {
-        observeEmails()
+        initializeUIState()
     }
 
-    private fun observeEmails() {
-        viewModelScope.launch {
-            emailsRepository.getAllEmails()
-                .catch { ex ->
-                    _uiState.value = ReplyHomeUIState(error = ex.message)
-                }
-                .collect { emails ->
-                    _uiState.value = ReplyHomeUIState(emails = emails)
-                }
+    private fun initializeUIState() {
+        val inboxEmails = LocalEmailsDataProvider.allEmails.filter {
+            it.mailbox == MailboxType.Inbox
         }
+        val sentEmails = LocalEmailsDataProvider.allEmails.filter {
+            it.mailbox == MailboxType.Sent
+        }
+        val draftsEmails = LocalEmailsDataProvider.allEmails.filter {
+            it.mailbox == MailboxType.Drafts
+        }
+        val spamEmails = LocalEmailsDataProvider.allEmails.filter {
+            it.mailbox == MailboxType.Spam
+        }
+        _uiState.value =
+            ReplyHomeUIState(inboxEmails, sentEmails, draftsEmails, spamEmails)
     }
 }
 
 data class ReplyHomeUIState(
-    val emails: List<Email> = emptyList(),
-    val loading: Boolean = false,
-    val error: String? = null
+    val inboxEmails: List<Email> = emptyList(),
+    val sentEmails: List<Email> = emptyList(),
+    val draftsEmails: List<Email> = emptyList(),
+    val spamEmails: List<Email> = emptyList(),
 )

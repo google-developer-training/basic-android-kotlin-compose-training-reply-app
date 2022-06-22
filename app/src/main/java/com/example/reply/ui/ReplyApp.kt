@@ -59,6 +59,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.reply.R
+import com.example.reply.data.MailboxType
 import com.example.reply.ui.utils.ReplyContentType
 import com.example.reply.ui.utils.ReplyNavigationType
 import kotlinx.coroutines.launch
@@ -161,11 +162,13 @@ fun ReplyAppContent(
             if (contentType == ReplyContentType.LIST_AND_DETAIL) {
                 ReplyListAndDetailContent(
                     replyHomeUIState = replyHomeUIState,
+                    mailboxType = MailboxType.Inbox,
                     modifier = Modifier.weight(1f),
                 )
             } else {
                 ReplyListOnlyContent(
                     replyHomeUIState = replyHomeUIState,
+                    mailboxType = MailboxType.Inbox,
                     modifier = Modifier.weight(1f)
                 )
             }
