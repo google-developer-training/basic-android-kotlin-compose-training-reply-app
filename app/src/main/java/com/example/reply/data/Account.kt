@@ -24,7 +24,6 @@ import androidx.annotation.DrawableRes
  */
 data class Account(
     val id: Long,
-    val uid: Long,
     val firstName: String,
     val lastName: String,
     val email: String,

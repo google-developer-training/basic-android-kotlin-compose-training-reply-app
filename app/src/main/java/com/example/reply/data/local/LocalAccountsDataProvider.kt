@@ -25,37 +25,18 @@ import com.example.reply.data.Account
  */
 object LocalAccountsDataProvider {
 
-    val allUserAccounts = mutableListOf(
+    private val userAccount =
         Account(
             1L,
-            0L,
             "Jeff",
             "Hansen",
             "hikingfan@gmail.com",
             R.drawable.avatar_10
-        ),
-        Account(
-            2L,
-            0L,
-            "Jeff",
-            "H",
-            "jeffersonloveshiking@gmail.com",
-            R.drawable.avatar_2
-        ),
-        Account(
-            3L,
-            0L,
-            "Jeff",
-            "Hansen",
-            "jeffersonc@google.com",
-            R.drawable.avatar_9
         )
-    )
 
     private val allUserContactAccounts = listOf(
         Account(
             4L,
-            1L,
             "Tracy",
             "Alvarez",
             "tracealvie@gmail.com",
@@ -63,7 +44,6 @@ object LocalAccountsDataProvider {
         ),
         Account(
             5L,
-            2L,
             "Allison",
             "Trabucco",
             "atrabucco222@gmail.com",
@@ -71,7 +51,6 @@ object LocalAccountsDataProvider {
         ),
         Account(
             6L,
-            3L,
             "Ali",
             "Connors",
             "aliconnors@gmail.com",
@@ -79,7 +58,6 @@ object LocalAccountsDataProvider {
         ),
         Account(
             7L,
-            4L,
             "Alberto",
             "Williams",
             "albertowilliams124@gmail.com",
@@ -87,7 +65,6 @@ object LocalAccountsDataProvider {
         ),
         Account(
             8L,
-            5L,
             "Kim",
             "Alen",
             "alen13@gmail.com",
@@ -95,7 +72,6 @@ object LocalAccountsDataProvider {
         ),
         Account(
             9L,
-            6L,
             "Google",
             "Express",
             "express@google.com",
@@ -103,7 +79,6 @@ object LocalAccountsDataProvider {
         ),
         Account(
             10L,
-            7L,
             "Sandra",
             "Adams",
             "sandraadams@gmail.com",
@@ -111,7 +86,6 @@ object LocalAccountsDataProvider {
         ),
         Account(
             11L,
-            8L,
             "Trevor",
             "Hansen",
             "trevorhandsen@gmail.com",
@@ -119,7 +93,6 @@ object LocalAccountsDataProvider {
         ),
         Account(
             12L,
-            9L,
             "Sean",
             "Holt",
             "sholt@gmail.com",
@@ -127,7 +100,6 @@ object LocalAccountsDataProvider {
         ),
         Account(
             13L,
-            10L,
             "Frank",
             "Hawkins",
             "fhawkank@gmail.com",
@@ -138,7 +110,7 @@ object LocalAccountsDataProvider {
     /**
      * Get the current user's default account.
      */
-    fun getDefaultUserAccount() = allUserAccounts.first()
+    fun getDefaultUserAccount() = userAccount
 
 
     /**

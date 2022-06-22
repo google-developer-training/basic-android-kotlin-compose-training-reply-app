@@ -173,7 +173,7 @@ fun ReplyEmailDetailItem(
                         style = MaterialTheme.typography.labelMedium
                     )
                     Text(
-                        text = "20 mins ago",
+                        text = email.createAt,
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.outline
                     )
@@ -227,7 +227,6 @@ fun ReplyEmailDetailItem(
         }
     }
 }
-
 
 @Composable
 fun ReplyProfileImage(
