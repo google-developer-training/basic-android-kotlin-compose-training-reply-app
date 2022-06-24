@@ -26,6 +26,7 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.reply.data.MailboxType
 import com.example.reply.data.local.LocalEmailsDataProvider
 import com.example.reply.ui.theme.ReplyTheme
 
@@ -43,7 +44,12 @@ class MainActivity : ComponentActivity() {
                 val uiState = viewModel.uiState.collectAsState().value
                 ReplyApp(
                     replyHomeUIState = uiState,
-                    windowSize = windowSize.widthSizeClass
+                    windowSize = windowSize.widthSizeClass,
+                    onEmailCardClick = { mailboxType: MailboxType, index: Int ->
+                        viewModel.updateSelectedEmailIndex(
+                            mailboxType, index
+                        )
+                    }
                 )
             }
         }

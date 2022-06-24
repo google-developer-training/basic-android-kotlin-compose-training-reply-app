@@ -22,6 +22,7 @@ import com.example.reply.data.MailboxType
 import com.example.reply.data.local.LocalEmailsDataProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 
 class ReplyHomeViewModel :
     ViewModel() {
@@ -50,6 +51,16 @@ class ReplyHomeViewModel :
         _uiState.value =
             ReplyHomeUIState(inboxEmails, sentEmails, draftsEmails, spamEmails)
     }
+
+    fun updateSelectedEmailIndex(mailboxType: MailboxType, newIndex: Int) {
+        _uiState.update {
+            it.copy(
+                selectedEmailIndex = it.selectedEmailIndex.mapValues {
+                    if (it.key == mailboxType) newIndex else it.value
+                }
+            )
+        }
+    }
 }
 
 data class ReplyHomeUIState(
@@ -57,4 +68,10 @@ data class ReplyHomeUIState(
     val sentEmails: List<Email> = emptyList(),
     val draftsEmails: List<Email> = emptyList(),
     val spamEmails: List<Email> = emptyList(),
+    val selectedEmailIndex: Map<MailboxType, Int> = mapOf(
+        MailboxType.Inbox to 0,
+        MailboxType.Sent to 0,
+        MailboxType.Drafts to 0,
+        MailboxType.Spam to 0
+    )
 )

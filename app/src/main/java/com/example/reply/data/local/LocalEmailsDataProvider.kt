@@ -103,6 +103,7 @@ object LocalEmailsDataProvider {
             "Update to Your Itinerary",
             "",
             createAt = "2 hours ago",
+            mailbox = MailboxType.Drafts
         ),
         Email(
             6L,

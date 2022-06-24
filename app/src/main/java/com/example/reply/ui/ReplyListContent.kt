@@ -38,11 +38,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -75,14 +70,15 @@ fun ReplyListOnlyContent(
 fun ReplyListAndDetailContent(
     replyHomeUIState: ReplyHomeUIState,
     mailboxType: MailboxType,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCardClick: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> }
 ) {
     val emails = getEmailsForMailbox(mailboxType, replyHomeUIState)
-    var selectedItemIndex by rememberSaveable {
-        mutableStateOf(0)
-    }
+
+    var selectedItemIndex = replyHomeUIState.selectedEmailIndex[mailboxType] ?: 0
+
     val onCardClick: (Int) -> () -> Unit =
-        { selectedCardIndex -> { selectedItemIndex = selectedCardIndex } }
+        { selectedCardIndex -> { onCardClick(mailboxType, selectedCardIndex) } }
 
     Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         LazyColumn(modifier = modifier.weight(1f)) {
