@@ -29,16 +29,11 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Drafts
 import androidx.compose.material.icons.filled.Inbox
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.MenuOpen
 import androidx.compose.material.icons.filled.Report
 import androidx.compose.material.icons.filled.Send
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationDrawerItem
@@ -47,12 +42,10 @@ import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.PermanentNavigationDrawer
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -64,7 +57,6 @@ import com.example.reply.R
 import com.example.reply.data.MailboxType
 import com.example.reply.ui.utils.ReplyContentType
 import com.example.reply.ui.utils.ReplyNavigationType
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -109,8 +101,6 @@ private fun ReplyNavigationWrapperUI(
     replyHomeUIState: ReplyHomeUIState,
     onEmailCardClick: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> }
 ) {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
     var selectedTab by rememberSaveable { mutableStateOf(MailboxType.Inbox) }
     val onTabClicked: (MailboxType) -> Unit = { mailboxType -> selectedTab = mailboxType }
 
@@ -132,32 +122,12 @@ private fun ReplyNavigationWrapperUI(
             )
         }
     } else {
-        ModalNavigationDrawer(
-            drawerContent = {
-                NavigationDrawerContent(
-                    selectedDestination = selectedTab,
-                    onDrawerClicked = {
-                        scope.launch {
-                            drawerState.close()
-                        }
-                    },
-                    onTabClicked = onTabClicked
-                )
-            },
-            drawerState = drawerState
-        ) {
-            ReplyAppContent(
-                navigationType = navigationType,
-                contentType = contentType,
-                replyHomeUIState = replyHomeUIState,
-                currentTab = selectedTab,
-                onDrawerClicked = {
-                    scope.launch {
-                        drawerState.open()
-                    }
-                }
-            )
-        }
+        ReplyAppContent(
+            navigationType = navigationType,
+            contentType = contentType,
+            replyHomeUIState = replyHomeUIState,
+            currentTab = selectedTab,
+        )
     }
 }
 
@@ -167,14 +137,11 @@ fun ReplyAppContent(
     contentType: ReplyContentType,
     replyHomeUIState: ReplyHomeUIState,
     currentTab: MailboxType,
-    onDrawerClicked: () -> Unit = {},
     onEmailCardClick: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> }
 ) {
     Row(modifier = Modifier.fillMaxSize()) {
         AnimatedVisibility(visible = navigationType == ReplyNavigationType.NAVIGATION_RAIL) {
-            ReplyNavigationRail(
-                onDrawerClicked = onDrawerClicked
-            )
+            ReplyNavigationRail()
         }
         Column(
             modifier = Modifier
@@ -204,20 +171,8 @@ fun ReplyAppContent(
 }
 
 @Composable
-fun ReplyNavigationRail(
-    onDrawerClicked: () -> Unit = {},
-) {
+fun ReplyNavigationRail() {
     NavigationRail(modifier = Modifier.fillMaxHeight()) {
-        NavigationRailItem(
-            selected = false,
-            onClick = onDrawerClicked,
-            icon = {
-                Icon(
-                    imageVector = Icons.Default.Menu,
-                    contentDescription = stringResource(id = R.string.navigation_drawer)
-                )
-            }
-        )
         NavigationRailItem(
             selected = true,
             onClick = { /*TODO*/ },
@@ -311,7 +266,6 @@ fun ReplyBottomNavigationBar() {
 fun NavigationDrawerContent(
     selectedDestination: MailboxType,
     modifier: Modifier = Modifier,
-    onDrawerClicked: (() -> Unit)? = null,
     onTabClicked: ((MailboxType) -> Unit) = {}
 ) {
     Column(
@@ -333,14 +287,6 @@ fun NavigationDrawerContent(
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.primary
             )
-            if (onDrawerClicked != null) {
-                IconButton(onClick = onDrawerClicked) {
-                    Icon(
-                        imageVector = Icons.Default.MenuOpen,
-                        contentDescription = stringResource(id = R.string.navigation_drawer)
-                    )
-                }
-            }
         }
 
         NavigationDrawerItem(
