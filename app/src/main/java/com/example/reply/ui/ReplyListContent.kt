@@ -52,16 +52,19 @@ import com.example.reply.data.MailboxType
 @Composable
 fun ReplyListOnlyContent(
     replyHomeUIState: ReplyHomeUIState,
-    mailboxType: MailboxType,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> }
 ) {
-    val emails = getEmailsForMailbox(mailboxType, replyHomeUIState)
+    val emails = replyHomeUIState.getEmailsForMailbox()
+    val onCardClick: (Int) -> () -> Unit =
+        { selectedCardIndex -> { onEmailCardPressed(replyHomeUIState.currentMailbox, selectedCardIndex) } }
+
     LazyColumn(modifier = modifier) {
         item {
             ReplyTopBar(modifier = Modifier.fillMaxWidth())
         }
-        items(emails) { email ->
-            ReplyEmailListItem(email = email)
+        itemsIndexed(emails) { index, email ->
+            ReplyEmailListItem(email = email, onCardClick = onCardClick(index))
         }
     }
 }
@@ -69,16 +72,14 @@ fun ReplyListOnlyContent(
 @Composable
 fun ReplyListAndDetailContent(
     replyHomeUIState: ReplyHomeUIState,
-    mailboxType: MailboxType,
     modifier: Modifier = Modifier,
-    onCardClick: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> }
+    onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> }
 ) {
-    val emails = getEmailsForMailbox(mailboxType, replyHomeUIState)
-
-    var selectedItemIndex = replyHomeUIState.selectedEmailIndex[mailboxType] ?: 0
+    val emails = replyHomeUIState.getEmailsForMailbox()
+    var selectedItemIndex = replyHomeUIState.selectedEmailIndex[replyHomeUIState.currentMailbox] ?: 0
 
     val onCardClick: (Int) -> () -> Unit =
-        { selectedCardIndex -> { onCardClick(mailboxType, selectedCardIndex) } }
+        { selectedCardIndex -> { onEmailCardPressed(replyHomeUIState.currentMailbox, selectedCardIndex) } }
 
     Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         LazyColumn(modifier = modifier.weight(1f)) {
@@ -91,7 +92,7 @@ fun ReplyListAndDetailContent(
         }
         LazyColumn(modifier = modifier.weight(1f)) {
             item {
-                ReplyEmailDetailItem(email = emails[selectedItemIndex], mailboxType = mailboxType)
+                ReplyEmailDetailItem(email = emails[selectedItemIndex], mailboxType = replyHomeUIState.currentMailbox)
             }
         }
     }
@@ -333,17 +334,4 @@ fun ReplyTopBar(modifier: Modifier = Modifier) {
         }
         Divider(thickness = 2.dp, color = MaterialTheme.colorScheme.onPrimaryContainer)
     }
-}
-
-private fun getEmailsForMailbox(
-    mailboxType: MailboxType,
-    replyHomeUIState: ReplyHomeUIState
-): List<Email> {
-    val emails = when (mailboxType) {
-        MailboxType.Inbox -> replyHomeUIState.inboxEmails
-        MailboxType.Sent -> replyHomeUIState.sentEmails
-        MailboxType.Drafts -> replyHomeUIState.draftsEmails
-        MailboxType.Spam -> replyHomeUIState.spamEmails
-    }
-    return emails
 }

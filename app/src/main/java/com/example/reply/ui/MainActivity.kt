@@ -23,11 +23,9 @@ import androidx.activity.viewModels
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 import com.example.reply.data.MailboxType
-import com.example.reply.data.local.LocalEmailsDataProvider
 import com.example.reply.ui.theme.ReplyTheme
 
 class MainActivity : ComponentActivity() {
@@ -40,51 +38,49 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             ReplyTheme {
+                val navController = rememberNavController()
                 val windowSize = calculateWindowSizeClass(this)
                 val uiState = viewModel.uiState.collectAsState().value
-                ReplyApp(
+                ReplyNavHost(
+                    navController = navController,
                     replyHomeUIState = uiState,
                     windowSize = windowSize.widthSizeClass,
-                    onEmailCardClick = { mailboxType: MailboxType, index: Int ->
-                        viewModel.updateSelectedEmailIndex(
-                            mailboxType, index
-                        )
-                    }
+                    viewModel = viewModel
                 )
             }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ReplyAppPreview() {
-    ReplyTheme {
-        ReplyApp(
-            replyHomeUIState = ReplyHomeUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
-            windowSize = WindowWidthSizeClass.Compact
-        )
-    }
-}
-
-@Preview(showBackground = true, widthDp = 700)
-@Composable
-fun ReplyAppPreviewTablet() {
-    ReplyTheme {
-        ReplyApp(
-            replyHomeUIState = ReplyHomeUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
-            windowSize = WindowWidthSizeClass.Medium
-        )
-    }
-}
-
-@Preview(showBackground = true, widthDp = 1000)
-@Composable
-fun ReplyAppPreviewDesktop() {
-    ReplyTheme {
-        ReplyApp(
-            replyHomeUIState = ReplyHomeUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
-            windowSize = WindowWidthSizeClass.Expanded
-        )
-    }
-}
+// @Preview(showBackground = true)
+// @Composable
+// fun ReplyAppPreview() {
+//     ReplyTheme {
+//         ReplyNavHost(
+//             replyHomeUIState = ReplyHomeUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
+//             windowSize = WindowWidthSizeClass.Compact
+//         )
+//     }
+// }
+//
+// @Preview(showBackground = true, widthDp = 700)
+// @Composable
+// fun ReplyAppPreviewTablet() {
+//     ReplyTheme {
+//         ReplyNavHost(
+//             replyHomeUIState = ReplyHomeUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
+//             windowSize = WindowWidthSizeClass.Medium
+//         )
+//     }
+// }
+//
+// @Preview(showBackground = true, widthDp = 1000)
+// @Composable
+// fun ReplyAppPreviewDesktop() {
+//     ReplyTheme {
+//         ReplyNavHost(
+//             replyHomeUIState = ReplyHomeUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
+//             windowSize = WindowWidthSizeClass.Expanded
+//         )
+//     }
+// }

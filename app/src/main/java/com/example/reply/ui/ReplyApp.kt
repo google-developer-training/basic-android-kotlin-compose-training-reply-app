@@ -44,15 +44,14 @@ import androidx.compose.material3.PermanentNavigationDrawer
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import com.example.reply.R
 import com.example.reply.data.MailboxType
 import com.example.reply.ui.utils.ReplyContentType
@@ -60,16 +59,27 @@ import com.example.reply.ui.utils.ReplyNavigationType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReplyApp(
+fun ReplyNavHost(
+    navController: NavHostController,
     replyHomeUIState: ReplyHomeUIState,
     windowSize: WindowWidthSizeClass,
-    onEmailCardClick: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> }
+    viewModel: ReplyHomeViewModel
 ) {
     /**
      * This will help us select type of navigation and content type depending on window size
      */
     val navigationType: ReplyNavigationType
     val contentType: ReplyContentType
+
+    val onTabPressed = { mailboxType: MailboxType ->
+        viewModel.updateCurrentMailbox(mailboxType)
+    }
+    var onEmailCardPressed: (MailboxType, Int) -> Unit = { mailboxType: MailboxType, index: Int ->
+        viewModel.updateSelectedEmailIndex(
+            mailboxType, index
+        )
+        navController.navigate(ReplyScreens.Details.name)
+    }
 
     when (windowSize) {
         WindowWidthSizeClass.Compact -> {
@@ -79,37 +89,58 @@ fun ReplyApp(
         WindowWidthSizeClass.Medium -> {
             navigationType = ReplyNavigationType.NAVIGATION_RAIL
             contentType = ReplyContentType.LIST_ONLY
-
         }
         WindowWidthSizeClass.Expanded -> {
             navigationType = ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER
             contentType = ReplyContentType.LIST_AND_DETAIL
+            onEmailCardPressed = { mailboxType: MailboxType, index: Int ->
+                viewModel.updateSelectedEmailIndex(
+                    mailboxType, index
+                )
+            }
         }
         else -> {
             navigationType = ReplyNavigationType.BOTTOM_NAVIGATION
             contentType = ReplyContentType.LIST_ONLY
         }
     }
-    ReplyNavigationWrapperUI(navigationType, contentType, replyHomeUIState, onEmailCardClick)
+    NavHost(navController = navController, startDestination = "Home", modifier = Modifier) {
+        composable(ReplyScreens.Home.name) {
+            ReplyHomeScreen(
+                navigationType,
+                contentType,
+                replyHomeUIState,
+                onTabPressed,
+                onEmailCardPressed
+            )
+        }
+        composable(ReplyScreens.Details.name) {
+            ReplyEmailDetailItem(
+                email = replyHomeUIState.getSelectedEmailForCurrentMailbox(),
+                mailboxType = replyHomeUIState.currentMailbox
+            )
+        }
+    }
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ReplyNavigationWrapperUI(
+private fun ReplyHomeScreen(
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
     replyHomeUIState: ReplyHomeUIState,
-    onEmailCardClick: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> }
+    onTabPressed: ((MailboxType) -> Unit) = {},
+    onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> }
 ) {
-    var selectedTab by rememberSaveable { mutableStateOf(MailboxType.Inbox) }
-    val onTabClicked: (MailboxType) -> Unit = { mailboxType -> selectedTab = mailboxType }
+    var selectedTab = replyHomeUIState.currentMailbox
 
     if (navigationType == ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER) {
         PermanentNavigationDrawer(
             drawerContent = {
                 NavigationDrawerContent(
                     selectedDestination = selectedTab,
-                    onTabClicked = onTabClicked
+                    onTabPressed = onTabPressed
                 )
             }
         ) {
@@ -117,8 +148,8 @@ private fun ReplyNavigationWrapperUI(
                 navigationType = navigationType,
                 contentType = contentType,
                 replyHomeUIState = replyHomeUIState,
-                currentTab = selectedTab,
-                onEmailCardClick = onEmailCardClick
+                onTabPressed = onTabPressed,
+                onEmailCardPressed = onEmailCardPressed
             )
         }
     } else {
@@ -126,7 +157,8 @@ private fun ReplyNavigationWrapperUI(
             navigationType = navigationType,
             contentType = contentType,
             replyHomeUIState = replyHomeUIState,
-            currentTab = selectedTab,
+            onTabPressed = onTabPressed,
+            onEmailCardPressed = onEmailCardPressed
         )
     }
 }
@@ -136,12 +168,15 @@ fun ReplyAppContent(
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
     replyHomeUIState: ReplyHomeUIState,
-    currentTab: MailboxType,
-    onEmailCardClick: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> }
+    onTabPressed: ((MailboxType) -> Unit) = {},
+    onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> }
 ) {
     Row(modifier = Modifier.fillMaxSize()) {
         AnimatedVisibility(visible = navigationType == ReplyNavigationType.NAVIGATION_RAIL) {
-            ReplyNavigationRail()
+            ReplyNavigationRail(
+                currentTab = replyHomeUIState.currentMailbox,
+                onTabPressed = onTabPressed
+            )
         }
         Column(
             modifier = Modifier
@@ -151,31 +186,36 @@ fun ReplyAppContent(
             if (contentType == ReplyContentType.LIST_AND_DETAIL) {
                 ReplyListAndDetailContent(
                     replyHomeUIState = replyHomeUIState,
-                    mailboxType = currentTab,
                     modifier = Modifier.weight(1f),
-                    onCardClick = onEmailCardClick
+                    onEmailCardPressed = onEmailCardPressed
                 )
             } else {
                 ReplyListOnlyContent(
                     replyHomeUIState = replyHomeUIState,
-                    mailboxType = currentTab,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    onEmailCardPressed = onEmailCardPressed
                 )
             }
 
             AnimatedVisibility(visible = navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
-                ReplyBottomNavigationBar()
+                ReplyBottomNavigationBar(
+                    currentTab = replyHomeUIState.currentMailbox,
+                    onTabPressed = onTabPressed
+                )
             }
         }
     }
 }
 
 @Composable
-fun ReplyNavigationRail() {
+fun ReplyNavigationRail(
+    currentTab: MailboxType,
+    onTabPressed: ((MailboxType) -> Unit) = {}
+) {
     NavigationRail(modifier = Modifier.fillMaxHeight()) {
         NavigationRailItem(
-            selected = true,
-            onClick = { /*TODO*/ },
+            selected = currentTab == MailboxType.Inbox,
+            onClick = { onTabPressed(MailboxType.Inbox) },
             icon = {
                 Icon(
                     imageVector = Icons.Default.Inbox,
@@ -184,8 +224,8 @@ fun ReplyNavigationRail() {
             }
         )
         NavigationRailItem(
-            selected = false,
-            onClick = {/*TODO*/ },
+            selected = currentTab == MailboxType.Sent,
+            onClick = { onTabPressed(MailboxType.Sent) },
             icon = {
                 Icon(
                     imageVector = Icons.Default.Send,
@@ -194,8 +234,8 @@ fun ReplyNavigationRail() {
             }
         )
         NavigationRailItem(
-            selected = false,
-            onClick = { /*TODO*/ },
+            selected = currentTab == MailboxType.Drafts,
+            onClick = { onTabPressed(MailboxType.Drafts) },
             icon = {
                 Icon(
                     imageVector = Icons.Default.Drafts, stringResource(id = R.string.tab_drafts)
@@ -203,8 +243,8 @@ fun ReplyNavigationRail() {
             }
         )
         NavigationRailItem(
-            selected = false,
-            onClick = { /*TODO*/ },
+            selected = currentTab == MailboxType.Spam,
+            onClick = { onTabPressed(MailboxType.Spam) },
             icon = {
                 Icon(
                     imageVector = Icons.Default.Report,
@@ -216,11 +256,14 @@ fun ReplyNavigationRail() {
 }
 
 @Composable
-fun ReplyBottomNavigationBar() {
+fun ReplyBottomNavigationBar(
+    currentTab: MailboxType,
+    onTabPressed: ((MailboxType) -> Unit) = {},
+) {
     NavigationBar(modifier = Modifier.fillMaxWidth()) {
         NavigationBarItem(
-            selected = true,
-            onClick = { /*TODO*/ },
+            selected = currentTab == MailboxType.Inbox,
+            onClick = { onTabPressed(MailboxType.Inbox) },
             icon = {
                 Icon(
                     imageVector = Icons.Default.Inbox,
@@ -229,8 +272,8 @@ fun ReplyBottomNavigationBar() {
             }
         )
         NavigationBarItem(
-            selected = false,
-            onClick = { /*TODO*/ },
+            selected = currentTab == MailboxType.Sent,
+            onClick = { onTabPressed(MailboxType.Sent) },
             icon = {
                 Icon(
                     imageVector = Icons.Default.Send,
@@ -239,8 +282,8 @@ fun ReplyBottomNavigationBar() {
             }
         )
         NavigationBarItem(
-            selected = false,
-            onClick = { /*TODO*/ },
+            selected = currentTab == MailboxType.Drafts,
+            onClick = { onTabPressed(MailboxType.Drafts) },
             icon = {
                 Icon(
                     imageVector = Icons.Default.Drafts,
@@ -249,8 +292,8 @@ fun ReplyBottomNavigationBar() {
             }
         )
         NavigationBarItem(
-            selected = false,
-            onClick = { /*TODO*/ },
+            selected = currentTab == MailboxType.Spam,
+            onClick = { onTabPressed(MailboxType.Spam) },
             icon = {
                 Icon(
                     imageVector = Icons.Default.Report,
@@ -266,7 +309,7 @@ fun ReplyBottomNavigationBar() {
 fun NavigationDrawerContent(
     selectedDestination: MailboxType,
     modifier: Modifier = Modifier,
-    onTabClicked: ((MailboxType) -> Unit) = {}
+    onTabPressed: ((MailboxType) -> Unit) = {}
 ) {
     Column(
         modifier
@@ -306,7 +349,7 @@ fun NavigationDrawerContent(
             colors = NavigationDrawerItemDefaults.colors(
                 unselectedContainerColor = Color.Transparent
             ),
-            onClick = { onTabClicked(MailboxType.Inbox) }
+            onClick = { onTabPressed(MailboxType.Inbox) }
         )
         NavigationDrawerItem(
             selected = selectedDestination == MailboxType.Sent,
@@ -325,7 +368,7 @@ fun NavigationDrawerContent(
             colors = NavigationDrawerItemDefaults.colors(
                 unselectedContainerColor = Color.Transparent
             ),
-            onClick = { onTabClicked(MailboxType.Sent) }
+            onClick = { onTabPressed(MailboxType.Sent) }
         )
         NavigationDrawerItem(
             selected = selectedDestination == MailboxType.Drafts,
@@ -344,7 +387,7 @@ fun NavigationDrawerContent(
             colors = NavigationDrawerItemDefaults.colors(
                 unselectedContainerColor = Color.Transparent
             ),
-            onClick = { onTabClicked(MailboxType.Drafts) }
+            onClick = { onTabPressed(MailboxType.Drafts) }
         )
         NavigationDrawerItem(
             selected = selectedDestination == MailboxType.Spam,
@@ -363,7 +406,7 @@ fun NavigationDrawerContent(
             colors = NavigationDrawerItemDefaults.colors(
                 unselectedContainerColor = Color.Transparent
             ),
-            onClick = { onTabClicked(MailboxType.Spam) }
+            onClick = { onTabPressed(MailboxType.Spam) }
         )
     }
 }

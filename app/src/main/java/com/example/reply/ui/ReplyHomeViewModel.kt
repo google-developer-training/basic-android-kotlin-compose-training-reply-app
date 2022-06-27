@@ -61,6 +61,13 @@ class ReplyHomeViewModel :
             )
         }
     }
+
+    fun updateCurrentMailbox(mailboxType: MailboxType) {
+        _uiState.update {
+            it.copy(
+                currentMailbox = mailboxType)
+        }
+    }
 }
 
 data class ReplyHomeUIState(
@@ -68,10 +75,25 @@ data class ReplyHomeUIState(
     val sentEmails: List<Email> = emptyList(),
     val draftsEmails: List<Email> = emptyList(),
     val spamEmails: List<Email> = emptyList(),
+    val currentMailbox: MailboxType = MailboxType.Inbox,
     val selectedEmailIndex: Map<MailboxType, Int> = mapOf(
         MailboxType.Inbox to 0,
         MailboxType.Sent to 0,
         MailboxType.Drafts to 0,
         MailboxType.Spam to 0
     )
-)
+) {
+    fun getEmailsForMailbox(): List<Email> {
+        val emails = when (currentMailbox) {
+            MailboxType.Inbox -> inboxEmails
+            MailboxType.Sent -> sentEmails
+            MailboxType.Drafts -> draftsEmails
+            MailboxType.Spam -> spamEmails
+        }
+        return emails
+    }
+
+    fun getSelectedEmailForCurrentMailbox(): Email {
+        return getEmailsForMailbox()[selectedEmailIndex[currentMailbox] ?: 0]
+    }
+}
