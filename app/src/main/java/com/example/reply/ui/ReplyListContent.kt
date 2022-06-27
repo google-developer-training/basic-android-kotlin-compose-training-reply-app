@@ -91,7 +91,7 @@ fun ReplyListAndDetailContent(
         }
         LazyColumn(modifier = modifier.weight(1f)) {
             item {
-                ReplyEmailDetailItem(email = emails[selectedItemIndex])
+                ReplyEmailDetailItem(email = emails[selectedItemIndex], mailboxType = mailboxType)
             }
         }
     }
@@ -157,6 +157,7 @@ fun ReplyEmailListItem(
 @Composable
 fun ReplyEmailDetailItem(
     email: Email,
+    mailboxType: MailboxType,
     modifier: Modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
 ) {
     Card(
@@ -204,37 +205,85 @@ fun ReplyEmailDetailItem(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 20.dp),
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
-            ) {
-                Button(
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier.weight(1f),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.inverseOnSurface
+            if (mailboxType == MailboxType.Drafts) {
+                OneActionButton(stringResource(id = R.string.continue_composing))
+            } else {
+                if (mailboxType == MailboxType.Spam) {
+                    TwoActionButtons(
+                        primaryText = stringResource(id = R.string.delete),
+                        secondaryText = stringResource(id = R.string.move_to_inbox),
+                        containIrreversibleAction = true
                     )
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.reply),
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-                Button(
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier.weight(1f),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.inverseOnSurface
-                    )
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.reply_all),
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                } else {
+                    TwoActionButtons(
+                        primaryText = stringResource(id = R.string.reply_all),
+                        secondaryText = stringResource(id = R.string.reply)
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun OneActionButton(text: String) {
+    Button(
+        onClick = { /*TODO*/ },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 20.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.inverseOnSurface
+        )
+    ) {
+        Text(
+            text = text,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    }
+}
+
+@Composable
+private fun TwoActionButtons(
+    primaryText: String,
+    secondaryText: String,
+    containIrreversibleAction: Boolean = false
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 20.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+        Button(
+            onClick = { /*TODO*/ },
+            modifier = Modifier.weight(1f),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.inverseOnSurface
+            )
+        ) {
+            Text(
+                text = secondaryText,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+        Button(
+            onClick = { /*TODO*/ },
+            modifier = Modifier.weight(1f),
+            colors = ButtonDefaults.buttonColors(
+                containerColor =
+                if (!containIrreversibleAction)
+                    MaterialTheme.colorScheme.inverseOnSurface
+                else MaterialTheme.colorScheme.onErrorContainer
+            )
+        ) {
+            Text(
+                text = primaryText,
+                color =
+                if (!containIrreversibleAction)
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                else MaterialTheme.colorScheme.onError
+            )
         }
     }
 }

@@ -24,4 +24,7 @@
     <string name="profile">Profile</string>
     <string name="reply">Reply</string>
     <string name="reply_all">Reply All</string>
+    <string name="continue_composing">Continue Composing</string>
+    <string name="delete">Delete</string>
+    <string name="move_to_inbox">Move to Inbox</string>
 </resources>
