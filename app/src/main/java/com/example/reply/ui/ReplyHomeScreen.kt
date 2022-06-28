@@ -264,7 +264,7 @@ fun NavigationDrawerContent(
             .wrapContentWidth()
             .fillMaxHeight()
             .background(MaterialTheme.colorScheme.inverseOnSurface)
-            .padding(24.dp)
+            .padding(12.dp)
     ) {
         Row(
             modifier = modifier

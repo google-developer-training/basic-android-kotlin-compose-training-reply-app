@@ -53,7 +53,7 @@ fun ReplyEmailDetailItem(
     showBackButton: Boolean = false,
     onBackButtonClicked: () -> Unit = {},
     checkWindowSize: (() -> Unit)? = null,
-    modifier: Modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+    modifier: Modifier = Modifier.padding(end = 16.dp)
 ) {
     if (checkWindowSize != null) checkWindowSize()
 

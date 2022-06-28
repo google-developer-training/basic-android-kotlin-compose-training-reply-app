@@ -65,7 +65,7 @@ fun ReplyListOnlyContent(
             }
         }
 
-    LazyColumn(modifier = modifier) {
+    LazyColumn(modifier = modifier.padding(horizontal = 16.dp)) {
         item {
             ReplyTopBar(modifier = Modifier.fillMaxWidth())
         }
@@ -98,10 +98,12 @@ fun ReplyListAndDetailContent(
             }
         }
 
-    Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        LazyColumn(modifier = Modifier.weight(1f)) {
+    Row(modifier = modifier) {
+        LazyColumn(modifier = Modifier
+            .weight(1f)
+            .padding(end = 16.dp)) {
             item {
-                Spacer(modifier= Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(20.dp))
             }
             itemsIndexed(emails) { index, email ->
                 ReplyEmailListItem(email = email, onCardClick = onCardClick(index))
@@ -109,7 +111,7 @@ fun ReplyListAndDetailContent(
         }
         LazyColumn(modifier = Modifier.weight(1f)) {
             item {
-                Spacer(modifier= Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(20.dp))
                 ReplyEmailDetailItem(
                     email = emails[selectedItemIndex],
                     mailboxType = replyUIState.currentMailbox
@@ -127,7 +129,7 @@ fun ReplyListAndDetailContent(
 fun ReplyEmailListItem(
     email: Email,
     onCardClick: () -> Unit = {},
-    modifier: Modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+    modifier: Modifier = Modifier.padding(vertical = 4.dp)
 ) {
     Card(
         modifier = modifier,
@@ -200,32 +202,24 @@ fun ReplyProfileImage(
  */
 @Composable
 fun ReplyTopBar(modifier: Modifier = Modifier) {
-    Column(
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-            .padding(bottom = 12.dp)
+            .fillMaxWidth()
+            .padding(vertical = 16.dp)
     ) {
-        Box(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-        ) {
-            Box(
-                modifier = Modifier.align(Alignment.CenterStart),
-            ) {
-                Text(
-                    text = stringResource(id = R.string.app_name).uppercase(),
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-            Box(modifier = Modifier.align(Alignment.CenterEnd)) {
-                ReplyProfileImage(
-                    drawableResource = R.drawable.avatar_6,
-                    description = stringResource(id = R.string.profile),
-                    modifier = Modifier
-                        .size(48.dp)
-                )
-            }
-        }
+        Text(
+            text = stringResource(id = R.string.app_name).uppercase(),
+            style = MaterialTheme.typography.headlineSmall,
+            color = MaterialTheme.colorScheme.primary,
+        )
+        ReplyProfileImage(
+            drawableResource = R.drawable.avatar_6,
+            description = stringResource(id = R.string.profile),
+            modifier = Modifier
+                .padding(end = 8.dp)
+                .size(48.dp)
+        )
     }
 }
