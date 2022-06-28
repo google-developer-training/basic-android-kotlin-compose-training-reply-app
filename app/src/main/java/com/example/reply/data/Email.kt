@@ -21,7 +21,7 @@ package com.example.reply.data
  */
 data class Email(
     /** Unique ID of the email **/
-    val id: Long,
+    val id: Int,
     /** Sender of the email **/
     val sender: Account,
     /** Recipient(s) of the email **/

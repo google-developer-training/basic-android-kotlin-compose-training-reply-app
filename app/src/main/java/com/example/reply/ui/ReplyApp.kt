@@ -48,17 +48,7 @@ fun ReplyApp(
     val navigationType: ReplyNavigationType
     val contentType: ReplyContentType
 
-    val onTabPressed = { mailboxType: MailboxType ->
-        viewModel.updateCurrentMailbox(mailboxType)
-    }
-    var onEmailCardPressed: (MailboxType, Int) -> Unit = { mailboxType: MailboxType, index: Int ->
-        viewModel.updateSelectedEmailIndex(
-            mailboxType, index
-        )
-        navController.navigate(ReplyScreens.Details.name)
-    }
-
-    val checkWindowSize = {
+    val displayHomeScreenIfWindowSizeExpanded = {
         /**
          * If [windowSize] changes to be expanded when user is not on home screen
          * screen will adjusts to home screen
@@ -82,40 +72,46 @@ fun ReplyApp(
         WindowWidthSizeClass.Expanded -> {
             navigationType = ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER
             contentType = ReplyContentType.LIST_AND_DETAIL
-            /**
-             * Overriding the behaviour so that user does not need to be navigated to details page
-             * when the [windowSize] is expanded
-             */
-            onEmailCardPressed = { mailboxType: MailboxType, index: Int ->
-                viewModel.updateSelectedEmailIndex(
-                    mailboxType, index
-                )
-            }
         }
         else -> {
             navigationType = ReplyNavigationType.BOTTOM_NAVIGATION
             contentType = ReplyContentType.LIST_ONLY
         }
     }
-    NavHost(navController = navController, startDestination = "Home", modifier = Modifier) {
+    NavHost(navController = navController, startDestination = ReplyScreens.Home.name, modifier = Modifier) {
         composable(ReplyScreens.Home.name) {
             ReplyHomeScreen(
-                navigationType,
-                contentType,
-                replyHomeUIState,
-                onTabPressed,
-                onEmailCardPressed
+                navigationType = navigationType,
+                contentType = contentType,
+                replyHomeUIState = replyHomeUIState,
+                onTabPressed = { mailboxType: MailboxType ->
+                    viewModel.updateCurrentMailbox(mailboxType)
+                },
+                onEmailCardPressed =
+                if (windowSize == WindowWidthSizeClass.Expanded)
+                    { mailboxType: MailboxType, index: Int ->
+                        viewModel.updateSelectedEmailIndex(
+                            mailboxType, index
+                        )
+                    }
+                else
+                    { mailboxType: MailboxType, index: Int ->
+                        viewModel.updateSelectedEmailIndex(
+                            mailboxType, index
+                        )
+                        navController.navigate(ReplyScreens.Details.name)
+                    }
             )
         }
         composable(ReplyScreens.Details.name) {
-            ReplyEmailDetailItem(
+            ReplyEmailDetailsScreen(
                 email = replyHomeUIState.getSelectedEmailForCurrentMailbox(),
                 mailboxType = replyHomeUIState.currentMailbox,
-                displayFullScreen = true,
+                isFullScreen = true,
                 onBackButtonClicked = {
                     navController.popBackStack()
                 },
-                checkWindowSize = checkWindowSize,
+                displayHomeScreenIfWindowSizeExpanded = displayHomeScreenIfWindowSizeExpanded,
                 modifier = Modifier.fillMaxSize()
             )
         }

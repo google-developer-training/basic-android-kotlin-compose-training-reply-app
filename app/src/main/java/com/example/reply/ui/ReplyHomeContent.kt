@@ -18,7 +18,6 @@ package com.example.reply.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -112,7 +111,7 @@ fun ReplyListAndDetailContent(
         LazyColumn(modifier = Modifier.weight(1f)) {
             item {
                 Spacer(modifier = Modifier.height(20.dp))
-                ReplyEmailDetailItem(
+                ReplyEmailDetailsScreen(
                     email = emails[selectedItemIndex],
                     mailboxType = replyUIState.currentMailbox
                 )

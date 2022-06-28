@@ -20,7 +20,6 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -48,15 +47,15 @@ import com.example.reply.data.MailboxType
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReplyEmailDetailItem(
+fun ReplyEmailDetailsScreen(
     email: Email,
     mailboxType: MailboxType,
-    displayFullScreen: Boolean = false,
+    isFullScreen: Boolean = false,
     onBackButtonClicked: () -> Unit = {},
-    checkWindowSize: (() -> Unit)? = null,
+    displayHomeScreenIfWindowSizeExpanded: () -> Unit = {},
     modifier: Modifier = Modifier.padding(end = 16.dp)
 ) {
-    if (checkWindowSize != null) checkWindowSize()
+    if (isFullScreen) displayHomeScreenIfWindowSizeExpanded()
 
     val context = LocalContext.current
     val displayToast = { text: String ->
@@ -67,7 +66,7 @@ fun ReplyEmailDetailItem(
         modifier = modifier,
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
-        if (displayFullScreen) {
+        if (isFullScreen) {
             IconButton(
                 onClick = { onBackButtonClicked() },
                 modifier = Modifier.padding(top = 16.dp)
