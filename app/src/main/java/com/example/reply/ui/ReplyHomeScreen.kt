@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Drafts
@@ -344,6 +345,12 @@ fun NavigationDrawerContent(
                 text = stringResource(id = R.string.app_name).uppercase(),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.primary
+            )
+            ReplyProfileImage(
+                drawableResource = R.drawable.avatar_6,
+                description = stringResource(id = R.string.profile),
+                modifier = Modifier
+                    .size(28.dp)
             )
         }
 

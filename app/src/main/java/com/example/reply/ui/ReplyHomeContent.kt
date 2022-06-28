@@ -22,7 +22,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -95,7 +97,7 @@ fun ReplyListAndDetailContent(
     Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         LazyColumn(modifier = Modifier.weight(1f)) {
             item {
-                ReplyTopBar(modifier = Modifier.fillMaxWidth())
+                Spacer(modifier= Modifier.height(20.dp))
             }
             itemsIndexed(emails) { index, email ->
                 ReplyEmailListItem(email = email, onCardClick = onCardClick(index))
@@ -103,6 +105,7 @@ fun ReplyListAndDetailContent(
         }
         LazyColumn(modifier = Modifier.weight(1f)) {
             item {
+                Spacer(modifier= Modifier.height(20.dp))
                 ReplyEmailDetailItem(
                     email = emails[selectedItemIndex],
                     mailboxType = replyHomeUIState.currentMailbox
@@ -186,7 +189,6 @@ fun ReplyTopBar(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .padding(bottom = 12.dp)
-            .background(MaterialTheme.colorScheme.primaryContainer)
     ) {
         Box(
             modifier = modifier
@@ -194,12 +196,12 @@ fun ReplyTopBar(modifier: Modifier = Modifier) {
                 .padding(16.dp),
         ) {
             Box(
-                modifier = Modifier.align(Alignment.Center),
+                modifier = Modifier.align(Alignment.CenterStart),
             ) {
                 Text(
                     text = stringResource(id = R.string.app_name).uppercase(),
                     style = MaterialTheme.typography.headlineSmall,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
             Box(modifier = Modifier.align(Alignment.CenterEnd)) {
@@ -211,6 +213,5 @@ fun ReplyTopBar(modifier: Modifier = Modifier) {
                 )
             }
         }
-        Divider(thickness = 2.dp, color = MaterialTheme.colorScheme.onPrimaryContainer)
     }
 }
