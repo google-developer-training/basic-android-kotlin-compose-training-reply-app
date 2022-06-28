@@ -16,6 +16,7 @@
 
 package com.example.reply.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -41,6 +42,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -57,7 +59,14 @@ fun ReplyListOnlyContent(
 ) {
     val emails = replyHomeUIState.getEmailsForMailbox()
     val onCardClick: (Int) -> () -> Unit =
-        { selectedCardIndex -> { onEmailCardPressed(replyHomeUIState.currentMailbox, selectedCardIndex) } }
+        { selectedCardIndex ->
+            {
+                onEmailCardPressed(
+                    replyHomeUIState.currentMailbox,
+                    selectedCardIndex
+                )
+            }
+        }
 
     LazyColumn(modifier = modifier) {
         item {
@@ -76,10 +85,18 @@ fun ReplyListAndDetailContent(
     onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> }
 ) {
     val emails = replyHomeUIState.getEmailsForMailbox()
-    var selectedItemIndex = replyHomeUIState.selectedEmailIndex[replyHomeUIState.currentMailbox] ?: 0
+    var selectedItemIndex =
+        replyHomeUIState.selectedEmailIndex[replyHomeUIState.currentMailbox] ?: 0
 
     val onCardClick: (Int) -> () -> Unit =
-        { selectedCardIndex -> { onEmailCardPressed(replyHomeUIState.currentMailbox, selectedCardIndex) } }
+        { selectedCardIndex ->
+            {
+                onEmailCardPressed(
+                    replyHomeUIState.currentMailbox,
+                    selectedCardIndex
+                )
+            }
+        }
 
     Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         LazyColumn(modifier = modifier.weight(1f)) {
@@ -92,7 +109,10 @@ fun ReplyListAndDetailContent(
         }
         LazyColumn(modifier = modifier.weight(1f)) {
             item {
-                ReplyEmailDetailItem(email = emails[selectedItemIndex], mailboxType = replyHomeUIState.currentMailbox)
+                ReplyEmailDetailItem(
+                    email = emails[selectedItemIndex],
+                    mailboxType = replyHomeUIState.currentMailbox
+                )
             }
         }
     }
@@ -161,6 +181,12 @@ fun ReplyEmailDetailItem(
     mailboxType: MailboxType,
     modifier: Modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
 ) {
+    val context = LocalContext.current
+    val displayToast = { text: String ->
+        val toast = Toast.makeText(context, text, Toast.LENGTH_SHORT)
+        toast.show()
+    }
+
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
@@ -207,18 +233,25 @@ fun ReplyEmailDetailItem(
             )
 
             if (mailboxType == MailboxType.Drafts) {
-                OneActionButton(stringResource(id = R.string.continue_composing))
+                OneActionButton(
+                    text = stringResource(id = R.string.continue_composing),
+                    onButtonClicked = displayToast
+                )
             } else {
                 if (mailboxType == MailboxType.Spam) {
                     TwoActionButtons(
                         primaryText = stringResource(id = R.string.delete),
                         secondaryText = stringResource(id = R.string.move_to_inbox),
+                        onPrimaryButtonClicked = displayToast,
+                        onSecondaryButtonClicked = displayToast,
                         containIrreversibleAction = true
                     )
                 } else {
                     TwoActionButtons(
                         primaryText = stringResource(id = R.string.reply_all),
-                        secondaryText = stringResource(id = R.string.reply)
+                        secondaryText = stringResource(id = R.string.reply),
+                        onPrimaryButtonClicked = displayToast,
+                        onSecondaryButtonClicked = displayToast
                     )
                 }
             }
@@ -227,9 +260,9 @@ fun ReplyEmailDetailItem(
 }
 
 @Composable
-private fun OneActionButton(text: String) {
+private fun OneActionButton(text: String, onButtonClicked: (String) -> Unit) {
     Button(
-        onClick = { /*TODO*/ },
+        onClick = { onButtonClicked(text) },
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 20.dp),
@@ -248,6 +281,8 @@ private fun OneActionButton(text: String) {
 private fun TwoActionButtons(
     primaryText: String,
     secondaryText: String,
+    onPrimaryButtonClicked: (String) -> Unit,
+    onSecondaryButtonClicked: (String) -> Unit,
     containIrreversibleAction: Boolean = false
 ) {
     Row(
@@ -257,7 +292,7 @@ private fun TwoActionButtons(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { onSecondaryButtonClicked(secondaryText) },
             modifier = Modifier.weight(1f),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.inverseOnSurface
@@ -269,7 +304,7 @@ private fun TwoActionButtons(
             )
         }
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { onPrimaryButtonClicked(primaryText) },
             modifier = Modifier.weight(1f),
             colors = ButtonDefaults.buttonColors(
                 containerColor =
