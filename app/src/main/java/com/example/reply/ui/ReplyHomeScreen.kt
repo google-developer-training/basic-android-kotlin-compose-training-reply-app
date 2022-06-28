@@ -85,7 +85,7 @@ fun ReplyNavHost(
 
     val checkWindowSize = {
         if (windowSize == WindowWidthSizeClass.Expanded) {
-            if(navController.currentBackStackEntry?.destination?.route != ReplyScreens.Home.name) {
+            if (navController.currentBackStackEntry?.destination?.route != ReplyScreens.Home.name) {
                 navController.navigate(ReplyScreens.Home.name)
             }
         }
@@ -128,6 +128,10 @@ fun ReplyNavHost(
             ReplyEmailDetailItem(
                 email = replyHomeUIState.getSelectedEmailForCurrentMailbox(),
                 mailboxType = replyHomeUIState.currentMailbox,
+                showBackButton = true,
+                onBackButtonClicked = {
+                    navController.popBackStack()
+                },
                 checkWindowSize = checkWindowSize
             )
         }
