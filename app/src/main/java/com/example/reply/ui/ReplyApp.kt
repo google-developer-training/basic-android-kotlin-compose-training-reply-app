@@ -81,6 +81,12 @@ fun ReplyNavHost(
         navController.navigate(ReplyScreens.Details.name)
     }
 
+    val checkWindowSize = {
+        if(windowSize == WindowWidthSizeClass.Expanded) {
+            navController.navigate(ReplyScreens.Home.name)
+        }
+    }
+
     when (windowSize) {
         WindowWidthSizeClass.Compact -> {
             navigationType = ReplyNavigationType.BOTTOM_NAVIGATION
@@ -117,7 +123,8 @@ fun ReplyNavHost(
         composable(ReplyScreens.Details.name) {
             ReplyEmailDetailItem(
                 email = replyHomeUIState.getSelectedEmailForCurrentMailbox(),
-                mailboxType = replyHomeUIState.currentMailbox
+                mailboxType = replyHomeUIState.currentMailbox,
+                checkWindowSize = checkWindowSize
             )
         }
     }

@@ -38,6 +38,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,8 +55,8 @@ import com.example.reply.data.MailboxType
 @Composable
 fun ReplyListOnlyContent(
     replyHomeUIState: ReplyHomeUIState,
-    modifier: Modifier = Modifier,
-    onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> }
+    onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> },
+    modifier: Modifier = Modifier
 ) {
     val emails = replyHomeUIState.getEmailsForMailbox()
     val onCardClick: (Int) -> () -> Unit =
@@ -81,8 +82,8 @@ fun ReplyListOnlyContent(
 @Composable
 fun ReplyListAndDetailContent(
     replyHomeUIState: ReplyHomeUIState,
-    modifier: Modifier = Modifier,
-    onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> }
+    onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> },
+    modifier: Modifier = Modifier
 ) {
     val emails = replyHomeUIState.getEmailsForMailbox()
     var selectedItemIndex =
@@ -99,7 +100,7 @@ fun ReplyListAndDetailContent(
         }
 
     Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        LazyColumn(modifier = modifier.weight(1f)) {
+        LazyColumn(modifier = Modifier.weight(1f)) {
             item {
                 ReplyTopBar(modifier = Modifier.fillMaxWidth())
             }
@@ -107,7 +108,7 @@ fun ReplyListAndDetailContent(
                 ReplyEmailListItem(email = email, onCardClick = onCardClick(index))
             }
         }
-        LazyColumn(modifier = modifier.weight(1f)) {
+        LazyColumn(modifier = Modifier.weight(1f)) {
             item {
                 ReplyEmailDetailItem(
                     email = emails[selectedItemIndex],
@@ -122,8 +123,8 @@ fun ReplyListAndDetailContent(
 @Composable
 fun ReplyEmailListItem(
     email: Email,
-    modifier: Modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
-    onCardClick: () -> Unit = {}
+    onCardClick: () -> Unit = {},
+    modifier: Modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
 ) {
     Card(
         modifier = modifier,
@@ -179,8 +180,11 @@ fun ReplyEmailListItem(
 fun ReplyEmailDetailItem(
     email: Email,
     mailboxType: MailboxType,
+    checkWindowSize: (() -> Unit)? = null,
     modifier: Modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
 ) {
+    if(checkWindowSize != null) checkWindowSize()
+
     val context = LocalContext.current
     val displayToast = { text: String ->
         val toast = Toast.makeText(context, text, Toast.LENGTH_SHORT)
