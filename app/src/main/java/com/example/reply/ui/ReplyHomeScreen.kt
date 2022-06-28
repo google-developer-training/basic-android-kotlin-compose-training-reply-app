@@ -16,6 +16,7 @@
 
 package com.example.reply.ui
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -50,6 +51,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.reply.R
@@ -82,8 +84,10 @@ fun ReplyNavHost(
     }
 
     val checkWindowSize = {
-        if(windowSize == WindowWidthSizeClass.Expanded) {
-            navController.navigate(ReplyScreens.Home.name)
+        if (windowSize == WindowWidthSizeClass.Expanded) {
+            if(navController.currentBackStackEntry?.destination?.route != ReplyScreens.Home.name) {
+                navController.navigate(ReplyScreens.Home.name)
+            }
         }
     }
 
