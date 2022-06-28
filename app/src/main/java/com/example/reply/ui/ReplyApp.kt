@@ -16,6 +16,7 @@
 
 package com.example.reply.ui
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -110,11 +111,12 @@ fun ReplyApp(
             ReplyEmailDetailItem(
                 email = replyHomeUIState.getSelectedEmailForCurrentMailbox(),
                 mailboxType = replyHomeUIState.currentMailbox,
-                showBackButton = true,
+                displayFullScreen = true,
                 onBackButtonClicked = {
                     navController.popBackStack()
                 },
-                checkWindowSize = checkWindowSize
+                checkWindowSize = checkWindowSize,
+                modifier = Modifier.fillMaxSize()
             )
         }
     }

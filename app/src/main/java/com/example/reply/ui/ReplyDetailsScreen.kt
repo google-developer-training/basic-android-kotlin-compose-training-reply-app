@@ -20,6 +20,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -50,7 +51,7 @@ import com.example.reply.data.MailboxType
 fun ReplyEmailDetailItem(
     email: Email,
     mailboxType: MailboxType,
-    showBackButton: Boolean = false,
+    displayFullScreen: Boolean = false,
     onBackButtonClicked: () -> Unit = {},
     checkWindowSize: (() -> Unit)? = null,
     modifier: Modifier = Modifier.padding(end = 16.dp)
@@ -62,27 +63,26 @@ fun ReplyEmailDetailItem(
         val toast = Toast.makeText(context, text, Toast.LENGTH_SHORT)
         toast.show()
     }
-
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
+        if (displayFullScreen) {
+            IconButton(
+                onClick = { onBackButtonClicked() },
+                modifier = Modifier.padding(top = 16.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = stringResource(id = R.string.navigation_back)
+                )
+            }
+        }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp)
         ) {
-            if (showBackButton) {
-                IconButton(
-                    onClick = { onBackButtonClicked() },
-                    modifier = Modifier.padding(bottom = 16.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = stringResource(id = R.string.navigation_back)
-                    )
-                }
-            }
             Row(modifier = Modifier.fillMaxWidth()) {
                 ReplyProfileImage(
                     drawableResource = email.sender.avatar,
