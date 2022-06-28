@@ -23,9 +23,14 @@ import androidx.activity.viewModels
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.reply.data.MailboxType
+import com.example.reply.data.local.LocalEmailsDataProvider
 import com.example.reply.ui.theme.ReplyTheme
 
 class MainActivity : ComponentActivity() {
@@ -52,35 +57,41 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// @Preview(showBackground = true)
-// @Composable
-// fun ReplyAppPreview() {
-//     ReplyTheme {
-//         ReplyNavHost(
-//             replyHomeUIState = ReplyHomeUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
-//             windowSize = WindowWidthSizeClass.Compact
-//         )
-//     }
-// }
-//
-// @Preview(showBackground = true, widthDp = 700)
-// @Composable
-// fun ReplyAppPreviewTablet() {
-//     ReplyTheme {
-//         ReplyNavHost(
-//             replyHomeUIState = ReplyHomeUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
-//             windowSize = WindowWidthSizeClass.Medium
-//         )
-//     }
-// }
-//
-// @Preview(showBackground = true, widthDp = 1000)
-// @Composable
-// fun ReplyAppPreviewDesktop() {
-//     ReplyTheme {
-//         ReplyNavHost(
-//             replyHomeUIState = ReplyHomeUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
-//             windowSize = WindowWidthSizeClass.Expanded
-//         )
-//     }
-// }
+@Preview(showBackground = true)
+@Composable
+fun ReplyAppPreview() {
+    ReplyTheme {
+        ReplyNavHost(
+            navController = rememberNavController(),
+            replyHomeUIState = ReplyHomeUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
+            windowSize = WindowWidthSizeClass.Compact,
+            viewModel = ReplyHomeViewModel()
+        )
+    }
+}
+
+@Preview(showBackground = true, widthDp = 700)
+@Composable
+fun ReplyAppPreviewTablet() {
+    ReplyTheme {
+        ReplyNavHost(
+            navController = rememberNavController(),
+            replyHomeUIState = ReplyHomeUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
+            windowSize = WindowWidthSizeClass.Medium,
+            viewModel = ReplyHomeViewModel()
+        )
+    }
+}
+
+@Preview(showBackground = true, widthDp = 1000)
+@Composable
+fun ReplyAppPreviewDesktop() {
+    ReplyTheme {
+        ReplyNavHost(
+            navController = rememberNavController(),
+            replyHomeUIState = ReplyHomeUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
+            windowSize = WindowWidthSizeClass.Expanded,
+            viewModel = ReplyHomeViewModel()
+        )
+    }
+}
