@@ -16,7 +16,6 @@
 
 package com.example.reply.ui
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -44,108 +43,27 @@ import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.PermanentNavigationDrawer
 import androidx.compose.material3.Text
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.NavOptions
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import com.example.reply.R
 import com.example.reply.data.MailboxType
 import com.example.reply.ui.utils.ReplyContentType
 import com.example.reply.ui.utils.ReplyNavigationType
 
+/**
+ * Composable that displays home screen that adapt depending on [navigationType]
+ * and [contentType]
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReplyNavHost(
-    navController: NavHostController,
-    replyHomeUIState: ReplyHomeUIState,
-    windowSize: WindowWidthSizeClass,
-    viewModel: ReplyHomeViewModel
-) {
-    /**
-     * This will help us select type of navigation and content type depending on window size
-     */
-    val navigationType: ReplyNavigationType
-    val contentType: ReplyContentType
-
-    val onTabPressed = { mailboxType: MailboxType ->
-        viewModel.updateCurrentMailbox(mailboxType)
-    }
-    var onEmailCardPressed: (MailboxType, Int) -> Unit = { mailboxType: MailboxType, index: Int ->
-        viewModel.updateSelectedEmailIndex(
-            mailboxType, index
-        )
-        navController.navigate(ReplyScreens.Details.name)
-    }
-
-    val checkWindowSize = {
-        if (windowSize == WindowWidthSizeClass.Expanded) {
-            if (navController.currentBackStackEntry?.destination?.route != ReplyScreens.Home.name) {
-                navController.navigate(ReplyScreens.Home.name)
-            }
-        }
-    }
-
-    when (windowSize) {
-        WindowWidthSizeClass.Compact -> {
-            navigationType = ReplyNavigationType.BOTTOM_NAVIGATION
-            contentType = ReplyContentType.LIST_ONLY
-        }
-        WindowWidthSizeClass.Medium -> {
-            navigationType = ReplyNavigationType.NAVIGATION_RAIL
-            contentType = ReplyContentType.LIST_ONLY
-        }
-        WindowWidthSizeClass.Expanded -> {
-            navigationType = ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER
-            contentType = ReplyContentType.LIST_AND_DETAIL
-            onEmailCardPressed = { mailboxType: MailboxType, index: Int ->
-                viewModel.updateSelectedEmailIndex(
-                    mailboxType, index
-                )
-            }
-        }
-        else -> {
-            navigationType = ReplyNavigationType.BOTTOM_NAVIGATION
-            contentType = ReplyContentType.LIST_ONLY
-        }
-    }
-    NavHost(navController = navController, startDestination = "Home", modifier = Modifier) {
-        composable(ReplyScreens.Home.name) {
-            ReplyHomeScreen(
-                navigationType,
-                contentType,
-                replyHomeUIState,
-                onTabPressed,
-                onEmailCardPressed
-            )
-        }
-        composable(ReplyScreens.Details.name) {
-            ReplyEmailDetailItem(
-                email = replyHomeUIState.getSelectedEmailForCurrentMailbox(),
-                mailboxType = replyHomeUIState.currentMailbox,
-                showBackButton = true,
-                onBackButtonClicked = {
-                    navController.popBackStack()
-                },
-                checkWindowSize = checkWindowSize
-            )
-        }
-    }
-
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun ReplyHomeScreen(
+fun ReplyHomeScreen(
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
-    replyHomeUIState: ReplyHomeUIState,
+    replyHomeUIState: ReplyUIState,
     onTabPressed: ((MailboxType) -> Unit) = {},
     onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> }
 ) {
@@ -179,11 +97,16 @@ private fun ReplyHomeScreen(
     }
 }
 
+/**
+ * Composable that displays content at home screen.
+ * It displays different navigation component depending on [navigationType],
+ * It displays different number of panes depending on [contentType]
+ */
 @Composable
 fun ReplyAppContent(
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
-    replyHomeUIState: ReplyHomeUIState,
+    replyHomeUIState: ReplyUIState,
     onTabPressed: ((MailboxType) -> Unit) = {},
     onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> }
 ) {
@@ -201,15 +124,15 @@ fun ReplyAppContent(
         ) {
             if (contentType == ReplyContentType.LIST_AND_DETAIL) {
                 ReplyListAndDetailContent(
-                    replyHomeUIState = replyHomeUIState,
-                    modifier = Modifier.weight(1f),
-                    onEmailCardPressed = onEmailCardPressed
+                    replyUIState = replyHomeUIState,
+                    onEmailCardPressed = onEmailCardPressed,
+                    modifier = Modifier.weight(1f)
                 )
             } else {
                 ReplyListOnlyContent(
                     replyHomeUIState = replyHomeUIState,
-                    modifier = Modifier.weight(1f),
-                    onEmailCardPressed = onEmailCardPressed
+                    onEmailCardPressed = onEmailCardPressed,
+                    modifier = Modifier.weight(1f)
                 )
             }
 
@@ -223,6 +146,9 @@ fun ReplyAppContent(
     }
 }
 
+/**
+ * Component that displays Navigation Rail
+ */
 @Composable
 fun ReplyNavigationRail(
     currentTab: MailboxType,
@@ -271,6 +197,9 @@ fun ReplyNavigationRail(
     }
 }
 
+/**
+ * Component that displays Bottom Navigation Bar
+ */
 @Composable
 fun ReplyBottomNavigationBar(
     currentTab: MailboxType,
@@ -320,6 +249,9 @@ fun ReplyBottomNavigationBar(
     }
 }
 
+/**
+ * Component that displays Navigation Drawer
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavigationDrawerContent(

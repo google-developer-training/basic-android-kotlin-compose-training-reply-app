@@ -16,6 +16,9 @@
 
 package com.example.reply.ui
 
+/**
+ * enum values that represent the screens in the app
+ */
 enum class ReplyScreens {
     Home, Details
 }

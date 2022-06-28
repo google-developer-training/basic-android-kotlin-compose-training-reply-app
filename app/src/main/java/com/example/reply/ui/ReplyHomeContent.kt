@@ -17,7 +17,6 @@
 package com.example.reply.ui
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,7 +30,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -47,9 +45,12 @@ import com.example.reply.R
 import com.example.reply.data.Email
 import com.example.reply.data.MailboxType
 
+/**
+ * Component that displays a single pane of list of emails
+ */
 @Composable
 fun ReplyListOnlyContent(
-    replyHomeUIState: ReplyHomeUIState,
+    replyHomeUIState: ReplyUIState,
     onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> },
     modifier: Modifier = Modifier
 ) {
@@ -74,21 +75,24 @@ fun ReplyListOnlyContent(
     }
 }
 
+/**
+ * Component that displays two panes of list of emails and email details
+ */
 @Composable
 fun ReplyListAndDetailContent(
-    replyHomeUIState: ReplyHomeUIState,
+    replyUIState: ReplyUIState,
     onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> },
     modifier: Modifier = Modifier
 ) {
-    val emails = replyHomeUIState.getEmailsForMailbox()
+    val emails = replyUIState.getEmailsForMailbox()
     var selectedItemIndex =
-        replyHomeUIState.selectedEmailIndex[replyHomeUIState.currentMailbox] ?: 0
+        replyUIState.selectedEmailIndex[replyUIState.currentMailbox] ?: 0
 
     val onCardClick: (Int) -> () -> Unit =
         { selectedCardIndex ->
             {
                 onEmailCardPressed(
-                    replyHomeUIState.currentMailbox,
+                    replyUIState.currentMailbox,
                     selectedCardIndex
                 )
             }
@@ -108,13 +112,16 @@ fun ReplyListAndDetailContent(
                 Spacer(modifier= Modifier.height(20.dp))
                 ReplyEmailDetailItem(
                     email = emails[selectedItemIndex],
-                    mailboxType = replyHomeUIState.currentMailbox
+                    mailboxType = replyUIState.currentMailbox
                 )
             }
         }
     }
 }
 
+/**
+ * Component that displays a single email list item
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReplyEmailListItem(
@@ -171,6 +178,9 @@ fun ReplyEmailListItem(
     }
 }
 
+/**
+ * Component that displays profile image
+ */
 @Composable
 fun ReplyProfileImage(
     drawableResource: Int,
@@ -184,6 +194,10 @@ fun ReplyProfileImage(
     )
 }
 
+/**
+ * Component that displays top bar.
+ * This is used when there is no navigation drawer
+ */
 @Composable
 fun ReplyTopBar(modifier: Modifier = Modifier) {
     Column(

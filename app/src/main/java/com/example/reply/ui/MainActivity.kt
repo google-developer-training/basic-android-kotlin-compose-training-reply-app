@@ -25,17 +25,16 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.example.reply.data.MailboxType
 import com.example.reply.data.local.LocalEmailsDataProvider
 import com.example.reply.ui.theme.ReplyTheme
 
+/**
+ * Activity for Reply app
+ */
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: ReplyHomeViewModel by viewModels()
+    private val viewModel: ReplyViewModel by viewModels()
 
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,11 +42,9 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             ReplyTheme {
-                val navController = rememberNavController()
                 val windowSize = calculateWindowSizeClass(this)
                 val uiState = viewModel.uiState.collectAsState().value
-                ReplyNavHost(
-                    navController = navController,
+                ReplyApp(
                     replyHomeUIState = uiState,
                     windowSize = windowSize.widthSizeClass,
                     viewModel = viewModel
@@ -61,11 +58,9 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ReplyAppPreview() {
     ReplyTheme {
-        ReplyNavHost(
-            navController = rememberNavController(),
-            replyHomeUIState = ReplyHomeUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
+        ReplyApp(
+            replyHomeUIState = ReplyUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
             windowSize = WindowWidthSizeClass.Compact,
-            viewModel = ReplyHomeViewModel()
         )
     }
 }
@@ -74,11 +69,9 @@ fun ReplyAppPreview() {
 @Composable
 fun ReplyAppPreviewTablet() {
     ReplyTheme {
-        ReplyNavHost(
-            navController = rememberNavController(),
-            replyHomeUIState = ReplyHomeUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
+        ReplyApp(
+            replyHomeUIState = ReplyUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
             windowSize = WindowWidthSizeClass.Medium,
-            viewModel = ReplyHomeViewModel()
         )
     }
 }
@@ -87,11 +80,9 @@ fun ReplyAppPreviewTablet() {
 @Composable
 fun ReplyAppPreviewDesktop() {
     ReplyTheme {
-        ReplyNavHost(
-            navController = rememberNavController(),
-            replyHomeUIState = ReplyHomeUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
+        ReplyApp(
+            replyHomeUIState = ReplyUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
             windowSize = WindowWidthSizeClass.Expanded,
-            viewModel = ReplyHomeViewModel()
         )
     }
 }

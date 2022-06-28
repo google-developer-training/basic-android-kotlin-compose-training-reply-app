@@ -24,17 +24,23 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
-class ReplyHomeViewModel :
+/**
+ * View Model for Reply app
+ */
+class ReplyViewModel :
     ViewModel() {
 
     /** UI state exposed to the UI **/
-    private val _uiState = MutableStateFlow(ReplyHomeUIState())
-    val uiState: StateFlow<ReplyHomeUIState> = _uiState
+    private val _uiState = MutableStateFlow(ReplyUIState())
+    val uiState: StateFlow<ReplyUIState> = _uiState
 
     init {
         initializeUIState()
     }
 
+    /**
+     * Initializing mailbox emails by getting them from [LocalEmailsDataProvider]
+     */
     private fun initializeUIState() {
         val inboxEmails = LocalEmailsDataProvider.allEmails.filter {
             it.mailbox == MailboxType.Inbox
@@ -49,9 +55,12 @@ class ReplyHomeViewModel :
             it.mailbox == MailboxType.Spam
         }
         _uiState.value =
-            ReplyHomeUIState(inboxEmails, sentEmails, draftsEmails, spamEmails)
+            ReplyUIState(inboxEmails, sentEmails, draftsEmails, spamEmails)
     }
 
+    /**
+     * Update [selectedEmailIndex] state for the [mailboxType]
+     */
     fun updateSelectedEmailIndex(mailboxType: MailboxType, newIndex: Int) {
         _uiState.update {
             it.copy(
@@ -62,6 +71,9 @@ class ReplyHomeViewModel :
         }
     }
 
+    /**
+     * Update [currentMailbox]
+     */
     fun updateCurrentMailbox(mailboxType: MailboxType) {
         _uiState.update {
             it.copy(
@@ -70,12 +82,21 @@ class ReplyHomeViewModel :
     }
 }
 
-data class ReplyHomeUIState(
+/**
+ * Data class that represents current UI State
+ */
+data class ReplyUIState(
+    /** Emails in the inbox tab **/
     val inboxEmails: List<Email> = emptyList(),
+    /** Emails in the Sent tab **/
     val sentEmails: List<Email> = emptyList(),
+    /** Emails in the Drafts tab **/
     val draftsEmails: List<Email> = emptyList(),
+    /** Emails in the Spam tab **/
     val spamEmails: List<Email> = emptyList(),
+    /** Current mailbox being displayed **/
     val currentMailbox: MailboxType = MailboxType.Inbox,
+    /** A map of indexes of selected item corresponding to each mailbox type **/
     val selectedEmailIndex: Map<MailboxType, Int> = mapOf(
         MailboxType.Inbox to 0,
         MailboxType.Sent to 0,
@@ -83,6 +104,9 @@ data class ReplyHomeUIState(
         MailboxType.Spam to 0
     )
 ) {
+    /**
+     * Returns List of [Email] according to the [currentMailbox]
+     */
     fun getEmailsForMailbox(): List<Email> {
         val emails = when (currentMailbox) {
             MailboxType.Inbox -> inboxEmails
@@ -93,6 +117,9 @@ data class ReplyHomeUIState(
         return emails
     }
 
+    /**
+     * Returns an [Email] which is selected from the list according to the [currentMailbox]
+     */
     fun getSelectedEmailForCurrentMailbox(): Email {
         return getEmailsForMailbox()[selectedEmailIndex[currentMailbox] ?: 0]
     }

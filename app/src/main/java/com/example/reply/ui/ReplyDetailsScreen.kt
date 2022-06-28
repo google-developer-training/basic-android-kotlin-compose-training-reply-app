@@ -42,6 +42,9 @@ import com.example.reply.R
 import com.example.reply.data.Email
 import com.example.reply.data.MailboxType
 
+/**
+ * Component that displays a single card containing one [email]
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReplyEmailDetailItem(
