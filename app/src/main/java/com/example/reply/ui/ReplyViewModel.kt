@@ -76,7 +76,8 @@ class ReplyViewModel : ViewModel() {
     fun updateCurrentMailbox(mailboxType: MailboxType) {
         _uiState.update {
             it.copy(
-                currentMailbox = mailboxType)
+                currentMailbox = mailboxType
+            )
         }
     }
 }
@@ -103,23 +104,18 @@ data class ReplyUIState(
         MailboxType.Spam to 0
     )
 ) {
-    /**
-     * Returns List of [Email] according to the [currentMailbox]
-     */
-    fun getEmailsForMailbox(): List<Email> {
-        val emails = when (currentMailbox) {
-            MailboxType.Inbox -> inboxEmails
-            MailboxType.Sent -> sentEmails
-            MailboxType.Drafts -> draftsEmails
-            MailboxType.Spam -> spamEmails
-        }
-        return emails
+    /** Current list of emails for the mailbox being displayed **/
+    val currentMailboxEmails: List<Email> = when (currentMailbox) {
+        MailboxType.Inbox -> inboxEmails
+        MailboxType.Sent -> sentEmails
+        MailboxType.Drafts -> draftsEmails
+        MailboxType.Spam -> spamEmails
     }
 
-    /**
-     * Returns an [Email] which is selected from the list according to the [currentMailbox]
-     */
-    fun getSelectedEmailForCurrentMailbox(): Email {
-        return getEmailsForMailbox()[selectedEmailIndex[currentMailbox] ?: 0]
-    }
+    /** Current selected email for the mailbox being displayed **/
+    val currentSelectedEmail: Email? =
+        if (currentMailboxEmails.isEmpty())
+            null
+        else
+            currentMailboxEmails[selectedEmailIndex[currentMailbox] ?: 0]
 }

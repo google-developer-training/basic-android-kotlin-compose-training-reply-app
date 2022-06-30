@@ -53,7 +53,7 @@ fun ReplyListOnlyContent(
     onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> },
     modifier: Modifier = Modifier
 ) {
-    val emails = replyHomeUIState.getEmailsForMailbox()
+    val emails = replyHomeUIState.currentMailboxEmails
     val onCardClick: (Int) -> () -> Unit =
         { selectedCardIndex ->
             {
@@ -83,7 +83,7 @@ fun ReplyListAndDetailContent(
     onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> },
     modifier: Modifier = Modifier
 ) {
-    val emails = replyUIState.getEmailsForMailbox()
+    val emails = replyUIState.currentMailboxEmails
     var selectedItemIndex =
         replyUIState.selectedEmailIndex[replyUIState.currentMailbox] ?: 0
 
@@ -113,7 +113,8 @@ fun ReplyListAndDetailContent(
                 Spacer(modifier = Modifier.height(20.dp))
                 ReplyEmailDetailsScreen(
                     email = emails[selectedItemIndex],
-                    mailboxType = replyUIState.currentMailbox
+                    mailboxType = replyUIState.currentMailbox ,
+                    modifier = Modifier.padding(end = 16.dp)
                 )
             }
         }

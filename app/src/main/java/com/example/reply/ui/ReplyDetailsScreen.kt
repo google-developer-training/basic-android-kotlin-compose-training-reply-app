@@ -48,12 +48,12 @@ import com.example.reply.data.MailboxType
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReplyEmailDetailsScreen(
-    email: Email,
+    email: Email?,
     mailboxType: MailboxType,
     isFullScreen: Boolean = false,
     onBackButtonClicked: () -> Unit = {},
     displayHomeScreenIfWindowSizeExpanded: () -> Unit = {},
-    modifier: Modifier = Modifier.padding(end = 16.dp)
+    modifier: Modifier = Modifier
 ) {
     if (isFullScreen) displayHomeScreenIfWindowSizeExpanded()
 
@@ -62,85 +62,100 @@ fun ReplyEmailDetailsScreen(
         val toast = Toast.makeText(context, text, Toast.LENGTH_SHORT)
         toast.show()
     }
-    Card(
-        modifier = modifier,
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
-    ) {
-        if (isFullScreen) {
-            IconButton(
-                onClick = { onBackButtonClicked() },
-                modifier = Modifier.padding(top = 16.dp)
+    if (email != null) {
+        Card(
+            modifier = modifier,
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+        ) {
+            if (isFullScreen) {
+                IconButton(
+                    onClick = { onBackButtonClicked() },
+                    modifier = Modifier.padding(top = 16.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = stringResource(id = R.string.navigation_back)
+                    )
+                }
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = stringResource(id = R.string.navigation_back)
+                DetailsScreenHeader(email)
+
+                Text(
+                    text = email.subject,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier.padding(top = 12.dp, bottom = 8.dp),
                 )
+
+                Text(
+                    text = email.body,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+
+                DetailsScreenActionBar(mailboxType, displayToast)
             }
         }
+    }
+}
+
+@Composable
+private fun DetailsScreenActionBar(
+    mailboxType: MailboxType,
+    displayToast: (String) -> Unit
+) {
+    if (mailboxType == MailboxType.Drafts) {
+        OneActionButton(
+            text = stringResource(id = R.string.continue_composing),
+            onButtonClicked = displayToast
+        )
+    } else {
+        if (mailboxType == MailboxType.Spam) {
+            TwoActionButtons(
+                primaryText = stringResource(id = R.string.delete),
+                secondaryText = stringResource(id = R.string.move_to_inbox),
+                onPrimaryButtonClicked = displayToast,
+                onSecondaryButtonClicked = displayToast,
+                containIrreversibleAction = true
+            )
+        } else {
+            TwoActionButtons(
+                primaryText = stringResource(id = R.string.reply_all),
+                secondaryText = stringResource(id = R.string.reply),
+                onPrimaryButtonClicked = displayToast,
+                onSecondaryButtonClicked = displayToast
+            )
+        }
+    }
+}
+
+@Composable
+private fun DetailsScreenHeader(email: Email) {
+    Row(modifier = Modifier.fillMaxWidth()) {
+        ReplyProfileImage(
+            drawableResource = email.sender.avatar,
+            description = email.sender.fullName,
+        )
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
+                .weight(1f)
+                .padding(horizontal = 12.dp, vertical = 4.dp),
+            verticalArrangement = Arrangement.Center
         ) {
-            Row(modifier = Modifier.fillMaxWidth()) {
-                ReplyProfileImage(
-                    drawableResource = email.sender.avatar,
-                    description = email.sender.fullName,
-                )
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = 12.dp, vertical = 4.dp),
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = email.sender.firstName,
-                        style = MaterialTheme.typography.labelMedium
-                    )
-                    Text(
-                        text = email.createAt,
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.outline
-                    )
-                }
-            }
-
             Text(
-                text = email.subject,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.outline,
-                modifier = Modifier.padding(top = 12.dp, bottom = 8.dp),
+                text = email.sender.firstName,
+                style = MaterialTheme.typography.labelMedium
             )
-
             Text(
-                text = email.body,
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                text = email.createAt,
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.outline
             )
-
-            if (mailboxType == MailboxType.Drafts) {
-                OneActionButton(
-                    text = stringResource(id = R.string.continue_composing),
-                    onButtonClicked = displayToast
-                )
-            } else {
-                if (mailboxType == MailboxType.Spam) {
-                    TwoActionButtons(
-                        primaryText = stringResource(id = R.string.delete),
-                        secondaryText = stringResource(id = R.string.move_to_inbox),
-                        onPrimaryButtonClicked = displayToast,
-                        onSecondaryButtonClicked = displayToast,
-                        containIrreversibleAction = true
-                    )
-                } else {
-                    TwoActionButtons(
-                        primaryText = stringResource(id = R.string.reply_all),
-                        secondaryText = stringResource(id = R.string.reply),
-                        onPrimaryButtonClicked = displayToast,
-                        onSecondaryButtonClicked = displayToast
-                    )
-                }
-            }
         }
     }
 }

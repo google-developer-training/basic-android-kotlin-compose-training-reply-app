@@ -105,7 +105,7 @@ fun ReplyApp(
         }
         composable(ReplyScreens.Details.name) {
             ReplyEmailDetailsScreen(
-                email = replyHomeUIState.getSelectedEmailForCurrentMailbox(),
+                email = replyHomeUIState.currentSelectedEmail,
                 mailboxType = replyHomeUIState.currentMailbox,
                 isFullScreen = true,
                 onBackButtonClicked = {
