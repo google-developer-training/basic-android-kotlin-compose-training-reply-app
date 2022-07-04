@@ -28,9 +28,9 @@ object LocalAccountsDataProvider {
     val userAccount =
         Account(
             id = 1,
-            firstName = "Jeff",
-            lastName = "Hansen",
-            email = "hikingfan@gmail.com",
+            firstName = "Angie",
+            lastName = "Awesomeville",
+            email = "aawesomeville@example.com",
             avatar = R.drawable.avatar_10
         )
 
@@ -39,71 +39,85 @@ object LocalAccountsDataProvider {
             id = 4,
             firstName = "Tracy",
             lastName = "Alvarez",
-            email = "tracealvie@gmail.com",
+            email = "tracealvie@example.com",
             avatar = R.drawable.avatar_1
         ),
         Account(
             id = 5,
-            firstName = "Allison",
+            firstName = "Maeve",
             lastName = "Trabucco",
-            email = "atrabucco222@gmail.com",
+            email = "mtrabucco222@example.com",
             avatar = R.drawable.avatar_3
         ),
         Account(
             id = 6,
             firstName = "Ali",
             lastName = "Connors",
-            email = "aliconnors@gmail.com",
+            email = "aliconnors@example.com",
             avatar = R.drawable.avatar_5
         ),
         Account(
             id = 7,
-            firstName = "Alberto",
-            lastName = "Williams",
-            email = "albertowilliams124@gmail.com",
+            firstName = "Steve",
+            lastName = "Nilam",
+            email = "snilam124@example.com",
             avatar = R.drawable.avatar_0
         ),
         Account(
             id = 8,
-            firstName = "Kim",
+            firstName = "Eric",
             lastName = "Alen",
-            email = "alen13@gmail.com",
+            email = "elen13@example.com",
             avatar = R.drawable.avatar_7
         ),
         Account(
             id = 9,
-            firstName = "Google",
+            firstName = "Shipping",
             lastName = "Express",
-            email = "express@google.com",
+            email = "express-commerce@example.org",
             avatar = R.drawable.avatar_express
         ),
         Account(
             id = 10,
             firstName = "Sandra",
             lastName = "Adams",
-            email = "sandraadams@gmail.com",
+            email = "sandraadams@example.com",
             avatar = R.drawable.avatar_2
         ),
         Account(
             id = 11,
-            firstName = "Trevor",
-            lastName = "Hansen",
-            email = "trevorhandsen@gmail.com",
+            firstName = "Li",
+            lastName = "Yang",
+            email = "li.yang1988@example.com",
             avatar = R.drawable.avatar_8
         ),
         Account(
             id = 12,
-            firstName = "Sean",
-            lastName = "Holt",
-            email = "sholt@gmail.com",
+            firstName = "Truffle",
+            lastName = "Culinary Club",
+            email = "tcc@example.com",
             avatar = R.drawable.avatar_6
         ),
         Account(
             id = 13,
             firstName = "Frank",
             lastName = "Hawkins",
-            email = "fhawkank@gmail.com",
+            email = "fhawkank@example.com",
             avatar = R.drawable.avatar_4
+        ),
+        Account(
+            id = 14,
+            firstName = "Stef",
+            lastName = "Chow",
+            email = "schow@example.com",
+            avatar = R.drawable.avatar_9
+        ),
+        Account(
+            id = 15,
+            firstName = "Spam",
+            lastName = "Bad",
+            email = "spam@example.com",
+            avatar = R.drawable.avatar_9
         )
     )
 
