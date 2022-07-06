@@ -51,7 +51,7 @@ fun ReplyEmailDetailsScreen(
     email: Email?,
     mailboxType: MailboxType,
     isFullScreen: Boolean = false,
-    onBackButtonClicked: (MailboxType) -> Unit = {},
+    onBackButtonClicked: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     if (email == null) {
@@ -67,7 +67,7 @@ fun ReplyEmailDetailsScreen(
     ) {
         if (isFullScreen) {
             IconButton(
-                onClick = { onBackButtonClicked(mailboxType) },
+                onClick = { onBackButtonClicked() },
                 modifier = Modifier.padding(top = 16.dp)
             ) {
                 Icon(

@@ -18,6 +18,7 @@ package com.example.reply.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -44,8 +45,24 @@ class MainActivity : ComponentActivity() {
             ReplyTheme {
                 val windowSize = calculateWindowSizeClass(this)
                 val uiState = viewModel.uiState.collectAsState().value
+
+                val onBackPressedCallback = object : OnBackPressedCallback(true) {
+                    override fun handleOnBackPressed() {
+                        if (
+                            windowSize.widthSizeClass != WindowWidthSizeClass.Expanded &&
+                            uiState.currentSelectedEmail != null
+                        ) {
+                            viewModel.resetSelectedEmailIndex(uiState.currentMailbox)
+                        } else {
+                            finish()
+                        }
+                    }
+                }
+
+                this.onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+
                 ReplyApp(
-                    replyHomeUIState = uiState,
+                    replyUIState = uiState,
                     windowSize = windowSize.widthSizeClass,
                     viewModel = viewModel
                 )
@@ -59,7 +76,7 @@ class MainActivity : ComponentActivity() {
 fun ReplyAppPreview() {
     ReplyTheme {
         ReplyApp(
-            replyHomeUIState = ReplyUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
+            replyUIState = ReplyUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
             windowSize = WindowWidthSizeClass.Compact,
         )
     }
@@ -70,7 +87,7 @@ fun ReplyAppPreview() {
 fun ReplyAppPreviewTablet() {
     ReplyTheme {
         ReplyApp(
-            replyHomeUIState = ReplyUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
+            replyUIState = ReplyUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
             windowSize = WindowWidthSizeClass.Medium,
         )
     }
@@ -81,7 +98,7 @@ fun ReplyAppPreviewTablet() {
 fun ReplyAppPreviewDesktop() {
     ReplyTheme {
         ReplyApp(
-            replyHomeUIState = ReplyUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
+            replyUIState = ReplyUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
             windowSize = WindowWidthSizeClass.Expanded,
         )
     }

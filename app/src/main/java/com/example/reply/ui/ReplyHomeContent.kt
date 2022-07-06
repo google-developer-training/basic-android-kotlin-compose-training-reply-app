@@ -51,7 +51,7 @@ import com.example.reply.data.local.LocalAccountsDataProvider
 @Composable
 fun ReplyListOnlyContent(
     replyHomeUIState: ReplyUIState,
-    onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> },
+    onEmailCardPressed: (Int) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val emails = replyHomeUIState.currentMailboxEmails
@@ -64,10 +64,7 @@ fun ReplyListOnlyContent(
             ReplyEmailListItem(
                 email = email,
                 onCardClick = {
-                    onEmailCardPressed(
-                        replyHomeUIState.currentMailbox,
-                        index
-                    )
+                    onEmailCardPressed(index)
                 }
             )
         }
@@ -80,7 +77,7 @@ fun ReplyListOnlyContent(
 @Composable
 fun ReplyListAndDetailContent(
     replyUIState: ReplyUIState,
-    onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> },
+    onEmailCardPressed: (Int) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val emails = replyUIState.currentMailboxEmails
@@ -98,7 +95,7 @@ fun ReplyListAndDetailContent(
             }
             itemsIndexed(emails) { index, email ->
                 ReplyEmailListItem(email = email, onCardClick = {
-                    onEmailCardPressed(replyUIState.currentMailbox, index)
+                    onEmailCardPressed(index)
                 })
             }
         }

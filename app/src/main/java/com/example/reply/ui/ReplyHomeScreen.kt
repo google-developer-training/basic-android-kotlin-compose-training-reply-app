@@ -64,9 +64,9 @@ fun ReplyHomeScreen(
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
     replyUIState: ReplyUIState,
-    onTabPressed: ((MailboxType) -> Unit) = {},
-    onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> },
-    onDetailScreenBackPressed: (MailboxType) -> Unit = {}
+    onTabPressed: (MailboxType) -> Unit = {},
+    onEmailCardPressed: (Int) -> Unit = {},
+    onDetailScreenBackPressed: () -> Unit = {}
 ) {
     var selectedTab = replyUIState.currentMailbox
 
@@ -120,7 +120,7 @@ fun ReplyAppContent(
     contentType: ReplyContentType,
     replyHomeUIState: ReplyUIState,
     onTabPressed: ((MailboxType) -> Unit) = {},
-    onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> }
+    onEmailCardPressed: (Int) -> Unit = {}
 ) {
     Row(modifier = Modifier.fillMaxSize()) {
         AnimatedVisibility(visible = navigationType == ReplyNavigationType.NAVIGATION_RAIL) {
