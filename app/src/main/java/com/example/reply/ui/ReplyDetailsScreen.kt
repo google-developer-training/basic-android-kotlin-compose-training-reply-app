@@ -54,48 +54,47 @@ fun ReplyEmailDetailsScreen(
     onBackButtonClicked: (MailboxType) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+    if (email == null) {
+        return
+    }
     val context = LocalContext.current
     val displayToast = { text: String ->
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
-    if (email != null) {
-        Card(
-            modifier = modifier,
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
-        ) {
-            if (isFullScreen) {
-                IconButton(
-                    onClick = { onBackButtonClicked(mailboxType) },
-                    modifier = Modifier.padding(top = 16.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = stringResource(id = R.string.navigation_back)
-                    )
-                }
-            }
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp)
+    Card(
+        modifier = modifier,
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+    ) {
+        if (isFullScreen) {
+            IconButton(
+                onClick = { onBackButtonClicked(mailboxType) },
+                modifier = Modifier.padding(top = 16.dp)
             ) {
-                DetailsScreenHeader(email)
-
-                Text(
-                    text = email.subject,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.outline,
-                    modifier = Modifier.padding(top = 12.dp, bottom = 8.dp),
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = stringResource(id = R.string.navigation_back)
                 )
-
-                Text(
-                    text = email.body,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-
-                DetailsScreenButtonBar(mailboxType, displayToast)
             }
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp)
+        ) {
+            DetailsScreenHeader(email)
+            Text(
+                text = email.subject,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.outline,
+                modifier = Modifier.padding(top = 12.dp, bottom = 8.dp),
+            )
+            Text(
+                text = email.body,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+
+            DetailsScreenButtonBar(mailboxType, displayToast)
         }
     }
 }
@@ -183,7 +182,7 @@ private fun DetailsScreenHeader(email: Email) {
 private fun ActionButton(
     text: String, onButtonClicked: (String) -> Unit,
     containIrreversibleAction: Boolean = false,
-    modifier: Modifier= Modifier
+    modifier: Modifier = Modifier
 ) {
     Button(
         onClick = { onButtonClicked(text) },
