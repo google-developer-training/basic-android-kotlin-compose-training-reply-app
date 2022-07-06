@@ -63,11 +63,12 @@ import com.example.reply.ui.utils.ReplyNavigationType
 fun ReplyHomeScreen(
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
-    replyHomeUIState: ReplyUIState,
+    replyUIState: ReplyUIState,
     onTabPressed: ((MailboxType) -> Unit) = {},
-    onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> }
+    onEmailCardPressed: (MailboxType, Int) -> Unit = { _: MailboxType, _: Int -> },
+    onDetailScreenBackPressed: (MailboxType) -> Unit = {}
 ) {
-    var selectedTab = replyHomeUIState.currentMailbox
+    var selectedTab = replyUIState.currentMailbox
 
     if (navigationType == ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER) {
         PermanentNavigationDrawer(
@@ -81,19 +82,30 @@ fun ReplyHomeScreen(
             ReplyAppContent(
                 navigationType = navigationType,
                 contentType = contentType,
-                replyHomeUIState = replyHomeUIState,
+                replyHomeUIState = replyUIState,
                 onTabPressed = onTabPressed,
                 onEmailCardPressed = onEmailCardPressed
             )
         }
     } else {
-        ReplyAppContent(
-            navigationType = navigationType,
-            contentType = contentType,
-            replyHomeUIState = replyHomeUIState,
-            onTabPressed = onTabPressed,
-            onEmailCardPressed = onEmailCardPressed
-        )
+        if(replyUIState.currentSelectedEmail == null) {
+            ReplyAppContent(
+                navigationType = navigationType,
+                contentType = contentType,
+                replyHomeUIState = replyUIState,
+                onTabPressed = onTabPressed,
+                onEmailCardPressed = onEmailCardPressed
+            )
+        } else {
+            ReplyEmailDetailsScreen(
+                email = replyUIState.currentSelectedEmail,
+                mailboxType = replyUIState.currentMailbox,
+                isFullScreen = true,
+                onBackButtonClicked = onDetailScreenBackPressed,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+
     }
 }
 

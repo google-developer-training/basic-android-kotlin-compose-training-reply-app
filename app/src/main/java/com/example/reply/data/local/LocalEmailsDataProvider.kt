@@ -248,8 +248,8 @@ object LocalEmailsDataProvider {
         ),
         Email(
             id = 16,
-            sender = LocalAccountsDataProvider.userAccount,
-            recipients = listOf(LocalAccountsDataProvider.getContactAccountById(12)),
+            sender = LocalAccountsDataProvider.getContactAccountById(12),
+            recipients = listOf(LocalAccountsDataProvider.userAccount),
             subject = "[Application Open] Truffle Cooking Course",
             body = """
            Dear Angie,
@@ -263,8 +263,8 @@ object LocalEmailsDataProvider {
         ),
         Email(
             id = 17,
-            sender = LocalAccountsDataProvider.userAccount,
-            recipients = listOf(LocalAccountsDataProvider.getContactAccountById(11)),
+            sender = LocalAccountsDataProvider.getContactAccountById(11),
+            recipients = listOf(LocalAccountsDataProvider.userAccount),
             subject = "Outstanding Tasks",
             body = """
            Hi Angie,
@@ -278,16 +278,16 @@ object LocalEmailsDataProvider {
         ),
         Email(
             id = 18,
-            sender = LocalAccountsDataProvider.userAccount,
-            recipients = listOf(LocalAccountsDataProvider.getContactAccountById(8)),
+            sender = LocalAccountsDataProvider.getContactAccountById(8),
+            recipients = listOf(LocalAccountsDataProvider.userAccount),
             subject = "Please share the document",
             body = "Eric is requesting you to share the “Everyday planning 2022” doc",
             createdAt = "3 hours ago"
         ),
         Email(
             id = 19,
-            sender = LocalAccountsDataProvider.userAccount,
-            recipients = listOf(LocalAccountsDataProvider.getContactAccountById(15)),
+            sender = LocalAccountsDataProvider.getContactAccountById(15),
+            recipients = listOf(LocalAccountsDataProvider.userAccount),
             subject = "Hi",
             body = "hi",
             createdAt = "3 hours ago",
@@ -295,8 +295,8 @@ object LocalEmailsDataProvider {
         ),
         Email(
             id = 20,
-            sender = LocalAccountsDataProvider.userAccount,
-            recipients = listOf(LocalAccountsDataProvider.getContactAccountById(15)),
+            sender = LocalAccountsDataProvider.getContactAccountById(15),
+            recipients = listOf(LocalAccountsDataProvider.userAccount),
             subject = "New email",
             body = """
            Hello my name is Christopher. I am the CEO of a large enterprise with an important proposal for you. Could we arrange a meeting sometime this week?
@@ -306,8 +306,8 @@ object LocalEmailsDataProvider {
         ),
         Email(
             id = 21,
-            sender = LocalAccountsDataProvider.userAccount,
-            recipients = listOf(LocalAccountsDataProvider.getContactAccountById(15)),
+            sender = LocalAccountsDataProvider.getContactAccountById(15),
+            recipients = listOf(LocalAccountsDataProvider.userAccount),
             subject = "URGENT REPLY FOR MORE DETAILS",
             body = """
            Good morning!

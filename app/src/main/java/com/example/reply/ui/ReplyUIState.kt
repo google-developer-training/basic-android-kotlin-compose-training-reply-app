@@ -34,11 +34,11 @@ data class ReplyUIState(
     /** Current mailbox being displayed **/
     val currentMailbox: MailboxType = MailboxType.Inbox,
     /** A map of indexes of selected item corresponding to each mailbox type **/
-    val selectedEmailIndex: Map<MailboxType, Int> = mapOf(
-        MailboxType.Inbox to 0,
-        MailboxType.Sent to 0,
-        MailboxType.Drafts to 0,
-        MailboxType.Spam to 0
+    val selectedEmailIndex: Map<MailboxType, Int?> = mapOf(
+        MailboxType.Inbox to null,
+        MailboxType.Sent to null,
+        MailboxType.Drafts to null,
+        MailboxType.Spam to null
     )
 ) {
     /** Current list of emails for the mailbox being displayed **/
@@ -51,8 +51,9 @@ data class ReplyUIState(
 
     /** Current selected email for the mailbox being displayed **/
     val currentSelectedEmail: Email? =
-        if (currentMailboxEmails.isEmpty())
+        if (currentMailboxEmails.isEmpty() || selectedEmailIndex[currentMailbox] == null) {
             null
-        else
-            currentMailboxEmails[selectedEmailIndex[currentMailbox] ?: 0]
+        } else {
+            currentMailboxEmails[selectedEmailIndex[currentMailbox]!!]
+        }
 }

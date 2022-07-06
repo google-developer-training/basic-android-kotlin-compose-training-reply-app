@@ -51,12 +51,9 @@ fun ReplyEmailDetailsScreen(
     email: Email?,
     mailboxType: MailboxType,
     isFullScreen: Boolean = false,
-    onBackButtonClicked: () -> Unit = {},
-    displayHomeScreenIfWindowSizeExpanded: () -> Unit = {},
+    onBackButtonClicked: (MailboxType) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    if (isFullScreen) displayHomeScreenIfWindowSizeExpanded()
-
     val context = LocalContext.current
     val displayToast = { text: String ->
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
@@ -68,7 +65,7 @@ fun ReplyEmailDetailsScreen(
         ) {
             if (isFullScreen) {
                 IconButton(
-                    onClick = { onBackButtonClicked() },
+                    onClick = { onBackButtonClicked(mailboxType) },
                     modifier = Modifier.padding(top = 16.dp)
                 ) {
                     Icon(
