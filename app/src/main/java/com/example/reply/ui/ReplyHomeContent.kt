@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import com.example.reply.R
 import com.example.reply.data.Email
 import com.example.reply.data.MailboxType
+import com.example.reply.data.local.LocalAccountsDataProvider
 
 /**
  * Component that displays a single pane of list of emails
@@ -54,22 +55,21 @@ fun ReplyListOnlyContent(
     modifier: Modifier = Modifier
 ) {
     val emails = replyHomeUIState.currentMailboxEmails
-    val onCardClick: (Int) -> () -> Unit =
-        { selectedCardIndex ->
-            {
-                onEmailCardPressed(
-                    replyHomeUIState.currentMailbox,
-                    selectedCardIndex
-                )
-            }
-        }
 
     LazyColumn(modifier = modifier.padding(horizontal = 16.dp)) {
         item {
             ReplyTopBar(modifier = Modifier.fillMaxWidth())
         }
         itemsIndexed(emails) { index, email ->
-            ReplyEmailListItem(email = email, onCardClick = onCardClick(index))
+            ReplyEmailListItem(
+                email = email,
+                onCardClick = {
+                    onEmailCardPressed(
+                        replyHomeUIState.currentMailbox,
+                        index
+                    )
+                }
+            )
         }
     }
 }
@@ -87,25 +87,19 @@ fun ReplyListAndDetailContent(
     var selectedItemIndex =
         replyUIState.selectedEmailIndex[replyUIState.currentMailbox] ?: 0
 
-    val onCardClick: (Int) -> () -> Unit =
-        { selectedCardIndex ->
-            {
-                onEmailCardPressed(
-                    replyUIState.currentMailbox,
-                    selectedCardIndex
-                )
-            }
-        }
-
     Row(modifier = modifier) {
-        LazyColumn(modifier = Modifier
-            .weight(1f)
-            .padding(end = 16.dp)) {
+        LazyColumn(
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = 16.dp)
+        ) {
             item {
                 Spacer(modifier = Modifier.height(20.dp))
             }
             itemsIndexed(emails) { index, email ->
-                ReplyEmailListItem(email = email, onCardClick = onCardClick(index))
+                ReplyEmailListItem(email = email, onCardClick = {
+                    onEmailCardPressed(replyUIState.currentMailbox, index)
+                })
             }
         }
         LazyColumn(modifier = Modifier.weight(1f)) {
@@ -113,7 +107,7 @@ fun ReplyListAndDetailContent(
                 Spacer(modifier = Modifier.height(20.dp))
                 ReplyEmailDetailsScreen(
                     email = emails[selectedItemIndex],
-                    mailboxType = replyUIState.currentMailbox ,
+                    mailboxType = replyUIState.currentMailbox,
                     modifier = Modifier.padding(end = 16.dp)
                 )
             }
@@ -129,10 +123,10 @@ fun ReplyListAndDetailContent(
 fun ReplyEmailListItem(
     email: Email,
     onCardClick: () -> Unit = {},
-    modifier: Modifier = Modifier.padding(vertical = 4.dp)
+    modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier,
+        modifier = modifier.padding(vertical = 4.dp),
         onClick = onCardClick
     ) {
         Column(
@@ -156,7 +150,7 @@ fun ReplyEmailListItem(
                         style = MaterialTheme.typography.labelMedium
                     )
                     Text(
-                        text = email.createAt,
+                        text = email.createdAt,
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.outline
                     )
@@ -210,13 +204,13 @@ fun ReplyTopBar(modifier: Modifier = Modifier) {
             .padding(vertical = 16.dp)
     ) {
         Text(
-            text = stringResource(id = R.string.app_name).uppercase(),
+            text = stringResource(R.string.app_name).uppercase(),
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.primary,
         )
         ReplyProfileImage(
-            drawableResource = R.drawable.avatar_6,
-            description = stringResource(id = R.string.profile),
+            drawableResource = LocalAccountsDataProvider.userAccount.avatar,
+            description = stringResource(R.string.profile),
             modifier = Modifier
                 .padding(end = 8.dp)
                 .size(48.dp)

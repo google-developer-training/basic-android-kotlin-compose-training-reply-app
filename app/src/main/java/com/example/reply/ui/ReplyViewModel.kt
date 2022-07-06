@@ -17,7 +17,6 @@
 package com.example.reply.ui
 
 import androidx.lifecycle.ViewModel
-import com.example.reply.data.Email
 import com.example.reply.data.MailboxType
 import com.example.reply.data.local.LocalEmailsDataProvider
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -80,42 +79,4 @@ class ReplyViewModel : ViewModel() {
             )
         }
     }
-}
-
-/**
- * Data class that represents current UI State
- */
-data class ReplyUIState(
-    /** Emails in the inbox tab **/
-    val inboxEmails: List<Email> = emptyList(),
-    /** Emails in the Sent tab **/
-    val sentEmails: List<Email> = emptyList(),
-    /** Emails in the Drafts tab **/
-    val draftsEmails: List<Email> = emptyList(),
-    /** Emails in the Spam tab **/
-    val spamEmails: List<Email> = emptyList(),
-    /** Current mailbox being displayed **/
-    val currentMailbox: MailboxType = MailboxType.Inbox,
-    /** A map of indexes of selected item corresponding to each mailbox type **/
-    val selectedEmailIndex: Map<MailboxType, Int> = mapOf(
-        MailboxType.Inbox to 0,
-        MailboxType.Sent to 0,
-        MailboxType.Drafts to 0,
-        MailboxType.Spam to 0
-    )
-) {
-    /** Current list of emails for the mailbox being displayed **/
-    val currentMailboxEmails: List<Email> = when (currentMailbox) {
-        MailboxType.Inbox -> inboxEmails
-        MailboxType.Sent -> sentEmails
-        MailboxType.Drafts -> draftsEmails
-        MailboxType.Spam -> spamEmails
-    }
-
-    /** Current selected email for the mailbox being displayed **/
-    val currentSelectedEmail: Email? =
-        if (currentMailboxEmails.isEmpty())
-            null
-        else
-            currentMailboxEmails[selectedEmailIndex[currentMailbox] ?: 0]
 }

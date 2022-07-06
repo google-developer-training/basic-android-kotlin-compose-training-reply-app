@@ -37,5 +37,5 @@ data class Email(
      * It should be calculated from relative time in the future.
      * For now it's hard coded to a [String] value.
      */
-    var createAt: String
+    var createdAt: String
 )

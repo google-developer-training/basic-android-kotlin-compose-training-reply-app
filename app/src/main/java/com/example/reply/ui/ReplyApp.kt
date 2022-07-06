@@ -78,7 +78,11 @@ fun ReplyApp(
             contentType = ReplyContentType.LIST_ONLY
         }
     }
-    NavHost(navController = navController, startDestination = ReplyScreens.Home.name, modifier = Modifier) {
+    NavHost(
+        navController = navController,
+        startDestination = ReplyScreens.Home.name,
+        modifier = Modifier
+    ) {
         composable(ReplyScreens.Home.name) {
             ReplyHomeScreen(
                 navigationType = navigationType,

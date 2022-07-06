@@ -59,8 +59,7 @@ fun ReplyEmailDetailsScreen(
 
     val context = LocalContext.current
     val displayToast = { text: String ->
-        val toast = Toast.makeText(context, text, Toast.LENGTH_SHORT)
-        toast.show()
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
     if (email != null) {
         Card(
@@ -98,39 +97,62 @@ fun ReplyEmailDetailsScreen(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
 
-                DetailsScreenActionBar(mailboxType, displayToast)
+                DetailsScreenButtonBar(mailboxType, displayToast)
             }
         }
     }
 }
 
 @Composable
-private fun DetailsScreenActionBar(
+private fun DetailsScreenButtonBar(
     mailboxType: MailboxType,
-    displayToast: (String) -> Unit
+    displayToast: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    if (mailboxType == MailboxType.Drafts) {
-        OneActionButton(
-            text = stringResource(id = R.string.continue_composing),
-            onButtonClicked = displayToast
-        )
-    } else {
-        if (mailboxType == MailboxType.Spam) {
-            TwoActionButtons(
-                primaryText = stringResource(id = R.string.delete),
-                secondaryText = stringResource(id = R.string.move_to_inbox),
-                onPrimaryButtonClicked = displayToast,
-                onSecondaryButtonClicked = displayToast,
-                containIrreversibleAction = true
+    when (mailboxType) {
+        MailboxType.Drafts ->
+            ActionButton(
+                text = stringResource(id = R.string.continue_composing),
+                onButtonClicked = displayToast,
+                modifier = modifier
             )
-        } else {
-            TwoActionButtons(
-                primaryText = stringResource(id = R.string.reply_all),
-                secondaryText = stringResource(id = R.string.reply),
-                onPrimaryButtonClicked = displayToast,
-                onSecondaryButtonClicked = displayToast
-            )
-        }
+        MailboxType.Spam ->
+            Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 20.dp),
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                ActionButton(
+                    text = stringResource(id = R.string.move_to_inbox),
+                    onButtonClicked = displayToast,
+                    modifier = Modifier.weight(1f)
+                )
+                ActionButton(
+                    text = stringResource(id = R.string.delete),
+                    onButtonClicked = displayToast,
+                    containIrreversibleAction = true,
+                    modifier = Modifier.weight(1f)
+                )
+            }
+        MailboxType.Sent, MailboxType.Inbox ->
+            Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 20.dp),
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                ActionButton(
+                    text = stringResource(id = R.string.reply),
+                    onButtonClicked = displayToast,
+                    modifier = Modifier.weight(1f)
+                )
+                ActionButton(
+                    text = stringResource(id = R.string.reply_all),
+                    onButtonClicked = displayToast,
+                    modifier = Modifier.weight(1f)
+                )
+            }
     }
 }
 
@@ -152,7 +174,7 @@ private fun DetailsScreenHeader(email: Email) {
                 style = MaterialTheme.typography.labelMedium
             )
             Text(
-                text = email.createAt,
+                text = email.createdAt,
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.outline
             )
@@ -161,66 +183,29 @@ private fun DetailsScreenHeader(email: Email) {
 }
 
 @Composable
-private fun OneActionButton(text: String, onButtonClicked: (String) -> Unit) {
+private fun ActionButton(
+    text: String, onButtonClicked: (String) -> Unit,
+    containIrreversibleAction: Boolean = false,
+    modifier: Modifier= Modifier
+) {
     Button(
         onClick = { onButtonClicked(text) },
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 20.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.inverseOnSurface
+            containerColor =
+            if (!containIrreversibleAction)
+                MaterialTheme.colorScheme.inverseOnSurface
+            else MaterialTheme.colorScheme.onErrorContainer
         )
     ) {
         Text(
             text = text,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color =
+            if (!containIrreversibleAction)
+                MaterialTheme.colorScheme.onSurfaceVariant
+            else MaterialTheme.colorScheme.onError
         )
-    }
-}
-
-@Composable
-private fun TwoActionButtons(
-    primaryText: String,
-    secondaryText: String,
-    onPrimaryButtonClicked: (String) -> Unit,
-    onSecondaryButtonClicked: (String) -> Unit,
-    containIrreversibleAction: Boolean = false
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 20.dp),
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
-    ) {
-        Button(
-            onClick = { onSecondaryButtonClicked(secondaryText) },
-            modifier = Modifier.weight(1f),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.inverseOnSurface
-            )
-        ) {
-            Text(
-                text = secondaryText,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-        Button(
-            onClick = { onPrimaryButtonClicked(primaryText) },
-            modifier = Modifier.weight(1f),
-            colors = ButtonDefaults.buttonColors(
-                containerColor =
-                if (!containIrreversibleAction)
-                    MaterialTheme.colorScheme.inverseOnSurface
-                else MaterialTheme.colorScheme.onErrorContainer
-            )
-        ) {
-            Text(
-                text = primaryText,
-                color =
-                if (!containIrreversibleAction)
-                    MaterialTheme.colorScheme.onSurfaceVariant
-                else MaterialTheme.colorScheme.onError
-            )
-        }
     }
 }

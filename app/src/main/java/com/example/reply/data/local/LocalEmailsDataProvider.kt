@@ -37,7 +37,7 @@ object LocalEmailsDataProvider {
 
            As always, thank you for shopping with us and we hope you love our specially formulated Cucumber mask!
        """.trimIndent(),
-            createAt = "20 mins ago"
+            createdAt = "20 mins ago"
         ),
         Email(
             id = 1,
@@ -53,7 +53,7 @@ object LocalEmailsDataProvider {
 
            Ali
        """.trimIndent(),
-            createAt = "40 mins ago",
+            createdAt = "40 mins ago",
         ),
         Email(
             id = 2,
@@ -66,7 +66,7 @@ object LocalEmailsDataProvider {
            Cheers,
            Stef and Michael
        """.trimIndent(),
-            createAt = "1 hour ago",
+            createdAt = "1 hour ago",
         ),
         Email(
             id = 3,
@@ -83,7 +83,7 @@ object LocalEmailsDataProvider {
 
            Anyway, it turns out she is on the organizing committee for the high school reunion this fall. I don't know if you were planning on going or not, but she could definitely use our help in trying to track down lots of missing alums. If you can make it, we're doing a little phone-tree party at her place next Saturday. It will also be fun to catch up!
        """.trimIndent(),
-            createAt = "2 hours ago",
+            createdAt = "2 hours ago",
             mailbox = MailboxType.Sent,
         ),
         Email(
@@ -104,7 +104,7 @@ object LocalEmailsDataProvider {
 
            Maybe we can jump on the phone later today if you have a second.
        """.trimIndent(),
-            createAt = "2 hours ago",
+            createdAt = "2 hours ago",
         ),
         Email(
             id = 5,
@@ -112,7 +112,7 @@ object LocalEmailsDataProvider {
             recipients = listOf(LocalAccountsDataProvider.getContactAccountById(13)),
             "Next week’s sprint planning",
             "",
-            createAt = "2 hours ago",
+            createdAt = "2 hours ago",
             mailbox = MailboxType.Drafts
         ),
         Email(
@@ -123,7 +123,7 @@ object LocalEmailsDataProvider {
             body = """
            Raspberry Pie: We should make this pie recipe tonight! The filling is very quick to put together.
        """.trimIndent(),
-            createAt = "2 hours ago",
+            createdAt = "2 hours ago",
             mailbox = MailboxType.Sent,
         ),
         Email(
@@ -132,7 +132,7 @@ object LocalEmailsDataProvider {
             recipients = listOf(LocalAccountsDataProvider.userAccount),
             subject = "Delivered",
             body = "Your shoes should be waiting for you at home!",
-            createAt = "2 hours ago",
+            createdAt = "2 hours ago",
         ),
         Email(
             id = 8,
@@ -144,7 +144,7 @@ object LocalEmailsDataProvider {
 
            If I can get all the photos sorted by next week, I can place the order for the album the following week. I think it will be ready by the 5th, in time for her birthday party. We can get some flowers and a card to go with it too.
        """.trimIndent(),
-            createAt = "3 hours ago",
+            createdAt = "3 hours ago",
         ),
         Email(
             id = 9,
@@ -155,7 +155,7 @@ object LocalEmailsDataProvider {
        Hey,
        Wanted to email and see what you thought of
      """.trimIndent(),
-            createAt = "3 hours ago",
+            createdAt = "3 hours ago",
             mailbox = MailboxType.Drafts,
         ),
         Email(
@@ -168,7 +168,7 @@ object LocalEmailsDataProvider {
 
            Whether you're an experienced hiker or just looking to get outside for the afternoon, there's a segment that suits you.
        """.trimIndent(),
-            createAt = "3 hours ago",
+            createdAt = "3 hours ago",
             mailbox = MailboxType.Spam,
         ),
         Email(
@@ -179,7 +179,7 @@ object LocalEmailsDataProvider {
             body = """
        You've been selected as a winner in our latest raffle! To claim your prize, click on the link.
      """.trimIndent(),
-            createAt = "3 hours ago",
+            createdAt = "3 hours ago",
             mailbox = MailboxType.Spam,
         ),
         Email(
@@ -195,7 +195,7 @@ object LocalEmailsDataProvider {
            Thanks!
            Angie
        """.trimIndent(),
-            createAt = "3 hours ago",
+            createdAt = "3 hours ago",
             mailbox = MailboxType.Sent,
         ),
         Email(
@@ -211,7 +211,7 @@ object LocalEmailsDataProvider {
            Thank you very much.
            Angie
        """.trimIndent(),
-            createAt = "3 hours ago",
+            createdAt = "3 hours ago",
             mailbox = MailboxType.Sent,
         ),
         Email(
@@ -227,7 +227,7 @@ object LocalEmailsDataProvider {
            Regards,
            Angie
        """.trimIndent(),
-            createAt = "3 hours ago",
+            createdAt = "3 hours ago",
             mailbox = MailboxType.Sent,
         ),
         Email(
@@ -243,7 +243,7 @@ object LocalEmailsDataProvider {
            Thanks!
            Angie
        """.trimIndent(),
-            createAt = "3 hours ago",
+            createdAt = "3 hours ago",
             mailbox = MailboxType.Sent,
         ),
         Email(
@@ -259,7 +259,7 @@ object LocalEmailsDataProvider {
            We can’t wait for you to join us!
            Truffle Culinary Club
        """.trimIndent(),
-            createAt = "3 hours ago"
+            createdAt = "3 hours ago"
         ),
         Email(
             id = 17,
@@ -274,7 +274,7 @@ object LocalEmailsDataProvider {
            Thanks
            Yang Li
        """.trimIndent(),
-            createAt = "3 hours ago"
+            createdAt = "3 hours ago"
         ),
         Email(
             id = 18,
@@ -282,7 +282,7 @@ object LocalEmailsDataProvider {
             recipients = listOf(LocalAccountsDataProvider.getContactAccountById(8)),
             subject = "Please share the document",
             body = "Eric is requesting you to share the “Everyday planning 2022” doc",
-            createAt = "3 hours ago"
+            createdAt = "3 hours ago"
         ),
         Email(
             id = 19,
@@ -290,7 +290,7 @@ object LocalEmailsDataProvider {
             recipients = listOf(LocalAccountsDataProvider.getContactAccountById(15)),
             subject = "Hi",
             body = "hi",
-            createAt = "3 hours ago",
+            createdAt = "3 hours ago",
             mailbox = MailboxType.Spam,
         ),
         Email(
@@ -301,7 +301,7 @@ object LocalEmailsDataProvider {
             body = """
            Hello my name is Christopher. I am the CEO of a large enterprise with an important proposal for you. Could we arrange a meeting sometime this week?
        """.trimIndent(),
-            createAt = "3 hours ago",
+            createdAt = "3 hours ago",
             mailbox = MailboxType.Spam,
         ),
         Email(
@@ -314,7 +314,7 @@ object LocalEmailsDataProvider {
 
            I met you last week. I’m here to offer you a once in a lifetime investment opportunity. Please reply for more details
        """.trimIndent(),
-            createAt = "3 hours ago",
+            createdAt = "3 hours ago",
             mailbox = MailboxType.Spam,
         ),
         Email(
@@ -327,7 +327,7 @@ object LocalEmailsDataProvider {
 
            I wish I could join you
        """.trimIndent(),
-            createAt = "3 hours ago",
+            createdAt = "3 hours ago",
             mailbox = MailboxType.Drafts,
         ),
         Email(
@@ -338,7 +338,7 @@ object LocalEmailsDataProvider {
             body = """
            I’m coming to the KL office this Friday. Let’s meet up in
        """.trimIndent(),
-            createAt = "3 hours ago",
+            createdAt = "3 hours ago",
             mailbox = MailboxType.Drafts,
         )
     )
