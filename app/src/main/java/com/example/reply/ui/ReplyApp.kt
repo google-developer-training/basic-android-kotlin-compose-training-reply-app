@@ -20,11 +20,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.reply.data.MailboxType
 import com.example.reply.ui.utils.ReplyContentType
 import com.example.reply.ui.utils.ReplyNavigationType
 
 /**
- * Main composable that serves as container (NavHost)
+ * Main composable that serves as container
  * which displays content according to [replyUIState] and [windowSize]
  */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,8 +63,8 @@ fun ReplyApp(
         navigationType = navigationType,
         contentType = contentType,
         replyUIState = replyUIState,
-        onTabPressed = {
-            viewModel.updateCurrentMailbox(replyUIState.currentMailbox)
+        onTabPressed = { mailboxType: MailboxType ->
+            viewModel.updateCurrentMailbox(mailboxType = mailboxType)
             viewModel.resetSelectedEmailIndex(replyUIState.currentMailbox)
         },
         onEmailCardPressed = { index: Int ->

@@ -68,13 +68,11 @@ fun ReplyHomeScreen(
     onEmailCardPressed: (Int) -> Unit = {},
     onDetailScreenBackPressed: () -> Unit = {}
 ) {
-    var selectedTab = replyUIState.currentMailbox
-
     if (navigationType == ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER) {
         PermanentNavigationDrawer(
             drawerContent = {
                 NavigationDrawerContent(
-                    selectedDestination = selectedTab,
+                    selectedDestination = replyUIState.currentMailbox,
                     onTabPressed = onTabPressed
                 )
             }
