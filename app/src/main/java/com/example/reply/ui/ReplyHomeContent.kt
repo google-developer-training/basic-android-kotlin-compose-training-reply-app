@@ -42,7 +42,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.reply.R
 import com.example.reply.data.Email
-import com.example.reply.data.MailboxType
 import com.example.reply.data.local.LocalAccountsDataProvider
 
 /**
@@ -50,11 +49,11 @@ import com.example.reply.data.local.LocalAccountsDataProvider
  */
 @Composable
 fun ReplyListOnlyContent(
-    replyHomeUIState: ReplyUIState,
+    replyUIState: ReplyUIState,
     onEmailCardPressed: (Int) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    val emails = replyHomeUIState.currentMailboxEmails
+    val emails = replyUIState.currentMailboxEmails
 
     LazyColumn(modifier = modifier.padding(horizontal = 16.dp)) {
         item {

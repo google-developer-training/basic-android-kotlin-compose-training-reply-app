@@ -80,7 +80,7 @@ fun ReplyHomeScreen(
             ReplyAppContent(
                 navigationType = navigationType,
                 contentType = contentType,
-                replyHomeUIState = replyUIState,
+                replyUIState = replyUIState,
                 onTabPressed = onTabPressed,
                 onEmailCardPressed = onEmailCardPressed
             )
@@ -90,7 +90,7 @@ fun ReplyHomeScreen(
             ReplyAppContent(
                 navigationType = navigationType,
                 contentType = contentType,
-                replyHomeUIState = replyUIState,
+                replyUIState = replyUIState,
                 onTabPressed = onTabPressed,
                 onEmailCardPressed = onEmailCardPressed
             )
@@ -116,14 +116,14 @@ fun ReplyHomeScreen(
 fun ReplyAppContent(
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
-    replyHomeUIState: ReplyUIState,
+    replyUIState: ReplyUIState,
     onTabPressed: ((MailboxType) -> Unit) = {},
     onEmailCardPressed: (Int) -> Unit = {}
 ) {
     Row(modifier = Modifier.fillMaxSize()) {
         AnimatedVisibility(visible = navigationType == ReplyNavigationType.NAVIGATION_RAIL) {
             ReplyNavigationRail(
-                currentTab = replyHomeUIState.currentMailbox,
+                currentTab = replyUIState.currentMailbox,
                 onTabPressed = onTabPressed
             )
         }
@@ -134,13 +134,13 @@ fun ReplyAppContent(
         ) {
             if (contentType == ReplyContentType.LIST_AND_DETAIL) {
                 ReplyListAndDetailContent(
-                    replyUIState = replyHomeUIState,
+                    replyUIState = replyUIState,
                     onEmailCardPressed = onEmailCardPressed,
                     modifier = Modifier.weight(1f)
                 )
             } else {
                 ReplyListOnlyContent(
-                    replyHomeUIState = replyHomeUIState,
+                    replyUIState = replyUIState,
                     onEmailCardPressed = onEmailCardPressed,
                     modifier = Modifier.weight(1f)
                 )
@@ -148,7 +148,7 @@ fun ReplyAppContent(
 
             AnimatedVisibility(visible = navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
                 ReplyBottomNavigationBar(
-                    currentTab = replyHomeUIState.currentMailbox,
+                    currentTab = replyUIState.currentMailbox,
                     onTabPressed = onTabPressed
                 )
             }
