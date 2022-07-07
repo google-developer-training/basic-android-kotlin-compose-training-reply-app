@@ -16,7 +16,6 @@
 
 package com.example.reply.ui
 
-import android.app.Activity
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -38,7 +37,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -70,40 +68,6 @@ fun ReplyListOnlyContent(
                 }
             )
         }
-    }
-}
-
-/**
- * Component that displays two panes of list of emails and email details
- */
-@Composable
-fun ReplyListAndDetailContent(
-    replyUiState: ReplyUiState,
-    onEmailCardPressed: (Email) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val emails = replyUiState.currentMailboxEmails
-    Row(modifier = modifier) {
-        LazyColumn(
-            modifier = Modifier
-                .weight(1f)
-                .padding(end = 16.dp, top = 20.dp)
-        ) {
-            items(emails, key = { email -> email.id }) { email ->
-                ReplyEmailListItem(
-                    email = email,
-                    onCardClick = {
-                        onEmailCardPressed(email)
-                    }
-                )
-            }
-        }
-        val activity = LocalContext.current as Activity
-        ReplyDetailsScreen(
-            replyUiState = replyUiState,
-            modifier = Modifier.weight(1f),
-            onBackPressed = { activity.finish() }
-        )
     }
 }
 
@@ -205,7 +169,6 @@ fun ReplyLogo(
 
 /**
  * Component that displays top bar.
- * This is used when there is no navigation drawer
  */
 @Composable
 private fun ReplyHomeTopBar(modifier: Modifier = Modifier) {
