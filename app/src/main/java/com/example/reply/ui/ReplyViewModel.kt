@@ -60,7 +60,7 @@ class ReplyViewModel : ViewModel() {
      * Update [selectedEmailIndex] state for the [mailboxType]
      */
     fun updateSelectedEmailIndex(mailboxType: MailboxType, newIndex: Int?) {
-        _uiState.update { it ->
+        _uiState.update {
             it.copy(
                 selectedEmailIndex = it.selectedEmailIndex.mapValues {
                     if (it.key == mailboxType) newIndex else it.value

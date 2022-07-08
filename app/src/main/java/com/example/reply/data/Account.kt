@@ -30,7 +30,7 @@ data class Account(
     val lastName: String,
     /** User's email address **/
     val email: String,
-    /** User's avatar image resouce id **/
+    /** User's avatar image resource id **/
     @DrawableRes val avatar: Int
 ) {
     /** User's full name **/
