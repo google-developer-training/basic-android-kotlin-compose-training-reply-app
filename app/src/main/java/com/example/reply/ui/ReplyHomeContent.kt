@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
@@ -50,7 +51,7 @@ import com.example.reply.data.local.LocalAccountsDataProvider
 @Composable
 fun ReplyListOnlyContent(
     replyUIState: ReplyUIState,
-    onEmailCardPressed: (Int) -> Unit = {},
+    onEmailCardPressed: (Email) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val emails = replyUIState.currentMailboxEmails
@@ -59,11 +60,11 @@ fun ReplyListOnlyContent(
         item {
             ReplyTopBar(modifier = Modifier.fillMaxWidth())
         }
-        itemsIndexed(emails) { index, email ->
+        items(emails) { email ->
             ReplyEmailListItem(
                 email = email,
                 onCardClick = {
-                    onEmailCardPressed(index)
+                    onEmailCardPressed(email)
                 }
             )
         }
@@ -76,12 +77,10 @@ fun ReplyListOnlyContent(
 @Composable
 fun ReplyListAndDetailContent(
     replyUIState: ReplyUIState,
-    onEmailCardPressed: (Int) -> Unit = {},
+    onEmailCardPressed: (Email) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val emails = replyUIState.currentMailboxEmails
-    var selectedItemIndex =
-        replyUIState.selectedEmailIndex[replyUIState.currentMailbox] ?: 0
 
     Row(modifier = modifier) {
         LazyColumn(
@@ -92,9 +91,9 @@ fun ReplyListAndDetailContent(
             item {
                 Spacer(modifier = Modifier.height(20.dp))
             }
-            itemsIndexed(emails) { index, email ->
+            items(emails) { email ->
                 ReplyEmailListItem(email = email, onCardClick = {
-                    onEmailCardPressed(index)
+                    onEmailCardPressed(email)
                 })
             }
         }
@@ -102,7 +101,7 @@ fun ReplyListAndDetailContent(
             item {
                 Spacer(modifier = Modifier.height(20.dp))
                 ReplyEmailDetailsScreen(
-                    email = emails[selectedItemIndex],
+                    email = replyUIState.currentSelectedEmail,
                     mailboxType = replyUIState.currentMailbox,
                     modifier = Modifier.padding(end = 16.dp)
                 )

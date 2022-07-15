@@ -24,6 +24,7 @@ import com.example.reply.data.Account
  * all [Account]s of the current user's contacts.
  */
 object LocalAccountsDataProvider {
+    val defaultAccount = Account(-1, "", "", "", R.drawable.avatar_1)
 
     val userAccount =
         Account(

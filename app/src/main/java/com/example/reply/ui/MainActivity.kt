@@ -27,6 +27,7 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.reply.data.MailboxType
 import com.example.reply.data.local.LocalEmailsDataProvider
 import com.example.reply.ui.theme.ReplyTheme
 
@@ -52,7 +53,7 @@ class MainActivity : ComponentActivity() {
                             windowSize.widthSizeClass != WindowWidthSizeClass.Expanded &&
                             uiState.currentSelectedEmail != null
                         ) {
-                            viewModel.resetSelectedEmailIndex(uiState.currentMailbox)
+                            viewModel.resetSelectedEmailIndex()
                         } else {
                             finish()
                         }
@@ -76,7 +77,9 @@ class MainActivity : ComponentActivity() {
 fun ReplyAppPreview() {
     ReplyTheme {
         ReplyApp(
-            replyUIState = ReplyUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
+            replyUIState = ReplyUIState(
+                mailboxes = mapOf(MailboxType.Inbox to LocalEmailsDataProvider.allEmails)
+            ),
             windowSize = WindowWidthSizeClass.Compact,
         )
     }
@@ -87,7 +90,9 @@ fun ReplyAppPreview() {
 fun ReplyAppPreviewTablet() {
     ReplyTheme {
         ReplyApp(
-            replyUIState = ReplyUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
+            replyUIState = ReplyUIState(
+                mailboxes = mapOf(MailboxType.Inbox to LocalEmailsDataProvider.allEmails)
+            ),
             windowSize = WindowWidthSizeClass.Medium,
         )
     }
@@ -98,7 +103,9 @@ fun ReplyAppPreviewTablet() {
 fun ReplyAppPreviewDesktop() {
     ReplyTheme {
         ReplyApp(
-            replyUIState = ReplyUIState(inboxEmails = LocalEmailsDataProvider.allEmails),
+            replyUIState = ReplyUIState(
+                mailboxes = mapOf(MailboxType.Inbox to LocalEmailsDataProvider.allEmails)
+            ),
             windowSize = WindowWidthSizeClass.Expanded,
         )
     }

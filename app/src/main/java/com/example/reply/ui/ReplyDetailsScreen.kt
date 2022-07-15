@@ -48,15 +48,12 @@ import com.example.reply.data.MailboxType
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReplyEmailDetailsScreen(
-    email: Email?,
+    email: Email,
     mailboxType: MailboxType,
     isFullScreen: Boolean = false,
     onBackButtonClicked: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    if (email == null) {
-        return
-    }
     val context = LocalContext.current
     val displayToast = { text: String ->
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()

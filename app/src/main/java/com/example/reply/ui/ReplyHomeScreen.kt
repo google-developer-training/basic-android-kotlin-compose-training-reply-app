@@ -50,6 +50,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.reply.R
+import com.example.reply.data.Email
 import com.example.reply.data.MailboxType
 import com.example.reply.ui.utils.ReplyContentType
 import com.example.reply.ui.utils.ReplyNavigationType
@@ -65,7 +66,7 @@ fun ReplyHomeScreen(
     contentType: ReplyContentType,
     replyUIState: ReplyUIState,
     onTabPressed: (MailboxType) -> Unit = {},
-    onEmailCardPressed: (Int) -> Unit = {},
+    onEmailCardPressed: (Email) -> Unit = {},
     onDetailScreenBackPressed: () -> Unit = {}
 ) {
     if (navigationType == ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER) {
@@ -86,7 +87,7 @@ fun ReplyHomeScreen(
             )
         }
     } else {
-        if(replyUIState.currentSelectedEmail == null) {
+        if(replyUIState.isShowingHomepage) {
             ReplyAppContent(
                 navigationType = navigationType,
                 contentType = contentType,
@@ -118,7 +119,7 @@ fun ReplyAppContent(
     contentType: ReplyContentType,
     replyUIState: ReplyUIState,
     onTabPressed: ((MailboxType) -> Unit) = {},
-    onEmailCardPressed: (Int) -> Unit = {}
+    onEmailCardPressed: (Email) -> Unit = {}
 ) {
     Row(modifier = Modifier.fillMaxSize()) {
         AnimatedVisibility(visible = navigationType == ReplyNavigationType.NAVIGATION_RAIL) {

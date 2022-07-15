@@ -342,4 +342,10 @@ object LocalEmailsDataProvider {
             mailbox = MailboxType.Drafts,
         )
     )
+
+    val defaultEmail =  Email(
+        id = -1,
+        sender = LocalAccountsDataProvider.defaultAccount,
+        createdAt = ""
+    )
 }

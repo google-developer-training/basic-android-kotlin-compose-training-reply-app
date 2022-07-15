@@ -18,42 +18,21 @@ package com.example.reply.ui
 
 import com.example.reply.data.Email
 import com.example.reply.data.MailboxType
+import com.example.reply.data.local.LocalEmailsDataProvider
 
 /**
  * Data class that represents current UI State
  */
 data class ReplyUIState(
-    /** Emails in the inbox tab **/
-    val inboxEmails: List<Email> = emptyList(),
-    /** Emails in the Sent tab **/
-    val sentEmails: List<Email> = emptyList(),
-    /** Emails in the Drafts tab **/
-    val draftsEmails: List<Email> = emptyList(),
-    /** Emails in the Spam tab **/
-    val spamEmails: List<Email> = emptyList(),
+    /** Emails map for all type of [MailboxType] **/
+    val mailboxes: Map<MailboxType, List<Email>> = emptyMap(),
     /** Current mailbox being displayed **/
     val currentMailbox: MailboxType = MailboxType.Inbox,
-    /** A map of indexes of selected item corresponding to each mailbox type **/
-    val selectedEmailIndex: Map<MailboxType, Int?> = mapOf(
-        MailboxType.Inbox to null,
-        MailboxType.Sent to null,
-        MailboxType.Drafts to null,
-        MailboxType.Spam to null
-    )
+    /** Current selected email for the mailbox being displayed **/
+    val currentSelectedEmail: Email = LocalEmailsDataProvider.defaultEmail,
+    /** Whether currently displaying homepage **/
+    val isShowingHomepage: Boolean = true
 ) {
     /** Current list of emails for the mailbox being displayed **/
-    val currentMailboxEmails: List<Email> = when (currentMailbox) {
-        MailboxType.Inbox -> inboxEmails
-        MailboxType.Sent -> sentEmails
-        MailboxType.Drafts -> draftsEmails
-        MailboxType.Spam -> spamEmails
-    }
-
-    /** Current selected email for the mailbox being displayed **/
-    val currentSelectedEmail: Email? =
-        if (currentMailboxEmails.isEmpty() || selectedEmailIndex[currentMailbox] == null) {
-            null
-        } else {
-            currentMailboxEmails[selectedEmailIndex[currentMailbox]!!]
-        }
+    val currentMailboxEmails: List<Email> by lazy { mailboxes[currentMailbox]!! }
 }

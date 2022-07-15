@@ -17,6 +17,7 @@
 package com.example.reply.ui
 
 import androidx.lifecycle.ViewModel
+import com.example.reply.data.Email
 import com.example.reply.data.MailboxType
 import com.example.reply.data.local.LocalEmailsDataProvider
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,40 +41,39 @@ class ReplyViewModel : ViewModel() {
      * Initializing mailbox emails by getting them from [LocalEmailsDataProvider]
      */
     private fun initializeUIState() {
-        val inboxEmails = LocalEmailsDataProvider.allEmails.filter {
-            it.mailbox == MailboxType.Inbox
-        }
-        val sentEmails = LocalEmailsDataProvider.allEmails.filter {
-            it.mailbox == MailboxType.Sent
-        }
-        val draftsEmails = LocalEmailsDataProvider.allEmails.filter {
-            it.mailbox == MailboxType.Drafts
-        }
-        val spamEmails = LocalEmailsDataProvider.allEmails.filter {
-            it.mailbox == MailboxType.Spam
-        }
+        var mailboxes: Map<MailboxType, List<Email>> =
+            LocalEmailsDataProvider.allEmails.groupBy { it.mailbox }
         _uiState.value =
-            ReplyUIState(inboxEmails, sentEmails, draftsEmails, spamEmails)
+            ReplyUIState(
+                mailboxes = mailboxes,
+                currentSelectedEmail = mailboxes[MailboxType.Inbox]!![0]
+            )
     }
 
     /**
-     * Update [selectedEmailIndex] state for the [mailboxType]
+     * Update [currentSelectedEmail] state
+     * and [isShowingHomepage] to false
      */
-    fun updateSelectedEmailIndex(mailboxType: MailboxType, newIndex: Int?) {
+    fun updateSelectedEmail(email: Email) {
         _uiState.update {
             it.copy(
-                selectedEmailIndex = it.selectedEmailIndex.mapValues {
-                    if (it.key == mailboxType) newIndex else it.value
-                }
+                currentSelectedEmail = email,
+                isShowingHomepage = false
             )
         }
     }
 
     /**
-     * Reset [selectedEmailIndex] state for the [mailboxType] to null
+     * Reset [currentSelectedEmail] state to first email
+     * and [isShowingHomepage] to true
      */
-    fun resetSelectedEmailIndex(mailboxType: MailboxType) {
-        updateSelectedEmailIndex(mailboxType, null)
+    fun resetSelectedEmailIndex() {
+        _uiState.update {
+            it.copy(
+                currentSelectedEmail = it.mailboxes[it.currentMailbox]!![0],
+                isShowingHomepage = true
+            )
+        }
     }
 
     /**
