@@ -183,8 +183,8 @@ fun ReplyProfileImage(
  */
 @Composable
 fun ReplyLogo(
-    color: Color = MaterialTheme.colorScheme.primary,
     modifier: Modifier = Modifier.size(48.dp),
+    color: Color = MaterialTheme.colorScheme.primary
 ) {
     Image(
         painter = painterResource(R.drawable.logo),

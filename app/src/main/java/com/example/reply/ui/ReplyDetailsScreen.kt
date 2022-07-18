@@ -55,9 +55,9 @@ import com.example.reply.data.MailboxType
 @Composable
 fun ReplyDetailsScreen(
     replyUIState: ReplyUIState,
-    isFullScreen: Boolean = false,
+    modifier: Modifier = Modifier,
     onBackButtonClicked: () -> Unit = {},
-    modifier: Modifier = Modifier
+    isFullScreen: Boolean = false
 ) {
     LazyColumn(
         modifier = modifier
@@ -126,8 +126,8 @@ private fun ReplyDetailsScreenTopBar(
 fun ReplyEmailDetailsCard(
     email: Email,
     mailboxType: MailboxType,
-    isFullScreen: Boolean = false,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isFullScreen: Boolean = false
 ) {
     val context = LocalContext.current
     val displayToast = { text: String ->
@@ -245,9 +245,10 @@ private fun DetailsScreenHeader(email: Email) {
 
 @Composable
 private fun ActionButton(
-    text: String, onButtonClicked: (String) -> Unit,
-    containIrreversibleAction: Boolean = false,
-    modifier: Modifier = Modifier
+    text: String,
+    onButtonClicked: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    containIrreversibleAction: Boolean = false
 ) {
     Button(
         onClick = { onButtonClicked(text) },
