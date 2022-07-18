@@ -83,16 +83,12 @@ fun ReplyListAndDetailContent(
     modifier: Modifier = Modifier
 ) {
     val emails = replyUIState.currentMailboxEmails
-
     Row(modifier = modifier) {
         LazyColumn(
             modifier = Modifier
                 .weight(1f)
-                .padding(end = 16.dp)
+                .padding(end = 16.dp, top = 20.dp)
         ) {
-            item {
-                Spacer(modifier = Modifier.height(20.dp))
-            }
             items(emails) { email ->
                 ReplyEmailListItem(email = email, onCardClick = {
                     onEmailCardPressed(email)
