@@ -17,11 +17,17 @@
 package com.example.reply.ui
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -34,6 +40,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -43,15 +50,83 @@ import com.example.reply.data.Email
 import com.example.reply.data.MailboxType
 
 /**
- * Component that displays a single card containing one [email]
+ * Component that displays details screen
+ */
+@Composable
+fun ReplyDetailsScreen(
+    replyUIState: ReplyUIState,
+    isFullScreen: Boolean = false,
+    onBackButtonClicked: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.inverseOnSurface)
+    ) {
+        item {
+            Spacer(modifier = Modifier.height(24.dp))
+            if (isFullScreen) {
+                ReplyDetailsScreenTopBar(onBackButtonClicked, replyUIState)
+            }
+            ReplyEmailDetailsCard(
+                email = replyUIState.currentSelectedEmail,
+                mailboxType = replyUIState.currentMailbox,
+                isFullScreen = isFullScreen,
+                modifier = if (isFullScreen)
+                    Modifier.padding(horizontal = 16.dp)
+                else
+                    Modifier.padding(end = 16.dp)
+            )
+        }
+    }
+}
+
+@Composable
+private fun ReplyDetailsScreenTopBar(
+    onBackButtonClicked: () -> Unit,
+    replyUIState: ReplyUIState
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        IconButton(
+            onClick = { onBackButtonClicked() },
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .background(MaterialTheme.colorScheme.surface, shape = CircleShape),
+        ) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = stringResource(id = R.string.navigation_back)
+            )
+        }
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(end = 40.dp)
+        ) {
+            Text(
+                text = replyUIState.currentSelectedEmail.subject,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    }
+    Spacer(modifier = Modifier.height(24.dp))
+}
+
+/**
+ * Component that displays a single card containing one [Email]
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReplyEmailDetailsScreen(
+fun ReplyEmailDetailsCard(
     email: Email,
     mailboxType: MailboxType,
     isFullScreen: Boolean = false,
-    onBackButtonClicked: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -62,29 +137,22 @@ fun ReplyEmailDetailsScreen(
         modifier = modifier,
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
-        if (isFullScreen) {
-            IconButton(
-                onClick = { onBackButtonClicked() },
-                modifier = Modifier.padding(top = 16.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = stringResource(id = R.string.navigation_back)
-                )
-            }
-        }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp)
         ) {
             DetailsScreenHeader(email)
-            Text(
-                text = email.subject,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.outline,
-                modifier = Modifier.padding(top = 12.dp, bottom = 8.dp),
-            )
+            if (!isFullScreen) {
+                Text(
+                    text = email.subject,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier.padding(top = 12.dp, bottom = 8.dp),
+                )
+            } else {
+                Spacer(modifier = Modifier.height(12.dp))
+            }
             Text(
                 text = email.body,
                 style = MaterialTheme.typography.bodyLarge,

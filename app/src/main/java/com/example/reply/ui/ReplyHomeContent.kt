@@ -16,6 +16,7 @@
 
 package com.example.reply.ui
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,7 +28,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -37,6 +37,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -97,16 +99,7 @@ fun ReplyListAndDetailContent(
                 })
             }
         }
-        LazyColumn(modifier = Modifier.weight(1f)) {
-            item {
-                Spacer(modifier = Modifier.height(20.dp))
-                ReplyEmailDetailsScreen(
-                    email = replyUIState.currentSelectedEmail,
-                    mailboxType = replyUIState.currentMailbox,
-                    modifier = Modifier.padding(end = 16.dp)
-                )
-            }
-        }
+        ReplyDetailsScreen(replyUIState = replyUIState, modifier = Modifier.weight(1f))
     }
 }
 
@@ -174,14 +167,30 @@ fun ReplyEmailListItem(
  */
 @Composable
 fun ReplyProfileImage(
-    drawableResource: Int,
+    @DrawableRes drawableResource: Int,
     description: String,
     modifier: Modifier = Modifier.size(40.dp),
 ) {
     Image(
         modifier = modifier.clip(CircleShape),
-        painter = painterResource(id = drawableResource),
+        painter = painterResource(drawableResource),
         contentDescription = description,
+    )
+}
+
+/**
+ * Component that displays Reply logo
+ */
+@Composable
+fun ReplyLogo(
+    color: Color = MaterialTheme.colorScheme.primary,
+    modifier: Modifier = Modifier.size(48.dp),
+) {
+    Image(
+        painter = painterResource(R.drawable.logo),
+        contentDescription = stringResource(R.string.logo),
+        colorFilter = ColorFilter.tint(color),
+        modifier = modifier
     )
 }
 
@@ -196,13 +205,11 @@ fun ReplyTopBar(modifier: Modifier = Modifier) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 16.dp)
+            .padding(vertical = 8.dp)
     ) {
-        Text(
-            text = stringResource(R.string.app_name).uppercase(),
-            style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.primary,
-        )
+        ReplyLogo(modifier = Modifier
+            .size(64.dp)
+            .padding(start = 4.dp))
         ReplyProfileImage(
             drawableResource = LocalAccountsDataProvider.userAccount.avatar,
             description = stringResource(R.string.profile),

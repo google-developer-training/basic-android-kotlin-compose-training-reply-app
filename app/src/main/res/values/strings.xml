@@ -21,6 +21,7 @@
     <string name="tab_sent">Sent</string>
     <string name="tab_drafts">Drafts</string>
     <string name="tab_spam">Spam</string>
+    <string name="logo">Logo</string>
 
     <string name="profile">Profile</string>
     <string name="reply">Reply</string>

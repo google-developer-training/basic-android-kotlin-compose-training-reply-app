@@ -87,7 +87,7 @@ fun ReplyHomeScreen(
             )
         }
     } else {
-        if(replyUIState.isShowingHomepage) {
+        if (replyUIState.isShowingHomepage) {
             ReplyAppContent(
                 navigationType = navigationType,
                 contentType = contentType,
@@ -96,12 +96,10 @@ fun ReplyHomeScreen(
                 onEmailCardPressed = onEmailCardPressed
             )
         } else {
-            ReplyEmailDetailsScreen(
-                email = replyUIState.currentSelectedEmail,
-                mailboxType = replyUIState.currentMailbox,
+            ReplyDetailsScreen(
+                replyUIState = replyUIState,
                 isFullScreen = true,
                 onBackButtonClicked = onDetailScreenBackPressed,
-                modifier = Modifier.fillMaxSize()
             )
         }
 
@@ -284,11 +282,7 @@ fun NavigationDrawerContent(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = stringResource(id = R.string.app_name).uppercase(),
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primary
-            )
+            ReplyLogo()
             ReplyProfileImage(
                 drawableResource = R.drawable.avatar_6,
                 description = stringResource(id = R.string.profile),
