@@ -118,12 +118,9 @@ private fun ReplyDetailsScreenTopBar(
     Spacer(modifier = Modifier.height(24.dp))
 }
 
-/**
- * Component that displays a single card containing one [Email]
- */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReplyEmailDetailsCard(
+private fun ReplyEmailDetailsCard(
     email: Email,
     mailboxType: MailboxType,
     modifier: Modifier = Modifier,

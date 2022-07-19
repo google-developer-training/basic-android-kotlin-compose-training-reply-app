@@ -21,9 +21,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -60,7 +58,7 @@ fun ReplyListOnlyContent(
 
     LazyColumn(modifier = modifier.padding(horizontal = 16.dp)) {
         item {
-            ReplyTopBar(modifier = Modifier.fillMaxWidth())
+            ReplyHomeTopBar(modifier = Modifier.fillMaxWidth())
         }
         items(emails) { email ->
             ReplyEmailListItem(
@@ -195,7 +193,7 @@ fun ReplyLogo(
  * This is used when there is no navigation drawer
  */
 @Composable
-fun ReplyTopBar(modifier: Modifier = Modifier) {
+private fun ReplyHomeTopBar(modifier: Modifier = Modifier) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,

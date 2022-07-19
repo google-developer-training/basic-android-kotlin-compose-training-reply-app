@@ -52,6 +52,7 @@ import androidx.compose.ui.unit.dp
 import com.example.reply.R
 import com.example.reply.data.Email
 import com.example.reply.data.MailboxType
+import com.example.reply.data.local.LocalAccountsDataProvider
 import com.example.reply.ui.utils.ReplyContentType
 import com.example.reply.ui.utils.ReplyNavigationType
 
@@ -112,7 +113,7 @@ fun ReplyHomeScreen(
  * It displays different number of panes depending on [contentType]
  */
 @Composable
-fun ReplyAppContent(
+private fun ReplyAppContent(
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
     replyUIState: ReplyUIState,
@@ -159,7 +160,7 @@ fun ReplyAppContent(
  * Component that displays Navigation Rail
  */
 @Composable
-fun ReplyNavigationRail(
+private fun ReplyNavigationRail(
     currentTab: MailboxType,
     onTabPressed: ((MailboxType) -> Unit) = {}
 ) {
@@ -210,7 +211,7 @@ fun ReplyNavigationRail(
  * Component that displays Bottom Navigation Bar
  */
 @Composable
-fun ReplyBottomNavigationBar(
+private fun ReplyBottomNavigationBar(
     currentTab: MailboxType,
     onTabPressed: ((MailboxType) -> Unit) = {},
 ) {
@@ -263,7 +264,7 @@ fun ReplyBottomNavigationBar(
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NavigationDrawerContent(
+private fun NavigationDrawerContent(
     selectedDestination: MailboxType,
     modifier: Modifier = Modifier,
     onTabPressed: ((MailboxType) -> Unit) = {}
@@ -284,7 +285,7 @@ fun NavigationDrawerContent(
         ) {
             ReplyLogo()
             ReplyProfileImage(
-                drawableResource = R.drawable.avatar_6,
+                drawableResource = LocalAccountsDataProvider.userAccount.avatar,
                 description = stringResource(id = R.string.profile),
                 modifier = Modifier
                     .size(28.dp)
