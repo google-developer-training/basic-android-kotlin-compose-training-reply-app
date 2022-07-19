@@ -54,7 +54,7 @@ class ReplyViewModel : ViewModel() {
      * Update [currentSelectedEmail] state
      * and [isShowingHomepage] to false
      */
-    fun updateSelectedEmail(email: Email) {
+    fun updateDetailsScreenStates(email: Email) {
         _uiState.update {
             it.copy(
                 currentSelectedEmail = email,
@@ -67,7 +67,7 @@ class ReplyViewModel : ViewModel() {
      * Reset [currentSelectedEmail] state to first email
      * and [isShowingHomepage] to true
      */
-    fun resetSelectedEmailIndex() {
+    fun resetHomeScreenStates() {
         _uiState.update {
             it.copy(
                 currentSelectedEmail = it.mailboxes[it.currentMailbox]!![0],

@@ -51,9 +51,9 @@ class MainActivity : ComponentActivity() {
                     override fun handleOnBackPressed() {
                         if (
                             windowSize.widthSizeClass != WindowWidthSizeClass.Expanded &&
-                            uiState.currentSelectedEmail != null
+                            !uiState.isShowingHomepage
                         ) {
-                            viewModel.resetSelectedEmailIndex()
+                            viewModel.resetHomeScreenStates()
                         } else {
                             finish()
                         }

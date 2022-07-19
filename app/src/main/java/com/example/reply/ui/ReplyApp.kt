@@ -66,15 +66,15 @@ fun ReplyApp(
         replyUIState = replyUIState,
         onTabPressed = { mailboxType: MailboxType ->
             viewModel.updateCurrentMailbox(mailboxType = mailboxType)
-            viewModel.resetSelectedEmailIndex()
+            viewModel.resetHomeScreenStates()
         },
         onEmailCardPressed = { email: Email ->
-            viewModel.updateSelectedEmail(
+            viewModel.updateDetailsScreenStates(
                 email = email
             )
         },
         onDetailScreenBackPressed = {
-            viewModel.resetSelectedEmailIndex()
+            viewModel.resetHomeScreenStates()
         }
     )
 }
