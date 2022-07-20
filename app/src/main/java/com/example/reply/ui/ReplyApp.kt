@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2022 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package com.example.reply.ui
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.reply.data.Email
 import com.example.reply.data.MailboxType
@@ -34,6 +35,7 @@ import com.example.reply.ui.utils.ReplyNavigationType
 fun ReplyApp(
     replyUIState: ReplyUIState,
     windowSize: WindowWidthSizeClass,
+    modifier: Modifier = Modifier,
     viewModel: ReplyViewModel = viewModel()
 ) {
     /**
@@ -75,6 +77,7 @@ fun ReplyApp(
         },
         onDetailScreenBackPressed = {
             viewModel.resetHomeScreenStates()
-        }
+        },
+        modifier = modifier
     )
 }

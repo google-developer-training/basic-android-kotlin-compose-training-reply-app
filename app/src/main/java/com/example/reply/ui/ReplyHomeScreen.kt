@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2022 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,9 +66,10 @@ fun ReplyHomeScreen(
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
     replyUIState: ReplyUIState,
-    onTabPressed: (MailboxType) -> Unit = {},
-    onEmailCardPressed: (Email) -> Unit = {},
-    onDetailScreenBackPressed: () -> Unit = {}
+    onTabPressed: (MailboxType) -> Unit,
+    onEmailCardPressed: (Email) -> Unit,
+    onDetailScreenBackPressed: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     if (navigationType == ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER) {
         PermanentNavigationDrawer(
@@ -84,7 +85,8 @@ fun ReplyHomeScreen(
                 contentType = contentType,
                 replyUIState = replyUIState,
                 onTabPressed = onTabPressed,
-                onEmailCardPressed = onEmailCardPressed
+                onEmailCardPressed = onEmailCardPressed,
+                modifier = modifier
             )
         }
     } else {
@@ -94,13 +96,15 @@ fun ReplyHomeScreen(
                 contentType = contentType,
                 replyUIState = replyUIState,
                 onTabPressed = onTabPressed,
-                onEmailCardPressed = onEmailCardPressed
+                onEmailCardPressed = onEmailCardPressed,
+                modifier = modifier
             )
         } else {
             ReplyDetailsScreen(
                 replyUIState = replyUIState,
                 isFullScreen = true,
                 onBackButtonClicked = onDetailScreenBackPressed,
+                modifier = modifier
             )
         }
 
@@ -117,8 +121,9 @@ private fun ReplyAppContent(
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
     replyUIState: ReplyUIState,
-    onTabPressed: ((MailboxType) -> Unit) = {},
-    onEmailCardPressed: (Email) -> Unit = {}
+    onTabPressed: ((MailboxType) -> Unit),
+    onEmailCardPressed: (Email) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(modifier = Modifier.fillMaxSize()) {
         AnimatedVisibility(visible = navigationType == ReplyNavigationType.NAVIGATION_RAIL) {
@@ -128,7 +133,7 @@ private fun ReplyAppContent(
             )
         }
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.inverseOnSurface)
         ) {
@@ -162,9 +167,10 @@ private fun ReplyAppContent(
 @Composable
 private fun ReplyNavigationRail(
     currentTab: MailboxType,
-    onTabPressed: ((MailboxType) -> Unit) = {}
+    onTabPressed: ((MailboxType) -> Unit),
+    modifier: Modifier = Modifier
 ) {
-    NavigationRail(modifier = Modifier.fillMaxHeight()) {
+    NavigationRail(modifier = modifier.fillMaxHeight()) {
         NavigationRailItem(
             selected = currentTab == MailboxType.Inbox,
             onClick = { onTabPressed(MailboxType.Inbox) },
@@ -213,9 +219,10 @@ private fun ReplyNavigationRail(
 @Composable
 private fun ReplyBottomNavigationBar(
     currentTab: MailboxType,
-    onTabPressed: ((MailboxType) -> Unit) = {},
+    onTabPressed: ((MailboxType) -> Unit),
+    modifier: Modifier = Modifier
 ) {
-    NavigationBar(modifier = Modifier.fillMaxWidth()) {
+    NavigationBar(modifier = modifier.fillMaxWidth()) {
         NavigationBarItem(
             selected = currentTab == MailboxType.Inbox,
             onClick = { onTabPressed(MailboxType.Inbox) },
@@ -266,8 +273,8 @@ private fun ReplyBottomNavigationBar(
 @Composable
 private fun NavigationDrawerContent(
     selectedDestination: MailboxType,
-    modifier: Modifier = Modifier,
-    onTabPressed: ((MailboxType) -> Unit) = {}
+    onTabPressed: ((MailboxType) -> Unit),
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier

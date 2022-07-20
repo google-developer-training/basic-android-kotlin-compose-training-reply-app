@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2022 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ import com.example.reply.data.local.LocalAccountsDataProvider
 @Composable
 fun ReplyListOnlyContent(
     replyUIState: ReplyUIState,
-    onEmailCardPressed: (Email) -> Unit = {},
+    onEmailCardPressed: (Email) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val emails = replyUIState.currentMailboxEmails
@@ -77,7 +77,7 @@ fun ReplyListOnlyContent(
 @Composable
 fun ReplyListAndDetailContent(
     replyUIState: ReplyUIState,
-    onEmailCardPressed: (Email) -> Unit = {},
+    onEmailCardPressed: (Email) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val emails = replyUIState.currentMailboxEmails
@@ -104,7 +104,7 @@ fun ReplyListAndDetailContent(
 @Composable
 fun ReplyEmailListItem(
     email: Email,
-    onCardClick: () -> Unit = {},
+    onCardClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
