@@ -46,7 +46,8 @@ class ReplyViewModel : ViewModel() {
         _uiState.value =
             ReplyUIState(
                 mailboxes = mailboxes,
-                currentSelectedEmail = mailboxes[MailboxType.Inbox]!![0]
+                currentSelectedEmail = mailboxes[MailboxType.Inbox]?.get(0)
+                    ?: LocalEmailsDataProvider.defaultEmail
             )
     }
 
@@ -70,7 +71,8 @@ class ReplyViewModel : ViewModel() {
     fun resetHomeScreenStates() {
         _uiState.update {
             it.copy(
-                currentSelectedEmail = it.mailboxes[it.currentMailbox]!![0],
+                currentSelectedEmail = it.mailboxes[it.currentMailbox]?.get(0)
+                    ?: LocalEmailsDataProvider.defaultEmail,
                 isShowingHomepage = true
             )
         }
