@@ -50,8 +50,8 @@ class MainActivity : ComponentActivity() {
                 val onBackPressedCallback = object : OnBackPressedCallback(true) {
                     override fun handleOnBackPressed() {
                         if (
-                            windowSize.widthSizeClass != WindowWidthSizeClass.Expanded &&
-                            !uiState.isShowingHomepage
+                            windowSize.widthSizeClass != WindowWidthSizeClass.Expanded
+                                && !uiState.isShowingHomepage
                         ) {
                             viewModel.resetHomeScreenStates()
                         } else {
