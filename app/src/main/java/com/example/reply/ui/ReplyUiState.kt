@@ -23,7 +23,7 @@ import com.example.reply.data.local.LocalEmailsDataProvider
 /**
  * Data class that represents current UI State
  */
-data class ReplyUIState(
+data class ReplyUiState(
     /** Emails map for all type of [MailboxType] **/
     val mailboxes: Map<MailboxType, List<Email>> = emptyMap(),
     /** Current mailbox being displayed **/

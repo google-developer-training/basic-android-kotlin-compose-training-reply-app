@@ -30,8 +30,8 @@ import kotlinx.coroutines.flow.update
 class ReplyViewModel : ViewModel() {
 
     /** UI state exposed to the UI **/
-    private val _uiState = MutableStateFlow(ReplyUIState())
-    val uiState: StateFlow<ReplyUIState> = _uiState
+    private val _uiState = MutableStateFlow(ReplyUiState())
+    val uiState: StateFlow<ReplyUiState> = _uiState
 
     init {
         initializeUIState()
@@ -44,7 +44,7 @@ class ReplyViewModel : ViewModel() {
         var mailboxes: Map<MailboxType, List<Email>> =
             LocalEmailsDataProvider.allEmails.groupBy { it.mailbox }
         _uiState.value =
-            ReplyUIState(
+            ReplyUiState(
                 mailboxes = mailboxes,
                 currentSelectedEmail = mailboxes[MailboxType.Inbox]?.get(0)
                     ?: LocalEmailsDataProvider.defaultEmail

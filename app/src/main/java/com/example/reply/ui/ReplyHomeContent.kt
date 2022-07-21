@@ -50,11 +50,11 @@ import com.example.reply.data.local.LocalAccountsDataProvider
  */
 @Composable
 fun ReplyListOnlyContent(
-    replyUIState: ReplyUIState,
+    replyUiState: ReplyUiState,
     onEmailCardPressed: (Email) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val emails = replyUIState.currentMailboxEmails
+    val emails = replyUiState.currentMailboxEmails
 
     LazyColumn(modifier = modifier.padding(horizontal = 16.dp)) {
         item {
@@ -76,11 +76,11 @@ fun ReplyListOnlyContent(
  */
 @Composable
 fun ReplyListAndDetailContent(
-    replyUIState: ReplyUIState,
+    replyUiState: ReplyUiState,
     onEmailCardPressed: (Email) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val emails = replyUIState.currentMailboxEmails
+    val emails = replyUiState.currentMailboxEmails
     Row(modifier = modifier) {
         LazyColumn(
             modifier = Modifier
@@ -93,7 +93,7 @@ fun ReplyListAndDetailContent(
                 })
             }
         }
-        ReplyDetailsScreen(replyUIState = replyUIState, modifier = Modifier.weight(1f))
+        ReplyDetailsScreen(replyUiState = replyUiState, modifier = Modifier.weight(1f))
     }
 }
 
@@ -138,7 +138,6 @@ fun ReplyEmailListItem(
                     )
                 }
             }
-
             Text(
                 text = email.subject,
                 style = MaterialTheme.typography.bodyLarge,

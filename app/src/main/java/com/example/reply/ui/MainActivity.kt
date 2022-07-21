@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
                 this.onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
                 ReplyApp(
-                    replyUIState = uiState,
+                    replyUiState = uiState,
                     windowSize = windowSize.widthSizeClass,
                     viewModel = viewModel
                 )
@@ -77,7 +77,7 @@ class MainActivity : ComponentActivity() {
 fun ReplyAppPreview() {
     ReplyTheme {
         ReplyApp(
-            replyUIState = ReplyUIState(
+            replyUiState = ReplyUiState(
                 mailboxes = mapOf(MailboxType.Inbox to LocalEmailsDataProvider.allEmails)
             ),
             windowSize = WindowWidthSizeClass.Compact,
@@ -90,7 +90,7 @@ fun ReplyAppPreview() {
 fun ReplyAppPreviewTablet() {
     ReplyTheme {
         ReplyApp(
-            replyUIState = ReplyUIState(
+            replyUiState = ReplyUiState(
                 mailboxes = mapOf(MailboxType.Inbox to LocalEmailsDataProvider.allEmails)
             ),
             windowSize = WindowWidthSizeClass.Medium,
@@ -103,7 +103,7 @@ fun ReplyAppPreviewTablet() {
 fun ReplyAppPreviewDesktop() {
     ReplyTheme {
         ReplyApp(
-            replyUIState = ReplyUIState(
+            replyUiState = ReplyUiState(
                 mailboxes = mapOf(MailboxType.Inbox to LocalEmailsDataProvider.allEmails)
             ),
             windowSize = WindowWidthSizeClass.Expanded,

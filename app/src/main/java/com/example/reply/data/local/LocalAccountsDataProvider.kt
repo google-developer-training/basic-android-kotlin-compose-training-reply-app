@@ -69,7 +69,7 @@ object LocalAccountsDataProvider {
             firstName = "Eric",
             lastName = "Alen",
             email = "ealen13@example.com",
-            avatar = R.drawable.avatar_4
+            avatar = R.drawable.avatar_5
         ),
         Account(
             id = 7,

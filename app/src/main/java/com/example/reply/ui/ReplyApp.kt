@@ -28,12 +28,12 @@ import com.example.reply.ui.utils.ReplyNavigationType
 
 /**
  * Main composable that serves as container
- * which displays content according to [replyUIState] and [windowSize]
+ * which displays content according to [replyUiState] and [windowSize]
  */
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun ReplyApp(
-    replyUIState: ReplyUIState,
+    replyUiState: ReplyUiState,
     windowSize: WindowWidthSizeClass,
     modifier: Modifier = Modifier,
     viewModel: ReplyViewModel = viewModel()
@@ -65,7 +65,7 @@ fun ReplyApp(
     ReplyHomeScreen(
         navigationType = navigationType,
         contentType = contentType,
-        replyUIState = replyUIState,
+        replyUiState = replyUiState,
         onTabPressed = { mailboxType: MailboxType ->
             viewModel.updateCurrentMailbox(mailboxType = mailboxType)
             viewModel.resetHomeScreenStates()

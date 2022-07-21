@@ -66,7 +66,7 @@ import com.example.reply.ui.utils.ReplyNavigationType
 fun ReplyHomeScreen(
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
-    replyUIState: ReplyUIState,
+    replyUiState: ReplyUiState,
     onTabPressed: (MailboxType) -> Unit,
     onEmailCardPressed: (Email) -> Unit,
     onDetailScreenBackPressed: () -> Unit,
@@ -98,7 +98,7 @@ fun ReplyHomeScreen(
         PermanentNavigationDrawer(
             drawerContent = {
                 NavigationDrawerContent(
-                    selectedDestination = replyUIState.currentMailbox,
+                    selectedDestination = replyUiState.currentMailbox,
                     onTabPressed = onTabPressed,
                     navigationItemContentList = navigationItemContentList
                 )
@@ -107,7 +107,7 @@ fun ReplyHomeScreen(
             ReplyAppContent(
                 navigationType = navigationType,
                 contentType = contentType,
-                replyUIState = replyUIState,
+                replyUiState = replyUiState,
                 onTabPressed = onTabPressed,
                 onEmailCardPressed = onEmailCardPressed,
                 navigationItemContentList = navigationItemContentList,
@@ -115,11 +115,11 @@ fun ReplyHomeScreen(
             )
         }
     } else {
-        if (replyUIState.isShowingHomepage) {
+        if (replyUiState.isShowingHomepage) {
             ReplyAppContent(
                 navigationType = navigationType,
                 contentType = contentType,
-                replyUIState = replyUIState,
+                replyUiState = replyUiState,
                 onTabPressed = onTabPressed,
                 onEmailCardPressed = onEmailCardPressed,
                 navigationItemContentList = navigationItemContentList,
@@ -127,13 +127,12 @@ fun ReplyHomeScreen(
             )
         } else {
             ReplyDetailsScreen(
-                replyUIState = replyUIState,
+                replyUiState = replyUiState,
                 isFullScreen = true,
                 onBackButtonClicked = onDetailScreenBackPressed,
                 modifier = modifier
             )
         }
-
     }
 }
 
@@ -146,7 +145,7 @@ fun ReplyHomeScreen(
 private fun ReplyAppContent(
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
-    replyUIState: ReplyUIState,
+    replyUiState: ReplyUiState,
     onTabPressed: ((MailboxType) -> Unit),
     onEmailCardPressed: (Email) -> Unit,
     navigationItemContentList: List<NavigationItemContent>,
@@ -155,7 +154,7 @@ private fun ReplyAppContent(
     Row(modifier = Modifier.fillMaxSize()) {
         AnimatedVisibility(visible = navigationType == ReplyNavigationType.NAVIGATION_RAIL) {
             ReplyNavigationRail(
-                currentTab = replyUIState.currentMailbox,
+                currentTab = replyUiState.currentMailbox,
                 onTabPressed = onTabPressed,
                 navigationItemContentList = navigationItemContentList
             )
@@ -167,21 +166,20 @@ private fun ReplyAppContent(
         ) {
             if (contentType == ReplyContentType.LIST_AND_DETAIL) {
                 ReplyListAndDetailContent(
-                    replyUIState = replyUIState,
+                    replyUiState = replyUiState,
                     onEmailCardPressed = onEmailCardPressed,
                     modifier = Modifier.weight(1f)
                 )
             } else {
                 ReplyListOnlyContent(
-                    replyUIState = replyUIState,
+                    replyUiState = replyUiState,
                     onEmailCardPressed = onEmailCardPressed,
                     modifier = Modifier.weight(1f)
                 )
             }
-
             AnimatedVisibility(visible = navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
                 ReplyBottomNavigationBar(
-                    currentTab = replyUIState.currentMailbox,
+                    currentTab = replyUiState.currentMailbox,
                     onTabPressed = onTabPressed,
                     navigationItemContentList = navigationItemContentList
                 )

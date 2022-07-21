@@ -54,7 +54,7 @@ import com.example.reply.data.MailboxType
  */
 @Composable
 fun ReplyDetailsScreen(
-    replyUIState: ReplyUIState,
+    replyUiState: ReplyUiState,
     modifier: Modifier = Modifier,
     onBackButtonClicked: () -> Unit = {},
     isFullScreen: Boolean = false
@@ -67,11 +67,11 @@ fun ReplyDetailsScreen(
         item {
             Spacer(modifier = Modifier.height(24.dp))
             if (isFullScreen) {
-                ReplyDetailsScreenTopBar(onBackButtonClicked, replyUIState)
+                ReplyDetailsScreenTopBar(onBackButtonClicked, replyUiState)
             }
             ReplyEmailDetailsCard(
-                email = replyUIState.currentSelectedEmail,
-                mailboxType = replyUIState.currentMailbox,
+                email = replyUiState.currentSelectedEmail,
+                mailboxType = replyUiState.currentMailbox,
                 isFullScreen = isFullScreen,
                 modifier = if (isFullScreen)
                     Modifier.padding(horizontal = 16.dp)
@@ -85,7 +85,7 @@ fun ReplyDetailsScreen(
 @Composable
 private fun ReplyDetailsScreenTopBar(
     onBackButtonClicked: () -> Unit,
-    replyUIState: ReplyUIState
+    replyUiState: ReplyUiState
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -109,7 +109,7 @@ private fun ReplyDetailsScreenTopBar(
                 .padding(end = 40.dp)
         ) {
             Text(
-                text = replyUIState.currentSelectedEmail.subject,
+                text = replyUiState.currentSelectedEmail.subject,
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -155,7 +155,6 @@ private fun ReplyEmailDetailsCard(
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-
             DetailsScreenButtonBar(mailboxType, displayToast)
         }
     }
