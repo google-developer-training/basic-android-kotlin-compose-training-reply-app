@@ -104,7 +104,8 @@ fun ReplyAppPreviewDesktop() {
     ReplyTheme {
         ReplyApp(
             replyUiState = ReplyUiState(
-                mailboxes = mapOf(MailboxType.Inbox to LocalEmailsDataProvider.allEmails)
+                mailboxes = mapOf(MailboxType.Inbox to LocalEmailsDataProvider.allEmails),
+                currentSelectedEmail = LocalEmailsDataProvider.allEmails[0]
             ),
             windowSize = WindowWidthSizeClass.Expanded,
         )
