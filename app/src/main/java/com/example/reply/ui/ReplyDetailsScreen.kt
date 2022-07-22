@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -63,9 +64,9 @@ fun ReplyDetailsScreen(
         modifier = modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.inverseOnSurface)
+            .padding(top = 24.dp)
     ) {
         item {
-            Spacer(modifier = Modifier.height(24.dp))
             if (isFullScreen) {
                 ReplyDetailsScreenTopBar(onBackButtonClicked, replyUiState)
             }
@@ -88,11 +89,13 @@ private fun ReplyDetailsScreenTopBar(
     replyUiState: ReplyUiState
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 24.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         IconButton(
-            onClick = { onBackButtonClicked() },
+            onClick = onBackButtonClicked,
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .background(MaterialTheme.colorScheme.surface, shape = CircleShape),
@@ -115,7 +118,6 @@ private fun ReplyDetailsScreenTopBar(
             )
         }
     }
-    Spacer(modifier = Modifier.height(24.dp))
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -214,11 +216,12 @@ private fun DetailsScreenButtonBar(
 }
 
 @Composable
-private fun DetailsScreenHeader(email: Email) {
-    Row(modifier = Modifier.fillMaxWidth()) {
+private fun DetailsScreenHeader(email: Email, modifier: Modifier = Modifier) {
+    Row(modifier = modifier.fillMaxWidth()) {
         ReplyProfileImage(
             drawableResource = email.sender.avatar,
             description = email.sender.fullName,
+            modifier = Modifier.size(40.dp)
         )
         Column(
             modifier = Modifier

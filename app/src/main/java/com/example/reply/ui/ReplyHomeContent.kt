@@ -60,7 +60,7 @@ fun ReplyListOnlyContent(
         item {
             ReplyHomeTopBar(modifier = Modifier.fillMaxWidth())
         }
-        items(emails) { email ->
+        items(emails, key = { email -> email.id }) { email ->
             ReplyEmailListItem(
                 email = email,
                 onCardClick = {
@@ -87,10 +87,13 @@ fun ReplyListAndDetailContent(
                 .weight(1f)
                 .padding(end = 16.dp, top = 20.dp)
         ) {
-            items(emails) { email ->
-                ReplyEmailListItem(email = email, onCardClick = {
-                    onEmailCardPressed(email)
-                })
+            items(emails, key = { email -> email.id }) { email ->
+                ReplyEmailListItem(
+                    email = email,
+                    onCardClick = {
+                        onEmailCardPressed(email)
+                    }
+                )
             }
         }
         ReplyDetailsScreen(replyUiState = replyUiState, modifier = Modifier.weight(1f))
@@ -116,28 +119,7 @@ fun ReplyEmailListItem(
                 .fillMaxWidth()
                 .padding(20.dp)
         ) {
-            Row(modifier = Modifier.fillMaxWidth()) {
-                ReplyProfileImage(
-                    drawableResource = email.sender.avatar,
-                    description = email.sender.fullName,
-                )
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = 12.dp, vertical = 4.dp),
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = email.sender.firstName,
-                        style = MaterialTheme.typography.labelMedium
-                    )
-                    Text(
-                        text = email.createdAt,
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.outline
-                    )
-                }
-            }
+            ReplyEmailItemHeader(email)
             Text(
                 text = email.subject,
                 style = MaterialTheme.typography.bodyLarge,
@@ -155,6 +137,33 @@ fun ReplyEmailListItem(
     }
 }
 
+@Composable
+private fun ReplyEmailItemHeader(email: Email, modifier: Modifier = Modifier) {
+    Row(modifier = modifier.fillMaxWidth()) {
+        ReplyProfileImage(
+            drawableResource = email.sender.avatar,
+            description = email.sender.fullName,
+            modifier = Modifier.size(40.dp)
+        )
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(horizontal = 12.dp, vertical = 4.dp),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = email.sender.firstName,
+                style = MaterialTheme.typography.labelMedium
+            )
+            Text(
+                text = email.createdAt,
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.outline
+            )
+        }
+    }
+}
+
 /**
  * Component that displays profile image
  */
@@ -162,7 +171,7 @@ fun ReplyEmailListItem(
 fun ReplyProfileImage(
     @DrawableRes drawableResource: Int,
     description: String,
-    modifier: Modifier = Modifier.size(40.dp),
+    modifier: Modifier = Modifier,
 ) {
     Image(
         modifier = modifier.clip(CircleShape),
@@ -200,9 +209,11 @@ private fun ReplyHomeTopBar(modifier: Modifier = Modifier) {
             .fillMaxWidth()
             .padding(vertical = 8.dp)
     ) {
-        ReplyLogo(modifier = Modifier
-            .size(64.dp)
-            .padding(start = 4.dp))
+        ReplyLogo(
+            modifier = Modifier
+                .size(64.dp)
+                .padding(start = 4.dp)
+        )
         ReplyProfileImage(
             drawableResource = LocalAccountsDataProvider.userAccount.avatar,
             description = stringResource(R.string.profile),
