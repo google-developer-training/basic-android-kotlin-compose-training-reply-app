@@ -74,7 +74,7 @@ class MainActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun ReplyAppPreview() {
+fun ReplyAppCompactPreview() {
     ReplyTheme {
         ReplyApp(
             replyUiState = ReplyUiState(
@@ -87,7 +87,7 @@ fun ReplyAppPreview() {
 
 @Preview(showBackground = true, widthDp = 700)
 @Composable
-fun ReplyAppPreviewTablet() {
+fun ReplyAppMediumPreview() {
     ReplyTheme {
         ReplyApp(
             replyUiState = ReplyUiState(
@@ -100,7 +100,7 @@ fun ReplyAppPreviewTablet() {
 
 @Preview(showBackground = true, widthDp = 1000)
 @Composable
-fun ReplyAppPreviewDesktop() {
+fun ReplyAppExpandedPreview() {
     ReplyTheme {
         ReplyApp(
             replyUiState = ReplyUiState(
