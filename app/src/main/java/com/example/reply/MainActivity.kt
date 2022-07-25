@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.reply.ui
+package com.example.reply
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -29,6 +29,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.reply.data.MailboxType
 import com.example.reply.data.local.LocalEmailsDataProvider
+import com.example.reply.ui.ReplyApp
 import com.example.reply.ui.theme.ReplyTheme
 
 /**
