@@ -19,6 +19,7 @@ package com.example.reply.ui
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.reply.data.Email
@@ -33,7 +34,6 @@ import com.example.reply.ui.utils.ReplyNavigationType
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun ReplyApp(
-    replyUiState: ReplyUiState,
     windowSize: WindowWidthSizeClass,
     modifier: Modifier = Modifier,
     onActivityClosed: () -> Unit = {},
@@ -44,6 +44,7 @@ fun ReplyApp(
      */
     val navigationType: ReplyNavigationType
     val contentType: ReplyContentType
+    val replyUiState = viewModel.uiState.collectAsState().value
 
     when (windowSize) {
         WindowWidthSizeClass.Compact -> {

@@ -35,9 +35,6 @@ import com.example.reply.ui.theme.ReplyTheme
  * Activity for Reply app
  */
 class MainActivity : ComponentActivity() {
-
-    private val viewModel: ReplyViewModel by viewModels()
-
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,12 +42,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             ReplyTheme {
                 val windowSize = calculateWindowSizeClass(this)
-                val uiState = viewModel.uiState.collectAsState().value
 
                 ReplyApp(
-                    replyUiState = uiState,
                     windowSize = windowSize.widthSizeClass,
-                    viewModel = viewModel,
                     onActivityClosed = ::finish
                 )
             }
@@ -63,9 +57,6 @@ class MainActivity : ComponentActivity() {
 fun ReplyAppCompactPreview() {
     ReplyTheme {
         ReplyApp(
-            replyUiState = ReplyUiState(
-                mailboxes = mapOf(MailboxType.Inbox to LocalEmailsDataProvider.allEmails)
-            ),
             windowSize = WindowWidthSizeClass.Compact,
         )
     }
@@ -76,9 +67,6 @@ fun ReplyAppCompactPreview() {
 fun ReplyAppMediumPreview() {
     ReplyTheme {
         ReplyApp(
-            replyUiState = ReplyUiState(
-                mailboxes = mapOf(MailboxType.Inbox to LocalEmailsDataProvider.allEmails)
-            ),
             windowSize = WindowWidthSizeClass.Medium,
         )
     }
@@ -89,10 +77,6 @@ fun ReplyAppMediumPreview() {
 fun ReplyAppExpandedPreview() {
     ReplyTheme {
         ReplyApp(
-            replyUiState = ReplyUiState(
-                mailboxes = mapOf(MailboxType.Inbox to LocalEmailsDataProvider.allEmails),
-                currentSelectedEmail = LocalEmailsDataProvider.allEmails[0]
-            ),
             windowSize = WindowWidthSizeClass.Expanded,
         )
     }
