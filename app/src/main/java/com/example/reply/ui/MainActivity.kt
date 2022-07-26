@@ -47,25 +47,11 @@ class MainActivity : ComponentActivity() {
                 val windowSize = calculateWindowSizeClass(this)
                 val uiState = viewModel.uiState.collectAsState().value
 
-                val onBackPressedCallback = object : OnBackPressedCallback(true) {
-                    override fun handleOnBackPressed() {
-                        if (
-                            windowSize.widthSizeClass != WindowWidthSizeClass.Expanded
-                                && !uiState.isShowingHomepage
-                        ) {
-                            viewModel.resetHomeScreenStates()
-                        } else {
-                            finish()
-                        }
-                    }
-                }
-
-                this.onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
-
                 ReplyApp(
                     replyUiState = uiState,
                     windowSize = windowSize.widthSizeClass,
-                    viewModel = viewModel
+                    viewModel = viewModel,
+                    onActivityClosed = ::finish
                 )
             }
         }

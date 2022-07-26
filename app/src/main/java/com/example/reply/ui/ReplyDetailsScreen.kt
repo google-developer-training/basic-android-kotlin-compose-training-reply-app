@@ -17,6 +17,7 @@
 package com.example.reply.ui
 
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -57,9 +58,13 @@ import com.example.reply.data.MailboxType
 fun ReplyDetailsScreen(
     replyUiState: ReplyUiState,
     modifier: Modifier = Modifier,
+    onBackPressed: () -> Unit = {},
     onBackButtonClicked: () -> Unit = {},
     isFullScreen: Boolean = false
 ) {
+    BackHandler {
+        onBackPressed()
+    }
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
@@ -86,7 +91,8 @@ fun ReplyDetailsScreen(
 @Composable
 private fun ReplyDetailsScreenTopBar(
     onBackButtonClicked: () -> Unit,
-    replyUiState: ReplyUiState
+    replyUiState: ReplyUiState,
+    modifier: Modifier = Modifier
 ) {
     Row(
         modifier = Modifier

@@ -36,6 +36,7 @@ fun ReplyApp(
     replyUiState: ReplyUiState,
     windowSize: WindowWidthSizeClass,
     modifier: Modifier = Modifier,
+    onActivityClosed: () -> Unit = {},
     viewModel: ReplyViewModel = viewModel()
 ) {
     /**
@@ -78,6 +79,7 @@ fun ReplyApp(
         onDetailScreenBackPressed = {
             viewModel.resetHomeScreenStates()
         },
+        onActivityClosed = onActivityClosed,
         modifier = modifier
     )
 }

@@ -70,6 +70,7 @@ fun ReplyHomeScreen(
     onTabPressed: (MailboxType) -> Unit,
     onEmailCardPressed: (Email) -> Unit,
     onDetailScreenBackPressed: () -> Unit,
+    onActivityClosed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val navigationItemContentList = listOf(
@@ -110,6 +111,7 @@ fun ReplyHomeScreen(
                 replyUiState = replyUiState,
                 onTabPressed = onTabPressed,
                 onEmailCardPressed = onEmailCardPressed,
+                onActivityClosed = onActivityClosed,
                 navigationItemContentList = navigationItemContentList,
                 modifier = modifier
             )
@@ -130,7 +132,8 @@ fun ReplyHomeScreen(
                 replyUiState = replyUiState,
                 isFullScreen = true,
                 onBackButtonClicked = onDetailScreenBackPressed,
-                modifier = modifier
+                modifier = modifier,
+                onBackPressed = onDetailScreenBackPressed
             )
         }
     }
@@ -149,7 +152,8 @@ private fun ReplyAppContent(
     onTabPressed: ((MailboxType) -> Unit),
     onEmailCardPressed: (Email) -> Unit,
     navigationItemContentList: List<NavigationItemContent>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onActivityClosed: () -> Unit = {}
 ) {
     Row(modifier = modifier.fillMaxSize()) {
         AnimatedVisibility(visible = navigationType == ReplyNavigationType.NAVIGATION_RAIL) {
@@ -168,7 +172,8 @@ private fun ReplyAppContent(
                 ReplyListAndDetailContent(
                     replyUiState = replyUiState,
                     onEmailCardPressed = onEmailCardPressed,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    onActivityClosed = onActivityClosed
                 )
             } else {
                 ReplyListOnlyContent(
@@ -199,7 +204,7 @@ private fun ReplyNavigationRail(
     modifier: Modifier = Modifier
 ) {
     NavigationRail(modifier = modifier.fillMaxHeight()) {
-        for(navItem in navigationItemContentList) {
+        for (navItem in navigationItemContentList) {
             NavigationRailItem(
                 selected = currentTab == navItem.mailboxType,
                 onClick = { onTabPressed(navItem.mailboxType) },
@@ -225,7 +230,7 @@ private fun ReplyBottomNavigationBar(
     modifier: Modifier = Modifier
 ) {
     NavigationBar(modifier = modifier.fillMaxWidth()) {
-        for(navItem in navigationItemContentList) {
+        for (navItem in navigationItemContentList) {
             NavigationBarItem(
                 selected = currentTab == navItem.mailboxType,
                 onClick = { onTabPressed(navItem.mailboxType) },
@@ -259,7 +264,7 @@ private fun NavigationDrawerContent(
             .padding(12.dp)
     ) {
         NavigationDrawerHeader(modifier)
-        for(navItem in navigationItemContentList) {
+        for (navItem in navigationItemContentList) {
             NavigationDrawerItem(
                 selected = selectedDestination == navItem.mailboxType,
                 label = {
@@ -292,7 +297,7 @@ private fun NavigationDrawerHeader(modifier: Modifier) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        ReplyLogo()
+        ReplyLogo(modifier = Modifier.size(48.dp))
         ReplyProfileImage(
             drawableResource = LocalAccountsDataProvider.userAccount.avatar,
             description = stringResource(id = R.string.profile),

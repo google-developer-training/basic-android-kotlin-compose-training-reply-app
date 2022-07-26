@@ -78,6 +78,7 @@ fun ReplyListOnlyContent(
 fun ReplyListAndDetailContent(
     replyUiState: ReplyUiState,
     onEmailCardPressed: (Email) -> Unit,
+    onActivityClosed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val emails = replyUiState.currentMailboxEmails
@@ -96,7 +97,11 @@ fun ReplyListAndDetailContent(
                 )
             }
         }
-        ReplyDetailsScreen(replyUiState = replyUiState, modifier = Modifier.weight(1f))
+        ReplyDetailsScreen(
+            replyUiState = replyUiState,
+            modifier = Modifier.weight(1f),
+            onBackPressed = onActivityClosed
+        )
     }
 }
 
@@ -185,7 +190,7 @@ fun ReplyProfileImage(
  */
 @Composable
 fun ReplyLogo(
-    modifier: Modifier = Modifier.size(48.dp),
+    modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colorScheme.primary
 ) {
     Image(
