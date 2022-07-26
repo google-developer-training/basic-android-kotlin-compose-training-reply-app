@@ -36,14 +36,13 @@ import com.example.reply.ui.utils.ReplyNavigationType
 fun ReplyApp(
     windowSize: WindowWidthSizeClass,
     modifier: Modifier = Modifier,
-    onActivityClosed: () -> Unit = {},
-    viewModel: ReplyViewModel = viewModel()
 ) {
     /**
      * This will help us select type of navigation and content type depending on window size
      */
     val navigationType: ReplyNavigationType
     val contentType: ReplyContentType
+    val viewModel: ReplyViewModel = viewModel()
     val replyUiState = viewModel.uiState.collectAsState().value
 
     when (windowSize) {
@@ -80,7 +79,6 @@ fun ReplyApp(
         onDetailScreenBackPressed = {
             viewModel.resetHomeScreenStates()
         },
-        onActivityClosed = onActivityClosed,
         modifier = modifier
     )
 }

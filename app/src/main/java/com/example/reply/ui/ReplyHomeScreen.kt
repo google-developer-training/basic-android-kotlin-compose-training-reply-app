@@ -70,7 +70,6 @@ fun ReplyHomeScreen(
     onTabPressed: (MailboxType) -> Unit,
     onEmailCardPressed: (Email) -> Unit,
     onDetailScreenBackPressed: () -> Unit,
-    onActivityClosed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val navigationItemContentList = listOf(
@@ -111,7 +110,6 @@ fun ReplyHomeScreen(
                 replyUiState = replyUiState,
                 onTabPressed = onTabPressed,
                 onEmailCardPressed = onEmailCardPressed,
-                onActivityClosed = onActivityClosed,
                 navigationItemContentList = navigationItemContentList,
                 modifier = modifier
             )
@@ -131,7 +129,6 @@ fun ReplyHomeScreen(
             ReplyDetailsScreen(
                 replyUiState = replyUiState,
                 isFullScreen = true,
-                onBackButtonClicked = onDetailScreenBackPressed,
                 modifier = modifier,
                 onBackPressed = onDetailScreenBackPressed
             )
@@ -153,7 +150,6 @@ private fun ReplyAppContent(
     onEmailCardPressed: (Email) -> Unit,
     navigationItemContentList: List<NavigationItemContent>,
     modifier: Modifier = Modifier,
-    onActivityClosed: () -> Unit = {}
 ) {
     Row(modifier = modifier.fillMaxSize()) {
         AnimatedVisibility(visible = navigationType == ReplyNavigationType.NAVIGATION_RAIL) {
@@ -173,7 +169,6 @@ private fun ReplyAppContent(
                     replyUiState = replyUiState,
                     onEmailCardPressed = onEmailCardPressed,
                     modifier = Modifier.weight(1f),
-                    onActivityClosed = onActivityClosed
                 )
             } else {
                 ReplyListOnlyContent(

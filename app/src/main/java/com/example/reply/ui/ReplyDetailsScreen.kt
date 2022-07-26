@@ -59,7 +59,6 @@ fun ReplyDetailsScreen(
     replyUiState: ReplyUiState,
     modifier: Modifier = Modifier,
     onBackPressed: () -> Unit = {},
-    onBackButtonClicked: () -> Unit = {},
     isFullScreen: Boolean = false
 ) {
     BackHandler {
@@ -73,7 +72,7 @@ fun ReplyDetailsScreen(
     ) {
         item {
             if (isFullScreen) {
-                ReplyDetailsScreenTopBar(onBackButtonClicked, replyUiState)
+                ReplyDetailsScreenTopBar(onBackPressed, replyUiState)
             }
             ReplyEmailDetailsCard(
                 email = replyUiState.currentSelectedEmail,
@@ -95,7 +94,7 @@ private fun ReplyDetailsScreenTopBar(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(bottom = 24.dp),
         verticalAlignment = Alignment.CenterVertically,
