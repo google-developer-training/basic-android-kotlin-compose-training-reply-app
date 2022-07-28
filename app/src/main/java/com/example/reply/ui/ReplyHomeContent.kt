@@ -16,7 +16,6 @@
 
 package com.example.reply.ui
 
-import android.app.Activity
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -38,7 +37,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -98,11 +96,10 @@ fun ReplyListAndDetailContent(
                 )
             }
         }
-        val activity = LocalContext.current as Activity
         ReplyDetailsScreen(
             replyUiState = replyUiState,
             modifier = Modifier.weight(1f),
-            onBackPressed = { activity.finish() }
+            onBackPressed = {}
         )
     }
 }
@@ -205,7 +202,6 @@ fun ReplyLogo(
 
 /**
  * Component that displays top bar.
- * This is used when there is no navigation drawer
  */
 @Composable
 private fun ReplyHomeTopBar(modifier: Modifier = Modifier) {
