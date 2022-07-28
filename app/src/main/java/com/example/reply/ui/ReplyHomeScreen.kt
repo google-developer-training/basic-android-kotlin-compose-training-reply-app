@@ -16,7 +16,6 @@
 
 package com.example.reply.ui
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,7 +40,6 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
-import androidx.compose.material3.PermanentNavigationDrawer
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -54,18 +52,12 @@ import com.example.reply.R
 import com.example.reply.data.Email
 import com.example.reply.data.MailboxType
 import com.example.reply.data.local.LocalAccountsDataProvider
-import com.example.reply.ui.utils.ReplyContentType
-import com.example.reply.ui.utils.ReplyNavigationType
 
 /**
- * Composable that displays home screen that adapt depending on [navigationType]
- * and [contentType]
+ * Composable that displays home screen
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReplyHomeScreen(
-    navigationType: ReplyNavigationType,
-    contentType: ReplyContentType,
     replyUiState: ReplyUiState,
     onTabPressed: (MailboxType) -> Unit,
     onEmailCardPressed: (Email) -> Unit,
@@ -94,97 +86,42 @@ fun ReplyHomeScreen(
             text = stringResource(id = R.string.tab_spam)
         )
     )
-    if (navigationType == ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER) {
-        PermanentNavigationDrawer(
-            drawerContent = {
-                NavigationDrawerContent(
-                    selectedDestination = replyUiState.currentMailbox,
-                    onTabPressed = onTabPressed,
-                    navigationItemContentList = navigationItemContentList
-                )
-            }
-        ) {
-            ReplyAppContent(
-                navigationType = navigationType,
-                contentType = contentType,
-                replyUiState = replyUiState,
-                onTabPressed = onTabPressed,
-                onEmailCardPressed = onEmailCardPressed,
-                navigationItemContentList = navigationItemContentList,
-                modifier = modifier
-            )
-        }
-    } else {
-        if (replyUiState.isShowingHomepage) {
-            ReplyAppContent(
-                navigationType = navigationType,
-                contentType = contentType,
-                replyUiState = replyUiState,
-                onTabPressed = onTabPressed,
-                onEmailCardPressed = onEmailCardPressed,
-                navigationItemContentList = navigationItemContentList,
-                modifier = modifier
-            )
-        } else {
-            ReplyDetailsScreen(
-                replyUiState = replyUiState,
-                isFullScreen = true,
-                modifier = modifier,
-                onBackPressed = onDetailScreenBackPressed
-            )
-        }
-    }
+    ReplyAppContent(
+        replyUiState = replyUiState,
+        onTabPressed = onTabPressed,
+        onEmailCardPressed = onEmailCardPressed,
+        navigationItemContentList = navigationItemContentList,
+        modifier = modifier
+
+    )
 }
 
 /**
  * Composable that displays content at home screen.
- * It displays different navigation component depending on [navigationType],
- * It displays different number of panes depending on [contentType]
  */
 @Composable
 private fun ReplyAppContent(
-    navigationType: ReplyNavigationType,
-    contentType: ReplyContentType,
     replyUiState: ReplyUiState,
     onTabPressed: ((MailboxType) -> Unit),
     onEmailCardPressed: (Email) -> Unit,
     navigationItemContentList: List<NavigationItemContent>,
     modifier: Modifier = Modifier,
 ) {
-    Row(modifier = modifier.fillMaxSize()) {
-        AnimatedVisibility(visible = navigationType == ReplyNavigationType.NAVIGATION_RAIL) {
-            ReplyNavigationRail(
-                currentTab = replyUiState.currentMailbox,
-                onTabPressed = onTabPressed,
-                navigationItemContentList = navigationItemContentList
-            )
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.inverseOnSurface)
-        ) {
-            if (contentType == ReplyContentType.LIST_AND_DETAIL) {
-                ReplyListAndDetailContent(
-                    replyUiState = replyUiState,
-                    onEmailCardPressed = onEmailCardPressed,
-                    modifier = Modifier.weight(1f),
-                )
-            } else {
-                ReplyListOnlyContent(
-                    replyUiState = replyUiState,
-                    onEmailCardPressed = onEmailCardPressed,
-                    modifier = Modifier.weight(1f)
-                )
-            }
-            AnimatedVisibility(visible = navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
-                ReplyBottomNavigationBar(
-                    currentTab = replyUiState.currentMailbox,
-                    onTabPressed = onTabPressed,
-                    navigationItemContentList = navigationItemContentList
-                )
-            }
-        }
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.inverseOnSurface)
+    ) {
+        ReplyListOnlyContent(
+            replyUiState = replyUiState,
+            onEmailCardPressed = onEmailCardPressed,
+            modifier = Modifier.weight(1f)
+        )
+        ReplyBottomNavigationBar(
+            currentTab = replyUiState.currentMailbox,
+            onTabPressed = onTabPressed,
+            navigationItemContentList = navigationItemContentList
+        )
     }
 }
 
@@ -194,7 +131,7 @@ private fun ReplyAppContent(
 @Composable
 private fun ReplyNavigationRail(
     currentTab: MailboxType,
-    onTabPressed: ((MailboxType) -> Unit),
+    onTabPressed: ((MailboxType) -> Unit) = {},
     navigationItemContentList: List<NavigationItemContent>,
     modifier: Modifier = Modifier
 ) {
@@ -292,7 +229,7 @@ private fun NavigationDrawerHeader(modifier: Modifier) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        ReplyLogo(modifier = Modifier.size(48.dp))
+        ReplyLogo()
         ReplyProfileImage(
             drawableResource = LocalAccountsDataProvider.userAccount.avatar,
             description = stringResource(id = R.string.profile),
