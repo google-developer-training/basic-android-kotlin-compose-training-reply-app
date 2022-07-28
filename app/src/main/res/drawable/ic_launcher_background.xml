@@ -10,11 +10,11 @@
   the License.
   -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="180dp"
-    android:height="180dp"
-    android:viewportWidth="180"
-    android:viewportHeight="180">
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
     <path
-        android:pathData="M-3.63,-3.63h187.26v187.26h-187.26z"
+        android:pathData="M-2.66,-2.78h113.32v113.32h-113.32z"
         android:fillColor="#1c81d8"/>
 </vector>

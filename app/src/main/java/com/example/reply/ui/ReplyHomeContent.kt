@@ -18,26 +18,18 @@ package com.example.reply.ui
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationDrawerItem
-import androidx.compose.material3.NavigationDrawerItemDefaults
-import androidx.compose.material3.NavigationRail
-import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -51,7 +43,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.reply.R
 import com.example.reply.data.Email
-import com.example.reply.data.MailboxType
 import com.example.reply.data.local.LocalAccountsDataProvider
 
 /**
@@ -233,87 +224,5 @@ private fun ReplyHomeTopBar(modifier: Modifier = Modifier) {
                 .padding(end = 8.dp)
                 .size(48.dp)
         )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun NavigationDrawerContent(
-    selectedDestination: MailboxType,
-    onTabPressed: ((MailboxType) -> Unit),
-    navigationItemContentList: List<NavigationItemContent>,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier
-            .wrapContentWidth()
-            .fillMaxHeight()
-            .background(MaterialTheme.colorScheme.inverseOnSurface)
-            .padding(12.dp)
-    ) {
-        NavigationDrawerHeader(modifier)
-        for (navItem in navigationItemContentList) {
-            NavigationDrawerItem(
-                selected = selectedDestination == navItem.mailboxType,
-                label = {
-                    Text(
-                        text = navItem.text,
-                        modifier = Modifier.padding(horizontal = 16.dp)
-                    )
-                },
-                icon = {
-                    Icon(
-                        imageVector = navItem.icon,
-                        contentDescription = navItem.text
-                    )
-                },
-                colors = NavigationDrawerItemDefaults.colors(
-                    unselectedContainerColor = Color.Transparent
-                ),
-                onClick = { onTabPressed(navItem.mailboxType) }
-            )
-        }
-    }
-}
-
-@Composable
-private fun NavigationDrawerHeader(modifier: Modifier) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        ReplyLogo()
-        ReplyProfileImage(
-            drawableResource = LocalAccountsDataProvider.userAccount.avatar,
-            description = stringResource(id = R.string.profile),
-            modifier = Modifier
-                .size(28.dp)
-        )
-    }
-}
-
-@Composable
-private fun ReplyNavigationRail(
-    currentTab: MailboxType,
-    onTabPressed: ((MailboxType) -> Unit) = {},
-    navigationItemContentList: List<NavigationItemContent>,
-    modifier: Modifier = Modifier
-) {
-    NavigationRail(modifier = modifier.fillMaxHeight()) {
-        for (navItem in navigationItemContentList) {
-            NavigationRailItem(
-                selected = currentTab == navItem.mailboxType,
-                onClick = { onTabPressed(navItem.mailboxType) },
-                icon = {
-                    Icon(
-                        imageVector = navItem.icon,
-                        contentDescription = navItem.text
-                    )
-                }
-            )
-        }
     }
 }
