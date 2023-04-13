@@ -35,8 +35,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.example.reply.R
 import com.example.reply.data.Email
 import com.example.reply.data.MailboxType
@@ -81,7 +81,7 @@ fun ReplyHomeScreen(
         val navigationDrawerContentDescription = stringResource(R.string.navigation_drawer)
         PermanentNavigationDrawer(
             drawerContent = {
-                PermanentDrawerSheet(Modifier.width(240.dp)) {
+                PermanentDrawerSheet(Modifier.width(dimensionResource(R.dimen.drawer_width))) {
                     NavigationDrawerContent(
                         selectedDestination = replyUiState.currentMailbox,
                         onTabPressed = onTabPressed,
@@ -233,7 +233,7 @@ private fun NavigationDrawerContent(
             .wrapContentWidth()
             .fillMaxHeight()
             .background(MaterialTheme.colorScheme.inverseOnSurface)
-            .padding(12.dp)
+            .padding(dimensionResource(R.dimen.drawer_padding_content))
     ) {
         NavigationDrawerHeader(modifier)
         for (navItem in navigationItemContentList) {
@@ -242,7 +242,7 @@ private fun NavigationDrawerContent(
                 label = {
                     Text(
                         text = navItem.text,
-                        modifier = Modifier.padding(horizontal = 16.dp)
+                        modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.drawer_padding_header))
                     )
                 },
                 icon = {
@@ -265,16 +265,16 @@ private fun NavigationDrawerHeader(modifier: Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(dimensionResource(R.dimen.profile_image_padding)),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        ReplyLogo(modifier = Modifier.size(48.dp))
+        ReplyLogo(modifier = Modifier.size(dimensionResource(R.dimen.reply_logo_size)))
         ReplyProfileImage(
             drawableResource = LocalAccountsDataProvider.defaultAccount.avatar,
             description = stringResource(id = R.string.profile),
             modifier = Modifier
-                .size(28.dp)
+                .size(dimensionResource(R.dimen.profile_image_size))
         )
     }
 }

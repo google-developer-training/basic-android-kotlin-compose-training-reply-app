@@ -15,7 +15,5 @@
   ~ limitations under the License.
   -->
 <resources>
-    <style name="Theme.Reply" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:windowTranslucentStatus">true</item>
-    </style>
+    <style name="Theme.Reply" parent="android:Theme.Material.Light.NoActionBar"/>
 </resources>

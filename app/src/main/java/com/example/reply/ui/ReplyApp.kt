@@ -7,8 +7,9 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.reply.R
 import com.example.reply.data.Email
 import com.example.reply.data.MailboxType
 import com.example.reply.ui.utils.ReplyContentType
@@ -59,6 +60,8 @@ fun ReplyApp(
         onDetailScreenBackPressed = {
             viewModel.resetHomeScreenStates()
         },
-        modifier = if (navigationType == ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER) modifier else modifier.padding(top = 20.dp)
+        modifier = if (navigationType == ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER) modifier else modifier.padding(
+            top = dimensionResource(R.dimen.padding_app_top)
+        )
     )
 }
