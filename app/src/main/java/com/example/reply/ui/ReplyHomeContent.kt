@@ -4,6 +4,7 @@ import android.app.Activity
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,11 +41,18 @@ fun ReplyListOnlyContent(
 ) {
     val emails = replyUiState.currentMailboxEmails
 
-    LazyColumn(modifier = modifier.padding(
-        horizontal = dimensionResource(R.dimen.email_list_only_horizontal_padding)
-    )) {
+    LazyColumn(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(
+            dimensionResource(R.dimen.email_list_item_vertical_spacing)
+        )
+    ) {
         item {
-            ReplyHomeTopBar(modifier = Modifier.fillMaxWidth())
+            ReplyHomeTopBar(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = dimensionResource(R.dimen.topbar_padding_vertical))
+            )
         }
         items(emails, key = { email -> email.id }) { email ->
             ReplyEmailListItem(
@@ -72,7 +80,10 @@ fun ReplyListAndDetailContent(
                 .padding(
                     end = dimensionResource(R.dimen.list_and_detail_list_padding_end),
                     top = dimensionResource(R.dimen.list_and_detail_list_padding_top)
-                )
+                ),
+            verticalArrangement = Arrangement.spacedBy(
+                dimensionResource(R.dimen.email_list_item_vertical_spacing)
+            )
         ) {
             items(emails, key = { email -> email.id }) { email ->
                 ReplyEmailListItem(
@@ -102,11 +113,12 @@ fun ReplyEmailListItem(
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier.padding(
-            vertical = dimensionResource(R.dimen.email_list_item_vertical_spacing)
-        ),
+        modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = if (selected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.secondaryContainer
+            containerColor = if (selected)
+                MaterialTheme.colorScheme.primaryContainer
+            else
+                MaterialTheme.colorScheme.secondaryContainer
         ),
         onClick = onCardClick
     ) {
@@ -115,9 +127,12 @@ fun ReplyEmailListItem(
                 .fillMaxWidth()
                 .padding(dimensionResource(R.dimen.email_list_item_inner_padding))
         ) {
-            ReplyEmailItemHeader(email)
+            ReplyEmailItemHeader(
+                email,
+                Modifier.fillMaxWidth()
+            )
             Text(
-                text = email.subject,
+                text = stringResource(email.subject),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(
@@ -126,7 +141,7 @@ fun ReplyEmailListItem(
                 ),
             )
             Text(
-                text = email.body,
+                text = stringResource(email.body),
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 2,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -138,7 +153,7 @@ fun ReplyEmailListItem(
 
 @Composable
 private fun ReplyEmailItemHeader(email: Email, modifier: Modifier = Modifier) {
-    Row(modifier = modifier.fillMaxWidth()) {
+    Row(modifier = modifier) {
         ReplyProfileImage(
             drawableResource = email.sender.avatar,
             description = email.sender.fullName,
@@ -154,11 +169,11 @@ private fun ReplyEmailItemHeader(email: Email, modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = email.sender.firstName,
+                text = stringResource(email.sender.firstName),
                 style = MaterialTheme.typography.labelMedium
             )
             Text(
-                text = email.createdAt,
+                text = stringResource(email.createdAt),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.outline
             )
@@ -172,11 +187,13 @@ fun ReplyProfileImage(
     description: String,
     modifier: Modifier = Modifier,
 ) {
-    Image(
-        modifier = modifier.clip(CircleShape),
-        painter = painterResource(drawableResource),
-        contentDescription = description,
-    )
+    Box(modifier = modifier) {
+        Image(
+            modifier = Modifier.clip(CircleShape),
+            painter = painterResource(drawableResource),
+            contentDescription = description,
+        )
+    }
 }
 
 @Composable
@@ -198,8 +215,6 @@ private fun ReplyHomeTopBar(modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = dimensionResource(R.dimen.topbar_padding_vertical))
     ) {
         ReplyLogo(
             modifier = Modifier

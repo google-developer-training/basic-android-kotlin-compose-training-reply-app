@@ -16,8 +16,6 @@
   -->
 <resources>
 
-    <dimen name="padding_app_top">20dp</dimen>
-
     <dimen name="spacing_detail_buttons">12dp</dimen>
 
     <dimen name="drawer_width">240dp</dimen>
@@ -32,7 +30,7 @@
     <dimen name="list_and_detail_list_padding_end">16dp</dimen>
 
     <dimen name="email_list_item_inner_padding">20dp</dimen>
-    <dimen name="email_list_item_vertical_spacing">4dp</dimen>
+    <dimen name="email_list_item_vertical_spacing">8dp</dimen>
     <dimen name="email_list_item_header_subject_spacing">12dp</dimen>
     <dimen name="email_list_item_subject_body_spacing">8dp</dimen>
 
