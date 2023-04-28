@@ -163,7 +163,6 @@ private fun ReplyAppContent(
                     onTabPressed = onTabPressed,
                     navigationItemContentList = navigationItemContentList,
                     modifier = Modifier
-                        .fillMaxWidth()
                         .testTag(navigationRailContentDescription)
                 )
             }
