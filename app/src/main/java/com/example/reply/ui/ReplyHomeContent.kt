@@ -113,7 +113,7 @@ fun ReplyListAndDetailContent(
         ReplyDetailsScreen(
             replyUiState = replyUiState,
             modifier = Modifier.weight(1f),
-            onBackPressed = { activity.finish() }
+            onBackPressed = {}
         )
     }
 }
