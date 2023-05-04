@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (C) 2023 The Android Open Source Project
   ~
@@ -15,4 +16,164 @@
   -->
 <resources>
     <string name="app_name">Reply</string>
+    <string name="navigation_drawer">Navigation Drawer</string>
+    <string name="navigation_rail">Navigation Rail</string>
+    <string name="navigation_bottom">Navigation Bottom</string>
+    <string name="navigation_back">Back</string>
+    <string name="details_screen">Details Screen</string>
+    <string name="tab_inbox">Inbox</string>
+    <string name="tab_sent">Sent</string>
+    <string name="tab_drafts">Drafts</string>
+    <string name="tab_spam">Spam</string>
+    <string name="logo">Logo</string>
+
+    <string name="profile">Profile</string>
+    <string name="reply">Reply</string>
+    <string name="reply_all">Reply All</string>
+    <string name="continue_composing">Continue Composing</string>
+    <string name="delete">Delete</string>
+    <string name="move_to_inbox">Move to Inbox</string>
+
+    <string name="account_1_first_name">Jeff</string>
+    <string name="account_1_last_name">Hansen</string>
+    <string name="account_1_email">hikingfan@gmail.com</string>
+
+    <string name="account_4_first_name">Tracy</string>
+    <string name="account_4_last_name">Alvarez</string>
+    <string name="account_4_email">tracealvie@gmail.com</string>
+
+    <string name="account_5_first_name">Allison</string>
+    <string name="account_5_last_name">Trabucco</string>
+    <string name="account_5_email">atrabucco222@gmail.com</string>
+
+    <string name="account_6_first_name">Ali</string>
+    <string name="account_6_last_name">Connors</string>
+    <string name="account_6_email">aliconnors@gmail.com</string>
+
+    <string name="account_7_first_name">Alberto</string>
+    <string name="account_7_last_name">Williams</string>
+    <string name="account_7_email">albertowilliams124@gmail.com</string>
+
+    <string name="account_8_first_name">Kim</string>
+    <string name="account_8_last_name">Alen</string>
+    <string name="account_8_email">alen13@gmail.com</string>
+
+    <string name="account_9_first_name">Google</string>
+    <string name="account_9_last_name">Express</string>
+    <string name="account_9_email">express@google.com</string>
+
+    <string name="account_10_first_name">Sandra</string>
+    <string name="account_10_last_name">Adams</string>
+    <string name="account_10_email">sandraadams@gmail.com</string>
+
+    <string name="account_11_first_name">Trevor</string>
+    <string name="account_11_last_name">Hansen</string>
+    <string name="account_11_email">trevorhandsen@gmail.com</string>
+
+    <string name="account_12_first_name">Sean</string>
+    <string name="account_12_last_name">Holt</string>
+    <string name="account_12_email">sholt@gmail.com</string>
+
+    <string name="account_13_first_name">Frank</string>
+    <string name="account_13_last_name">Hawkins</string>
+    <string name="account_13_email">fhawkank@gmail.com</string>
+
+    <string name="email_0_subject">Package shipped!</string>
+    <string name="email_0_body">
+        Cucumber Mask Facial has shipped.\n\nKeep an eye out for a package to arrive between this
+        Thursday and next Tuesday. If for any reason you don\'t receive your package before the end
+        of next week, please reach out to us for details on your shipment.\n\nAs always, thank you
+        for shopping with us and we hope you love our specially formulated Cucumber Mask!
+    </string>
+    <string name="email_0_time">20 mins ago</string>
+
+    <string name="email_1_subject">Brunch this weekend?</string>
+    <string name="email_1_body">
+        I\'ll be in your neighborhood doing errands and was hoping to catch you for a coffee this
+        Saturday. If you don\'t have anything scheduled, it would be great to see you! It feels like
+        its been forever.\n\nIf we do get a chance to get together, remind me to tell you about Kim.
+        She stopped over at the house to say hey to the kids and told me all about her trip to
+        Mexico.\n\nTalk to you soon,\nAli
+    </string>
+    <string name="email_1_time">40 mins ago</string>
+
+    <string name="email_2_subject">Bonjour from Paris</string>
+    <string name="email_2_body">
+        Here are some great shots from my trip...
+    </string>
+    <string name="email_2_time">1 hour ago</string>
+
+    <string name="email_3_subject">High school reunion?</string>
+    <string name="email_3_body">
+        Hi friends,\n\nI was at the grocery store on Sunday night.. when I ran into Genie Williams!
+        I almost didn\'t recognize her afer 20 years!\n\nAnyway, it turns out she is on the
+        organizing committee for the high school reunion this fall. I don\'t know if you were
+        planning on going or not, but she could definitely use our help in trying to track down lots
+        of missing alums.\n\nIf you can make it, we\'re doing a little phone-tree party at her place
+        next Saturday, hoping that if we can find one person, thee more will...
+    </string>
+    <string name="email_3_time">2 hours ago</string>
+
+    <string name="email_4_subject">Brazil trip</string>
+    <string name="email_4_body">
+        Thought we might be able to go over some details about our upcoming vacation.\n\nI\'ve been
+        doing a bit of research and have come across a few paces in Northern Brazil that I think we
+        should check out. One, the north has some of the most predictable wind on the planet. I\'d
+        love to get out on the ocean and kitesurf for a couple of days if we\'re going to be
+        anywhere near or around Taiba. I hear it\'s beautiful there and if you\'re up for it, I\'d
+        love to go. Other than that, I haven\'t spent too much time looking into places along our
+        road trip route. I\'m assuming we can find places to stay and things to do as we drive and
+        find places we think look interesting. But... I know you\'re more of a planner, so if you
+        have ideas or places in mind, lets jot some ideas down!\n\nMaybe we can jump on the phone
+        later today if you have a second.
+    </string>
+    <string name="email_4_time">2 hours ago</string>
+
+    <string name="email_5_subject">Update to Your Itinerary</string>
+    <string name="email_5_body"></string>
+    <string name="email_5_time">2 hours ago</string>
+
+    <string name="email_6_subject">Recipe to try</string>
+    <string name="email_6_body">
+        Raspberry Pie: We should make this pie recipe tonight! The filling is very quick to put
+        together.
+    </string>
+    <string name="email_6_time">2 hours ago</string>
+
+    <string name="email_7_subject">Delivered</string>
+    <string name="email_7_body">
+        Your shoes should be waiting for you at home!
+    </string>
+    <string name="email_7_time">2 hours ago</string>
+
+    <string name="email_8_subject">Your update on Google Play Store is live!</string>
+    <string name="email_8_body">
+        Your update, 0.1.1, is now live on the Play Store and available for your alpha users to
+        start testing.\n\nYour alpha testers will be automatically notified. If you\'d rather send
+        them a link directly, go to your Google Play Console and follow the instructions for
+        obtaining an open alpha testing link.
+    </string>
+    <string name="email_8_time">3 hours ago</string>
+
+    <string name="email_9_subject">(No subject)</string>
+    <string name="email_9_body">
+        Hey,\n\nWanted to email and see what you thought of
+    </string>
+    <string name="email_9_time">3 hours ago</string>
+
+    <string name="email_10_subject">Try a free TrailGo account</string>
+    <string name="email_10_body">
+        Looking for the best hiking trails in your area? TrailGo gets you on the path to the
+        outdoors faster than you can pack a sandwich.\n\nWhether you\'re an experienced hiker or
+        just looking to get outside for the afternoon, there\'s a segment that suits you.
+    </string>
+    <string name="email_10_time">3 hours ago</string>
+
+    <string name="email_11_subject">Free money</string>
+    <string name="email_11_body">
+        You\'ve been selected as a winner in our latest raffle! To claim your prize, click on the
+        link.
+    </string>
+    <string name="email_11_time">3 hours ago</string>
+
 </resources>
