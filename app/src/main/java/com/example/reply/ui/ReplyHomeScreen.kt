@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Drafts
 import androidx.compose.material.icons.filled.Inbox
+import androidx.compose.material.icons.filled.Report
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -74,6 +75,11 @@ fun ReplyHomeScreen(
             icon = Icons.Default.Drafts,
             text = stringResource(id = R.string.tab_drafts)
         ),
+        NavigationItemContent(
+            mailboxType = MailboxType.Spam,
+            icon = Icons.Default.Report,
+            text = stringResource(id = R.string.tab_spam)
+        )
     )
     ReplyAppContent(
         replyUiState = replyUiState,
