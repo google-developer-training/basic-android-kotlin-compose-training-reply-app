@@ -22,7 +22,7 @@
     <dimen name="drawer_padding_header">16dp</dimen>
     <dimen name="drawer_padding_content">12dp</dimen>
 
-    <dimen name="profile_image_padding">16.dp</dimen>
+    <dimen name="profile_image_padding">16dp</dimen>
     <dimen name="profile_image_size">20dp</dimen>
     <dimen name="reply_logo_size">48dp</dimen>
 
