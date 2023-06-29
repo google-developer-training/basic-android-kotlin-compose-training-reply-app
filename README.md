@@ -1,4 +1,4 @@
-Reply App - Solution Code
+Reply App - Starter Code
 =================================
 Starter code for the Android Basics with Compose: Reply app.
 
