@@ -36,47 +36,47 @@
 
     <string name="account_1_first_name">Jeff</string>
     <string name="account_1_last_name">Hansen</string>
-    <string name="account_1_email">hikingfan@gmail.com</string>
+    <string name="account_1_email">hikingfan@altostrat.com</string>
 
     <string name="account_4_first_name">Tracy</string>
     <string name="account_4_last_name">Alvarez</string>
-    <string name="account_4_email">tracealvie@gmail.com</string>
+    <string name="account_4_email">tracealvie@altostrat.com</string>
 
     <string name="account_5_first_name">Allison</string>
     <string name="account_5_last_name">Trabucco</string>
-    <string name="account_5_email">atrabucco222@gmail.com</string>
+    <string name="account_5_email">atrabucco222@altostrat.com</string>
 
     <string name="account_6_first_name">Ali</string>
     <string name="account_6_last_name">Connors</string>
-    <string name="account_6_email">aliconnors@gmail.com</string>
+    <string name="account_6_email">aliconnors@altostrat.com</string>
 
     <string name="account_7_first_name">Alberto</string>
     <string name="account_7_last_name">Williams</string>
-    <string name="account_7_email">albertowilliams124@gmail.com</string>
+    <string name="account_7_email">albertowilliams124@altostrat.com</string>
 
     <string name="account_8_first_name">Kim</string>
     <string name="account_8_last_name">Alen</string>
-    <string name="account_8_email">alen13@gmail.com</string>
+    <string name="account_8_email">alen13@altostrat.com</string>
 
     <string name="account_9_first_name">Google</string>
     <string name="account_9_last_name">Express</string>
-    <string name="account_9_email">express@google.com</string>
+    <string name="account_9_email">express@altostrat.com</string>
 
     <string name="account_10_first_name">Sandra</string>
     <string name="account_10_last_name">Adams</string>
-    <string name="account_10_email">sandraadams@gmail.com</string>
+    <string name="account_10_email">sandraadams@altostrat.com</string>
 
     <string name="account_11_first_name">Trevor</string>
     <string name="account_11_last_name">Hansen</string>
-    <string name="account_11_email">trevorhandsen@gmail.com</string>
+    <string name="account_11_email">trevorhandsen@altostrat.com</string>
 
     <string name="account_12_first_name">Sean</string>
     <string name="account_12_last_name">Holt</string>
-    <string name="account_12_email">sholt@gmail.com</string>
+    <string name="account_12_email">sholt@altostrat.com</string>
 
     <string name="account_13_first_name">Frank</string>
     <string name="account_13_last_name">Hawkins</string>
-    <string name="account_13_email">fhawkank@gmail.com</string>
+    <string name="account_13_email">fhawkank@altostrat.com</string>
 
     <string name="email_0_subject">Package shipped!</string>
     <string name="email_0_body">
