@@ -246,7 +246,8 @@ private fun DetailsScreenHeader(email: Email, modifier: Modifier = Modifier) {
     Row(modifier = modifier) {
         ReplyProfileImage(
             drawableResource = email.sender.avatar,
-            description = email.sender.fullName,
+            description = stringResource(email.sender.firstName) + " "
+                    + stringResource(email.sender.lastName),
             modifier = Modifier.size(
                 dimensionResource(R.dimen.email_header_profile_size)
             )
@@ -288,10 +289,10 @@ private fun ActionButton(
                 .padding(vertical = dimensionResource(R.dimen.detail_action_button_padding_vertical)),
             colors = ButtonDefaults.buttonColors(
                 containerColor =
-                if (!containIrreversibleAction) {
-                    MaterialTheme.colorScheme.primaryContainer
-                } else {
+                if (containIrreversibleAction) {
                     MaterialTheme.colorScheme.onErrorContainer
+                } else {
+                    MaterialTheme.colorScheme.primaryContainer
                 }
             )
         ) {

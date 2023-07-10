@@ -172,7 +172,8 @@ private fun ReplyEmailItemHeader(email: Email, modifier: Modifier = Modifier) {
     Row(modifier = modifier) {
         ReplyProfileImage(
             drawableResource = email.sender.avatar,
-            description = email.sender.fullName,
+            description = stringResource(email.sender.firstName) + " "
+                    + stringResource(email.sender.lastName),
             modifier = Modifier.size(dimensionResource(R.dimen.email_header_profile_size))
         )
         Column(

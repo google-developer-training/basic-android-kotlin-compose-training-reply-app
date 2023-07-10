@@ -32,7 +32,4 @@ data class Account(
     @StringRes val email: Int,
     /** User's avatar image resource id **/
     @DrawableRes val avatar: Int
-) {
-    /** User's full name **/
-    val fullName: String = "$firstName $lastName"
-}
+)
