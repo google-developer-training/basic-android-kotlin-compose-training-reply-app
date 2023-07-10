@@ -130,10 +130,11 @@ fun ReplyEmailListItem(
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = if (selected)
+            containerColor = if (selected) {
                 MaterialTheme.colorScheme.primaryContainer
-            else
+            } else {
                 MaterialTheme.colorScheme.secondaryContainer
+            }
         ),
         onClick = onCardClick
     ) {

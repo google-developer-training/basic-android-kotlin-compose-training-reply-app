@@ -51,9 +51,11 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ReplyAppCompactPreview() {
     ReplyTheme {
-        ReplyApp(
-            windowSize = WindowWidthSizeClass.Compact,
-        )
+        Surface {
+            ReplyApp(
+                windowSize = WindowWidthSizeClass.Compact,
+            )
+        }
     }
 }
 
@@ -61,9 +63,11 @@ fun ReplyAppCompactPreview() {
 @Composable
 fun ReplyAppMediumPreview() {
     ReplyTheme {
-        ReplyApp(
-            windowSize = WindowWidthSizeClass.Medium,
-        )
+        Surface {
+            ReplyApp(
+                windowSize = WindowWidthSizeClass.Medium,
+            )
+        }
     }
 }
 
@@ -71,8 +75,10 @@ fun ReplyAppMediumPreview() {
 @Composable
 fun ReplyAppExpandedPreview() {
     ReplyTheme {
-        ReplyApp(
-            windowSize = WindowWidthSizeClass.Expanded,
-        )
+        Surface {
+            ReplyApp(
+                windowSize = WindowWidthSizeClass.Expanded,
+            )
+        }
     }
 }

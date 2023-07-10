@@ -54,8 +54,8 @@ import com.example.reply.data.MailboxType
 @Composable
 fun ReplyDetailsScreen(
     replyUiState: ReplyUiState,
+    onBackPressed: () -> Unit,
     modifier: Modifier = Modifier,
-    onBackPressed: () -> Unit = {},
     isFullScreen: Boolean = false
 ) {
     BackHandler {
@@ -83,10 +83,11 @@ fun ReplyDetailsScreen(
                     email = replyUiState.currentSelectedEmail,
                     mailboxType = replyUiState.currentMailbox,
                     isFullScreen = isFullScreen,
-                    modifier = if (isFullScreen)
+                    modifier = if (isFullScreen) {
                         Modifier.padding(horizontal = dimensionResource(R.dimen.detail_card_outer_padding_horizontal))
-                    else
+                    } else {
                         Modifier.padding(end = dimensionResource(R.dimen.detail_card_outer_padding_horizontal))
+                    }
                 )
             }
         }
@@ -287,17 +288,20 @@ private fun ActionButton(
                 .padding(vertical = dimensionResource(R.dimen.detail_action_button_padding_vertical)),
             colors = ButtonDefaults.buttonColors(
                 containerColor =
-                if (!containIrreversibleAction)
+                if (!containIrreversibleAction) {
                     MaterialTheme.colorScheme.primaryContainer
-                else MaterialTheme.colorScheme.onErrorContainer
+                } else {
+                    MaterialTheme.colorScheme.onErrorContainer
+                }
             )
         ) {
             Text(
                 text = text,
-                color =
-                if (!containIrreversibleAction)
+                color = if (!containIrreversibleAction) {
                     MaterialTheme.colorScheme.onSurfaceVariant
-                else MaterialTheme.colorScheme.onError
+                } else {
+                    MaterialTheme.colorScheme.onError
+                }
             )
         }
     }
