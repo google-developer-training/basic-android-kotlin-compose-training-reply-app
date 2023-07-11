@@ -154,7 +154,9 @@ private fun ReplyEmailDetailsCard(
                 email,
                 Modifier.fillMaxWidth()
             )
-            if (!isFullScreen) {
+            if (isFullScreen) {
+                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.detail_content_padding_top)))
+            } else {
                 Text(
                     text = stringResource(email.subject),
                     style = MaterialTheme.typography.bodyMedium,
@@ -164,8 +166,6 @@ private fun ReplyEmailDetailsCard(
                         bottom = dimensionResource(R.dimen.detail_expanded_subject_body_spacing)
                     ),
                 )
-            } else {
-                Spacer(modifier = Modifier.height(dimensionResource(R.dimen.detail_content_padding_top)))
             }
             Text(
                 text = stringResource(email.body),
@@ -298,10 +298,10 @@ private fun ActionButton(
         ) {
             Text(
                 text = text,
-                color = if (!containIrreversibleAction) {
-                    MaterialTheme.colorScheme.onSurfaceVariant
-                } else {
+                color = if (containIrreversibleAction) {
                     MaterialTheme.colorScheme.onError
+                } else {
+                    MaterialTheme.colorScheme.onSurfaceVariant
                 }
             )
         }
