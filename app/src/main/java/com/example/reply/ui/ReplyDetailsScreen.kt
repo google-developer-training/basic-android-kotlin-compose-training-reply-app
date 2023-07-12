@@ -52,8 +52,8 @@ import com.example.reply.data.MailboxType
 @Composable
 fun ReplyDetailsScreen(
     replyUiState: ReplyUiState,
+    onBackPressed: () -> Unit,
     modifier: Modifier = Modifier,
-    onBackPressed: () -> Unit = {},
 ) {
     BackHandler {
         onBackPressed()
@@ -61,7 +61,6 @@ fun ReplyDetailsScreen(
     Box(modifier = modifier) {
         LazyColumn(
             modifier = Modifier
-                .testTag(stringResource(R.string.details_screen))
                 .fillMaxSize()
                 .background(color = MaterialTheme.colorScheme.inverseOnSurface)
                 .padding(top = dimensionResource(R.dimen.detail_card_list_padding_top))
@@ -230,7 +229,8 @@ private fun DetailsScreenHeader(email: Email, modifier: Modifier = Modifier) {
     Row(modifier = modifier) {
         ReplyProfileImage(
             drawableResource = email.sender.avatar,
-            description = email.sender.fullName,
+            description = stringResource(email.sender.firstName) + " "
+                    + stringResource(email.sender.lastName),
             modifier = Modifier.size(
                 dimensionResource(R.dimen.email_header_profile_size)
             )
@@ -272,17 +272,21 @@ private fun ActionButton(
                 .padding(vertical = dimensionResource(R.dimen.detail_action_button_padding_vertical)),
             colors = ButtonDefaults.buttonColors(
                 containerColor =
-                if (!containIrreversibleAction)
+                if (containIrreversibleAction) {
+                    MaterialTheme.colorScheme.onErrorContainer
+                } else {
                     MaterialTheme.colorScheme.primaryContainer
-                else MaterialTheme.colorScheme.onErrorContainer
+                }
             )
         ) {
             Text(
                 text = text,
                 color =
-                if (!containIrreversibleAction)
+                if (containIrreversibleAction) {
+                    MaterialTheme.colorScheme.onError
+                } else {
                     MaterialTheme.colorScheme.onSurfaceVariant
-                else MaterialTheme.colorScheme.onError
+                }
             )
         }
     }

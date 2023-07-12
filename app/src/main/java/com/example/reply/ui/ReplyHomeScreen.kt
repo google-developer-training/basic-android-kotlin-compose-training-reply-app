@@ -130,8 +130,8 @@ fun ReplyHomeScreen(
         } else {
             ReplyDetailsScreen(
                 replyUiState = replyUiState,
-                modifier = modifier,
-                onBackPressed = onDetailScreenBackPressed
+                onBackPressed = onDetailScreenBackPressed,
+                modifier = modifier
             )
         }
     }
@@ -174,15 +174,12 @@ private fun ReplyAppContent(
                 AnimatedVisibility(
                     visible = navigationType == ReplyNavigationType.BOTTOM_NAVIGATION
                 ) {
-                    val bottomNavigationContentDescription =
-                        stringResource(R.string.navigation_bottom)
                     ReplyBottomNavigationBar(
                         currentTab = replyUiState.currentMailbox,
                         onTabPressed = onTabPressed,
                         navigationItemContentList = navigationItemContentList,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .testTag(bottomNavigationContentDescription)
                     )
                 }
             }
