@@ -120,15 +120,13 @@ private fun ReplyAppContent(
                         horizontal = dimensionResource(R.dimen.email_list_only_horizontal_padding)
                     )
             )
-            val bottomNavigationContentDescription =
-                stringResource(R.string.navigation_bottom)
+            val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
             ReplyBottomNavigationBar(
                 currentTab = replyUiState.currentMailbox,
                 onTabPressed = onTabPressed,
                 navigationItemContentList = navigationItemContentList,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .testTag(bottomNavigationContentDescription)
             )
         }
     }

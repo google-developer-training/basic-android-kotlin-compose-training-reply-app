@@ -45,6 +45,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ReplyAppCompactPreview() {
     ReplyTheme {
-        ReplyApp()
+        Surface {
+            ReplyApp()
+        }
     }
 }
