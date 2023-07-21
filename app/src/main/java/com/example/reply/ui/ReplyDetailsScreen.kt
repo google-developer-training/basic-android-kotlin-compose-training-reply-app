@@ -41,7 +41,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.example.reply.R
@@ -51,13 +50,12 @@ import com.example.reply.data.MailboxType
 @Composable
 fun ReplyDetailsScreen(
     replyUiState: ReplyUiState,
-    modifier: Modifier = Modifier,
-    onBackPressed: () -> Unit = {},
+    onBackPressed: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier) {
         LazyColumn(
             modifier = Modifier
-                .testTag(stringResource(R.string.details_screen))
                 .fillMaxSize()
                 .background(color = MaterialTheme.colorScheme.inverseOnSurface)
                 .padding(top = dimensionResource(R.dimen.detail_card_list_padding_top))
@@ -72,7 +70,8 @@ fun ReplyDetailsScreen(
                 )
                 ReplyEmailDetailsCard(
                     email = replyUiState.currentSelectedEmail,
-                    mailboxType = replyUiState.currentMailbox
+                    mailboxType = replyUiState.currentMailbox,
+                    modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.detail_card_outer_padding_horizontal))
                 )
             }
         }
@@ -226,7 +225,8 @@ private fun DetailsScreenHeader(email: Email, modifier: Modifier = Modifier) {
     Row(modifier = modifier) {
         ReplyProfileImage(
             drawableResource = email.sender.avatar,
-            description = email.sender.fullName,
+            description = stringResource(email.sender.firstName) + " "
+                    + stringResource(email.sender.lastName),
             modifier = Modifier.size(
                 dimensionResource(R.dimen.email_header_profile_size)
             )
@@ -268,17 +268,21 @@ private fun ActionButton(
                 .padding(vertical = dimensionResource(R.dimen.detail_action_button_padding_vertical)),
             colors = ButtonDefaults.buttonColors(
                 containerColor =
-                if (!containIrreversibleAction)
+                if (containIrreversibleAction) {
+                    MaterialTheme.colorScheme.onErrorContainer
+                } else {
                     MaterialTheme.colorScheme.primaryContainer
-                else MaterialTheme.colorScheme.onErrorContainer
+                }
             )
         ) {
             Text(
                 text = text,
                 color =
-                if (!containIrreversibleAction)
+                if (containIrreversibleAction) {
+                    MaterialTheme.colorScheme.onError
+                } else {
                     MaterialTheme.colorScheme.onSurfaceVariant
-                else MaterialTheme.colorScheme.onError
+                }
             )
         }
     }
