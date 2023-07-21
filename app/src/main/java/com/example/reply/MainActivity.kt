@@ -51,8 +51,10 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ReplyAppCompactPreview() {
     ReplyTheme {
-        ReplyApp(
-            windowSize = WindowWidthSizeClass.Compact,
-        )
+        Surface {
+            ReplyApp(
+                windowSize = WindowWidthSizeClass.Compact,
+            )
+        }
     }
 }
