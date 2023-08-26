@@ -23,15 +23,19 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -63,31 +67,29 @@ fun ReplyDetailsScreen(
     }
     Box(modifier = modifier) {
         LazyColumn(
+            contentPadding = WindowInsets.safeDrawing.asPaddingValues(),
             modifier = Modifier
                 .testTag(stringResource(R.string.details_screen))
                 .fillMaxSize()
                 .background(color = MaterialTheme.colorScheme.inverseOnSurface)
-                .padding(top = dimensionResource(R.dimen.detail_card_list_padding_top))
         ) {
             item {
-                if (isFullScreen) {
-                    ReplyDetailsScreenTopBar(
-                        onBackPressed,
-                        replyUiState,
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = dimensionResource(R.dimen.detail_topbar_padding_bottom))
-                    )
-                }
+                ReplyDetailsScreenTopBar(
+                    onBackPressed,
+                    replyUiState,
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            bottom = dimensionResource(R.dimen.detail_topbar_padding_bottom),
+                            top = dimensionResource(R.dimen.topbar_padding_vertical)
+                        )
+                )
                 ReplyEmailDetailsCard(
                     email = replyUiState.currentSelectedEmail,
                     mailboxType = replyUiState.currentMailbox,
-                    isFullScreen = isFullScreen,
-                    modifier = if (isFullScreen) {
-                        Modifier.padding(horizontal = dimensionResource(R.dimen.detail_card_outer_padding_horizontal))
-                    } else {
-                        Modifier.padding(end = dimensionResource(R.dimen.detail_card_outer_padding_horizontal))
-                    }
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .padding(horizontal = dimensionResource(R.dimen.detail_card_outer_padding_horizontal))
                 )
             }
         }
@@ -111,7 +113,7 @@ private fun ReplyDetailsScreenTopBar(
                 .background(MaterialTheme.colorScheme.surface, shape = CircleShape),
         ) {
             Icon(
-                imageVector = Icons.Default.ArrowBack,
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = stringResource(id = R.string.navigation_back)
             )
         }
