@@ -34,10 +34,6 @@
     <string name="delete">Delete</string>
     <string name="move_to_inbox">Move to Inbox</string>
 
-    <string name="account_1_first_name">Jeff</string>
-    <string name="account_1_last_name">Hansen</string>
-    <string name="account_1_email">hikingfan@altostrat.com</string>
-
     <string name="account_4_first_name">Tracy</string>
     <string name="account_4_last_name">Alvarez</string>
     <string name="account_4_email">tracealvie@altostrat.com</string>
@@ -126,11 +122,21 @@
         find places we think look interesting. But... I know you\'re more of a planner, so if you
         have ideas or places in mind, lets jot some ideas down!\n\nMaybe we can jump on the phone
         later today if you have a second.
+        Thought we might be able to go over some details about our upcoming vacation.\n\nI\'ve been
+        doing a bit of research and have come across a few paces in Northern Brazil that I think we
+        should check out. One, the north has some of the most predictable wind on the planet. I\'d
+        love to get out on the ocean and kitesurf for a couple of days if we\'re going to be
+        anywhere near or around Taiba. I hear it\'s beautiful there and if you\'re up for it, I\'d
+        love to go. Other than that, I haven\'t spent too much time looking into places along our
+        road trip route. I\'m assuming we can find places to stay and things to do as we drive and
+        find places we think look interesting. But... I know you\'re more of a planner, so if you
+        have ideas or places in mind, lets jot some ideas down!\n\nMaybe we can jump on the phone
+        later today if you have a second.
     </string>
     <string name="email_4_time">2 hours ago</string>
 
     <string name="email_5_subject">Update to Your Itinerary</string>
-    <string name="email_5_body"></string>
+    <string name="email_5_body" />
     <string name="email_5_time">2 hours ago</string>
 
     <string name="email_6_subject">Recipe to try</string>
