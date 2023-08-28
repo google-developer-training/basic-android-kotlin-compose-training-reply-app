@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -63,8 +64,8 @@ fun ReplyDetailsScreen(
     BackHandler {
         onBackPressed()
     }
-    Box(modifier = modifier
-        .statusBarsPadding()
+    Box(modifier = modifier.statusBarsPadding()
+        //.safeDrawingPadding()
        ) {
         LazyColumn(
             modifier = Modifier
@@ -90,9 +91,7 @@ fun ReplyDetailsScreen(
                     mailboxType = replyUiState.currentMailbox,
                     isFullScreen = isFullScreen,
                     modifier = if (isFullScreen) {
-                        Modifier
-                            .navigationBarsPadding()
-                            .padding(horizontal = dimensionResource(R.dimen.detail_card_outer_padding_horizontal))
+                        Modifier.padding(horizontal = dimensionResource(R.dimen.detail_card_outer_padding_horizontal))
                     } else {
                         Modifier.padding(end = dimensionResource(R.dimen.detail_card_outer_padding_horizontal))
                     }
