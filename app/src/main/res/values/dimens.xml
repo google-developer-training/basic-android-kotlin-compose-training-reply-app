@@ -24,9 +24,6 @@
     <dimen name="profile_image_size">20dp</dimen>
     <dimen name="reply_logo_size">48dp</dimen>
 
-    <dimen name="list_and_detail_list_padding_top">20dp</dimen>
-    <dimen name="list_and_detail_list_padding_end">16dp</dimen>
-
     <dimen name="email_list_item_inner_padding">20dp</dimen>
     <dimen name="email_list_item_vertical_spacing">8dp</dimen>
     <dimen name="email_list_item_header_subject_spacing">12dp</dimen>

@@ -24,12 +24,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
@@ -121,8 +118,7 @@ fun ReplyHomeScreen(
                 onTabPressed = onTabPressed,
                 onEmailCardPressed = onEmailCardPressed,
                 navigationItemContentList = navigationItemContentList,
-                modifier = modifier
-                    //.safeDrawingPadding()
+                modifier = modifier,
             )
         }
     } else {
@@ -134,8 +130,7 @@ fun ReplyHomeScreen(
                 onTabPressed = onTabPressed,
                 onEmailCardPressed = onEmailCardPressed,
                 navigationItemContentList = navigationItemContentList,
-                modifier = modifier
-                    //.safeDrawingPadding()
+                modifier = modifier,
             )
         } else {
             ReplyDetailsScreen(
@@ -158,9 +153,7 @@ private fun ReplyAppContent(
     navigationItemContentList: List<NavigationItemContent>,
     modifier: Modifier = Modifier,
 ) {
-    Box(modifier = modifier
-        .navigationBarsPadding()
-    )
+    Box(modifier = modifier)
         {
         Row(modifier = Modifier.fillMaxSize()) {
             AnimatedVisibility(visible = navigationType == ReplyNavigationType.NAVIGATION_RAIL) {
@@ -176,8 +169,6 @@ private fun ReplyAppContent(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(MaterialTheme.colorScheme.inverseOnSurface)
-                    // .navigationBarsPadding()
-                  //  .padding(top = dimensionResource(R.dimen.detail_subject_padding_end))
             ) {
                 if (contentType == ReplyContentType.LIST_AND_DETAIL) {
                     ReplyListAndDetailContent(
@@ -192,7 +183,6 @@ private fun ReplyAppContent(
                         replyUiState = replyUiState,
                         onEmailCardPressed = onEmailCardPressed,
                         modifier = Modifier
-                            //.navigationBarsPadding()
                             .weight(1f)
                             .padding(horizontal = dimensionResource(R.dimen.email_list_only_horizontal_padding))
                             .padding(top = dimensionResource(R.dimen.detail_subject_padding_end))
