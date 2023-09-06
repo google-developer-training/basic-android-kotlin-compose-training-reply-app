@@ -185,7 +185,6 @@ private fun ReplyAppContent(
                         modifier = Modifier
                             .weight(1f)
                             .padding(horizontal = dimensionResource(R.dimen.email_list_only_horizontal_padding))
-                            .padding(top = dimensionResource(R.dimen.detail_subject_padding_end))
                     )
                 }
                 AnimatedVisibility(
