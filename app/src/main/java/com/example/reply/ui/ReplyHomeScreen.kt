@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
@@ -117,7 +118,7 @@ fun ReplyHomeScreen(
                 onTabPressed = onTabPressed,
                 onEmailCardPressed = onEmailCardPressed,
                 navigationItemContentList = navigationItemContentList,
-                modifier = modifier
+                modifier = modifier,
             )
         }
     } else {
@@ -129,7 +130,7 @@ fun ReplyHomeScreen(
                 onTabPressed = onTabPressed,
                 onEmailCardPressed = onEmailCardPressed,
                 navigationItemContentList = navigationItemContentList,
-                modifier = modifier
+                modifier = modifier,
             )
         } else {
             ReplyDetailsScreen(
@@ -152,7 +153,8 @@ private fun ReplyAppContent(
     navigationItemContentList: List<NavigationItemContent>,
     modifier: Modifier = Modifier,
 ) {
-    Box(modifier = modifier) {
+    Box(modifier = modifier)
+    {
         Row(modifier = Modifier.fillMaxSize()) {
             AnimatedVisibility(visible = navigationType == ReplyNavigationType.NAVIGATION_RAIL) {
                 val navigationRailContentDescription = stringResource(R.string.navigation_rail)
@@ -160,8 +162,7 @@ private fun ReplyAppContent(
                     currentTab = replyUiState.currentMailbox,
                     onTabPressed = onTabPressed,
                     navigationItemContentList = navigationItemContentList,
-                    modifier = Modifier
-                        .testTag(navigationRailContentDescription)
+                    modifier = Modifier.testTag(navigationRailContentDescription)
                 )
             }
             Column(
@@ -173,16 +174,18 @@ private fun ReplyAppContent(
                     ReplyListAndDetailContent(
                         replyUiState = replyUiState,
                         onEmailCardPressed = onEmailCardPressed,
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier
+                            .statusBarsPadding()
+                            .weight(1f),
                     )
                 } else {
                     ReplyListOnlyContent(
                         replyUiState = replyUiState,
                         onEmailCardPressed = onEmailCardPressed,
-                        modifier = Modifier.weight(1f)
-                            .padding(
-                                horizontal = dimensionResource(R.dimen.email_list_only_horizontal_padding)
-                            )
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(horizontal = dimensionResource(R.dimen.email_list_only_horizontal_padding))
+                            .padding(top = dimensionResource(R.dimen.detail_subject_padding_end))
                     )
                 }
                 AnimatedVisibility(
@@ -299,8 +302,7 @@ private fun NavigationDrawerHeader(
         ReplyProfileImage(
             drawableResource = LocalAccountsDataProvider.defaultAccount.avatar,
             description = stringResource(id = R.string.profile),
-            modifier = Modifier
-                .size(dimensionResource(R.dimen.profile_image_size))
+            modifier = Modifier.size(dimensionResource(R.dimen.profile_image_size))
         )
     }
 }
