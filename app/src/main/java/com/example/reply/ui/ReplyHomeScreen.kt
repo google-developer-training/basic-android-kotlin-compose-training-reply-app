@@ -104,9 +104,7 @@ fun ReplyHomeScreen(
                     modifier = Modifier
                         .width(dimensionResource(R.dimen.drawer_width))
                         .background(MaterialTheme.colorScheme.inverseOnSurface),
-                    windowInsets = WindowInsets.safeDrawing.only(
-                        WindowInsetsSides.Top + WindowInsetsSides.Start
-                    ),
+                    windowInsets = WindowInsets.safeDrawing.only(WindowInsetsSides.Top),
                 ) {
                     NavigationDrawerContent(
                         selectedDestination = replyUiState.currentMailbox,
