@@ -22,9 +22,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -58,6 +62,7 @@ fun ReplyListOnlyContent(
 
     LazyColumn(
         modifier = modifier,
+        contentPadding = WindowInsets.safeDrawing.asPaddingValues(),
         verticalArrangement = Arrangement.spacedBy(
             dimensionResource(R.dimen.email_list_item_vertical_spacing)
         )
@@ -88,14 +93,15 @@ fun ReplyListAndDetailContent(
     modifier: Modifier = Modifier
 ) {
     val emails = replyUiState.currentMailboxEmails
-    Row(modifier = modifier) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
         LazyColumn(
+            contentPadding = WindowInsets.statusBars.asPaddingValues(),
             modifier = Modifier
                 .weight(1f)
-                .padding(
-                    end = dimensionResource(R.dimen.list_and_detail_list_padding_end),
-                    top = dimensionResource(R.dimen.list_and_detail_list_padding_top)
-                ),
+                .padding(horizontal = dimensionResource(R.dimen.email_list_only_horizontal_padding)),
             verticalArrangement = Arrangement.spacedBy(
                 dimensionResource(R.dimen.email_list_item_vertical_spacing)
             )
@@ -113,7 +119,9 @@ fun ReplyListAndDetailContent(
         val activity = LocalContext.current as Activity
         ReplyDetailsScreen(
             replyUiState = replyUiState,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = dimensionResource(R.dimen.email_list_only_horizontal_padding)),
             onBackPressed = { activity.finish() }
         )
     }
