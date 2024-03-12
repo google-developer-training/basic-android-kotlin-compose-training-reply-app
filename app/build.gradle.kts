@@ -67,7 +67,7 @@ android {
 }
 
 dependencies {
-    implementation(platform("androidx.compose:compose-bom:2024.02.01"))
+    implementation(platform("androidx.compose:compose-bom:2024.02.02"))
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.compose.material3:material3")
@@ -79,7 +79,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:${rootProject.extra["lifecycle_version"]}")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:${rootProject.extra["lifecycle_version"]}")
 
-    androidTestImplementation(platform("androidx.compose:compose-bom:2024.02.01"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.02.02"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
