@@ -34,6 +34,10 @@
     <string name="delete">Delete</string>
     <string name="move_to_inbox">Move to Inbox</string>
 
+    <string name="account_1_first_name">Jeff</string>
+    <string name="account_1_last_name">Hansen</string>
+    <string name="account_1_email">hikingfan@altostrat.com</string>
+
     <string name="account_4_first_name">Tracy</string>
     <string name="account_4_last_name">Alvarez</string>
     <string name="account_4_email">tracealvie@altostrat.com</string>

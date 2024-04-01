@@ -25,6 +25,15 @@ import com.example.reply.data.Account
 object LocalAccountsDataProvider {
     val defaultAccount = Account(-1, -1, -1, -1, R.drawable.avatar_1)
 
+    val userAccount =
+        Account(
+            id = 1,
+            firstName = R.string.account_1_first_name,
+            lastName = R.string.account_1_last_name,
+            email = R.string.account_1_email,
+            avatar = R.drawable.avatar_1,
+        )
+
     private val allUserContactAccounts = listOf(
         Account(
             id = 4L,
