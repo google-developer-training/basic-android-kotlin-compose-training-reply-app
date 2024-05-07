@@ -130,7 +130,7 @@
     <string name="email_4_time">2 hours ago</string>
 
     <string name="email_5_subject">Update to Your Itinerary</string>
-    <string name="email_5_body"></string>
+    <string name="email_5_body" />
     <string name="email_5_time">2 hours ago</string>
 
     <string name="email_6_subject">Recipe to try</string>

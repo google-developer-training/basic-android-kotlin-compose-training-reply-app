@@ -31,7 +31,7 @@ object LocalAccountsDataProvider {
             firstName = R.string.account_1_first_name,
             lastName = R.string.account_1_last_name,
             email = R.string.account_1_email,
-            avatar = R.drawable.avatar_10
+            avatar = R.drawable.avatar_1,
         )
 
     private val allUserContactAccounts = listOf(

@@ -29,10 +29,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Drafts
 import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material.icons.filled.Report
-import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -75,7 +75,7 @@ fun ReplyHomeScreen(
         ),
         NavigationItemContent(
             mailboxType = MailboxType.Sent,
-            icon = Icons.Default.Send,
+            icon = Icons.AutoMirrored.Filled.Send,
             text = stringResource(id = R.string.tab_sent)
         ),
         NavigationItemContent(
@@ -93,7 +93,9 @@ fun ReplyHomeScreen(
         val navigationDrawerContentDescription = stringResource(R.string.navigation_drawer)
         PermanentNavigationDrawer(
             drawerContent = {
-                PermanentDrawerSheet(Modifier.width(dimensionResource(R.dimen.drawer_width))) {
+                PermanentDrawerSheet(Modifier.width(dimensionResource(R.dimen.drawer_width)),
+                    drawerContainerColor = MaterialTheme.colorScheme.inverseOnSurface
+                    ) {
                     NavigationDrawerContent(
                         selectedDestination = replyUiState.currentMailbox,
                         onTabPressed = onTabPressed,
@@ -101,7 +103,6 @@ fun ReplyHomeScreen(
                         modifier = Modifier
                             .wrapContentWidth()
                             .fillMaxHeight()
-                            .background(MaterialTheme.colorScheme.inverseOnSurface)
                             .padding(dimensionResource(R.dimen.drawer_padding_content))
                     )
                 }
@@ -114,7 +115,7 @@ fun ReplyHomeScreen(
                 onTabPressed = onTabPressed,
                 onEmailCardPressed = onEmailCardPressed,
                 navigationItemContentList = navigationItemContentList,
-                modifier = modifier
+                modifier = modifier,
             )
         }
     } else {
@@ -125,7 +126,7 @@ fun ReplyHomeScreen(
                 onTabPressed = onTabPressed,
                 onEmailCardPressed = onEmailCardPressed,
                 navigationItemContentList = navigationItemContentList,
-                modifier = modifier
+                modifier = modifier,
             )
         } else {
             ReplyDetailsScreen(
@@ -146,7 +147,9 @@ private fun ReplyAppContent(
     navigationItemContentList: List<NavigationItemContent>,
     modifier: Modifier = Modifier,
 ) {
-    Box(modifier = modifier) {
+    Box(modifier = modifier)
+        
+    {
         Row(modifier = Modifier.fillMaxSize()) {
             AnimatedVisibility(visible = navigationType == ReplyNavigationType.NAVIGATION_RAIL) {
                 val navigationRailContentDescription = stringResource(R.string.navigation_rail)
@@ -154,8 +157,7 @@ private fun ReplyAppContent(
                     currentTab = replyUiState.currentMailbox,
                     onTabPressed = onTabPressed,
                     navigationItemContentList = navigationItemContentList,
-                    modifier = Modifier
-                        .testTag(navigationRailContentDescription)
+                    modifier = Modifier.testTag(navigationRailContentDescription)
                 )
             }
             Column(
@@ -166,10 +168,10 @@ private fun ReplyAppContent(
                 ReplyListOnlyContent(
                     replyUiState = replyUiState,
                     onEmailCardPressed = onEmailCardPressed,
-                    modifier = Modifier.weight(1f)
-                        .padding(
-                            horizontal = dimensionResource(R.dimen.email_list_only_horizontal_padding)
-                        )
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(horizontal = dimensionResource(R.dimen.email_list_only_horizontal_padding))
+                        .padding(top = dimensionResource(R.dimen.detail_subject_padding_end))
                 )
                 AnimatedVisibility(
                     visible = navigationType == ReplyNavigationType.BOTTOM_NAVIGATION
@@ -283,8 +285,7 @@ private fun NavigationDrawerHeader(
         ReplyProfileImage(
             drawableResource = LocalAccountsDataProvider.defaultAccount.avatar,
             description = stringResource(id = R.string.profile),
-            modifier = Modifier
-                .size(dimensionResource(R.dimen.profile_image_size))
+            modifier = Modifier.size(dimensionResource(R.dimen.profile_image_size))
         )
     }
 }
