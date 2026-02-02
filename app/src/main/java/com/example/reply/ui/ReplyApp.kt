@@ -25,6 +25,8 @@ import com.example.reply.data.MailboxType
 import com.example.reply.ui.utils.ReplyContentType
 import com.example.reply.ui.utils.ReplyNavigationType
 
+
+
 @Composable
 fun ReplyApp(
     windowSize: WindowWidthSizeClass,
@@ -35,6 +37,17 @@ fun ReplyApp(
     val viewModel: ReplyViewModel = viewModel()
     val replyUiState = viewModel.uiState.collectAsState().value
 
+<<<<<<< HEAD
+=======
+    //CON ESTA VARIABLE VEO SI MUESTRO SOLO LA LISTA O MUESTRO LA LISTA Y DETALLE
+
+    val contentType: ReplyContentType
+
+
+    // en este when dependiendo del windowSize va a variar el tamaño en que se renderiza la pantalla
+    val navigationType: ReplyNavigationType
+
+>>>>>>> aa61db6 ( avanzado 3.2)
     when (windowSize) {
         WindowWidthSizeClass.Compact -> {
             navigationType = ReplyNavigationType.BOTTOM_NAVIGATION
@@ -54,6 +67,7 @@ fun ReplyApp(
         }
     }
     ReplyHomeScreen(
+        contentType = contentType,
         navigationType = navigationType,
         contentType = contentType,
         replyUiState = replyUiState,

@@ -29,6 +29,10 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+<<<<<<< HEAD
+=======
+import androidx.compose.foundation.layout.navigationBarsPadding
+>>>>>>> aa61db6 ( avanzado 3.2)
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
@@ -57,6 +61,7 @@ import com.example.reply.data.MailboxType
 
 @Composable
 fun ReplyDetailsScreen(
+    isFullScreen: Boolean,
     replyUiState: ReplyUiState,
     onBackPressed: () -> Unit,
     modifier: Modifier = Modifier,
@@ -76,6 +81,7 @@ fun ReplyDetailsScreen(
                 .background(color = MaterialTheme.colorScheme.inverseOnSurface)
         ) {
             item {
+<<<<<<< HEAD
                 if (isFullScreen) {
                     ReplyDetailsScreenTopBar(
                         onBackPressed,
@@ -88,7 +94,21 @@ fun ReplyDetailsScreen(
                             )
                     )
                 }
+=======
+                if (isFullScreen){
+                ReplyDetailsScreenTopBar(
+                    onBackPressed,
+                    replyUiState,
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            bottom = dimensionResource(R.dimen.detail_topbar_padding_bottom),
+                            top = dimensionResource(R.dimen.topbar_padding_vertical)
+                        )
+                )}
+>>>>>>> aa61db6 ( avanzado 3.2)
                 ReplyEmailDetailsCard(
+                    isFullScreen= isFullScreen,
                     email = replyUiState.currentSelectedEmail,
                     mailboxType = replyUiState.currentMailbox,
                     isFullScreen = isFullScreen,
@@ -141,6 +161,7 @@ private fun ReplyDetailsScreenTopBar(
 
 @Composable
 private fun ReplyEmailDetailsCard(
+    isFullScreen: Boolean = false,
     email: Email,
     mailboxType: MailboxType,
     modifier: Modifier = Modifier,
@@ -175,6 +196,7 @@ private fun ReplyEmailDetailsCard(
                         bottom = dimensionResource(R.dimen.detail_expanded_subject_body_spacing)
                     ),
                 )
+<<<<<<< HEAD
             }
             Text(
                 text = stringResource(email.body),
@@ -182,6 +204,15 @@ private fun ReplyEmailDetailsCard(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             DetailsScreenButtonBar(mailboxType, displayToast)
+=======
+                Text(
+                    text = stringResource(email.body),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                DetailsScreenButtonBar(mailboxType, displayToast)
+            }
+>>>>>>> aa61db6 ( avanzado 3.2)
         }
     }
 }

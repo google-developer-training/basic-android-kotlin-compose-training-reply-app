@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright (C) 2023 The Android Open Source Project
  *
@@ -28,3 +29,14 @@ enum class ReplyNavigationType {
 enum class ReplyContentType {
     LIST_ONLY, LIST_AND_DETAIL
 }
+=======
+package com.example.reply.ui.utils
+
+enum class ReplyNavigationType {
+    BOTTOM_NAVIGATION, NAVIGATION_RAIL, PERMANENT_NAVIGATION_DRAWER
+}
+enum class ReplyContentType{
+
+    LIST_ONLY, LIST_AND_DETAIL
+}
+>>>>>>> aa61db6 ( avanzado 3.2)
