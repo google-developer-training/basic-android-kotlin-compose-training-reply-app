@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.example.reply.ui
 
 import android.app.Activity
@@ -116,20 +101,18 @@ fun ReplyListAndDetailContent(
                 )
             }
         }
+
         val activity = LocalContext.current as Activity
         ReplyDetailsScreen(
             isFullScreen = false,
             replyUiState = replyUiState,
+            onBackPressed = { activity.finish() },
             modifier = Modifier
-<<<<<<< HEAD
                 .weight(1f)
-                .padding(end = dimensionResource(R.dimen.email_list_only_horizontal_padding)),
-            onBackPressed = { activity.finish() }
-=======
-                .padding(top = dimensionResource(R.dimen.email_list_item_vertical_spacing))
-                .weight(1f),
-            onBackPressed = {activity.finish()}
->>>>>>> aa61db6 ( avanzado 3.2)
+                .padding(
+                    end = dimensionResource(R.dimen.email_list_only_horizontal_padding),
+                    top = dimensionResource(R.dimen.email_list_item_vertical_spacing)
+                )
         )
     }
 }
@@ -158,10 +141,7 @@ fun ReplyEmailListItem(
                 .fillMaxWidth()
                 .padding(dimensionResource(R.dimen.email_list_item_inner_padding))
         ) {
-            ReplyEmailItemHeader(
-                email,
-                Modifier.fillMaxWidth()
-            )
+            ReplyEmailItemHeader(email, Modifier.fillMaxWidth())
             Text(
                 text = stringResource(email.subject),
                 style = MaterialTheme.typography.bodyLarge,
@@ -187,8 +167,7 @@ private fun ReplyEmailItemHeader(email: Email, modifier: Modifier = Modifier) {
     Row(modifier = modifier) {
         ReplyProfileImage(
             drawableResource = email.sender.avatar,
-            description = stringResource(email.sender.firstName) + " "
-                    + stringResource(email.sender.lastName),
+            description = stringResource(email.sender.firstName) + " " + stringResource(email.sender.lastName),
             modifier = Modifier.size(dimensionResource(R.dimen.email_header_profile_size))
         )
         Column(

@@ -1,23 +1,9 @@
-/*
- * Copyright (C) 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.example.reply.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -59,10 +45,8 @@ import com.example.reply.data.local.LocalAccountsDataProvider
 import com.example.reply.ui.utils.ReplyContentType
 import com.example.reply.ui.utils.ReplyNavigationType
 
-
 @Composable
 fun ReplyHomeScreen(
-    contentType: ReplyContentType,
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
     replyUiState: ReplyUiState,
@@ -93,14 +77,8 @@ fun ReplyHomeScreen(
             text = stringResource(id = R.string.tab_spam)
         )
     )
-<<<<<<< HEAD
+
     if (navigationType == ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER) {
-        val navigationDrawerContentDescription = stringResource(R.string.navigation_drawer)
-=======
-
-    if (navigationType == ReplyNavigationType.PERMANENT_NAVIGATION_DRAWER ) {
-
->>>>>>> aa61db6 ( avanzado 3.2)
         PermanentNavigationDrawer(
             drawerContent = {
                 PermanentDrawerSheet(
@@ -118,11 +96,9 @@ fun ReplyHomeScreen(
                             .padding(dimensionResource(R.dimen.drawer_padding_content))
                     )
                 }
-            },
-            modifier = Modifier.testTag(navigationDrawerContentDescription)
+            }
         ) {
             ReplyAppContent(
-                contentType = contentType,
                 navigationType = navigationType,
                 contentType = contentType,
                 replyUiState = replyUiState,
@@ -135,7 +111,6 @@ fun ReplyHomeScreen(
     } else {
         if (replyUiState.isShowingHomepage) {
             ReplyAppContent(
-                contentType = contentType,
                 navigationType = navigationType,
                 contentType = contentType,
                 replyUiState = replyUiState,
@@ -149,8 +124,7 @@ fun ReplyHomeScreen(
                 isFullScreen = true,
                 replyUiState = replyUiState,
                 onBackPressed = onDetailScreenBackPressed,
-                modifier = modifier,
-                isFullScreen = true
+                modifier = modifier
             )
         }
     }
@@ -158,7 +132,6 @@ fun ReplyHomeScreen(
 
 @Composable
 private fun ReplyAppContent(
-    contentType: ReplyContentType,
     navigationType: ReplyNavigationType,
     contentType: ReplyContentType,
     replyUiState: ReplyUiState,
@@ -167,56 +140,13 @@ private fun ReplyAppContent(
     navigationItemContentList: List<NavigationItemContent>,
     modifier: Modifier = Modifier,
 ) {
-<<<<<<< HEAD
-    Box(modifier = modifier)
-    {
+    Box(modifier = modifier) {
         Row(modifier = Modifier.fillMaxSize()) {
             AnimatedVisibility(visible = navigationType == ReplyNavigationType.NAVIGATION_RAIL) {
-                val navigationRailContentDescription = stringResource(R.string.navigation_rail)
                 ReplyNavigationRail(
-=======
-    Row(modifier = modifier) {
-        val navigationRailContentDescription = stringResource(R.string.navigation_rail)
-        AnimatedVisibility( visible = navigationType == ReplyNavigationType.NAVIGATION_RAIL) {
-        ReplyNavigationRail(
-            currentTab = replyUiState.currentMailbox,
-            onTabPressed = onTabPressed,
-            navigationItemContentList = navigationItemContentList,
-            modifier = Modifier
-                .testTag(navigationRailContentDescription)
-        )}
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.inverseOnSurface)
-        ) {
-            if(contentType == ReplyContentType.LIST_AND_DETAIL){
-            ReplyListAndDetailContent(
-                replyUiState = replyUiState,
-                onEmailCardPressed = onEmailCardPressed,
-                modifier = Modifier.weight(1f)
-                    .padding(
-                        horizontal = dimensionResource(R.dimen.email_list_only_horizontal_padding)
-                    )
-            )}
-            else {
-                ReplyListOnlyContent(
-                    replyUiState = replyUiState,
-                    onEmailCardPressed = onEmailCardPressed,
-                    modifier = Modifier.weight(1f)
-                        .padding(
-                            horizontal = dimensionResource(R.dimen.email_list_only_horizontal_padding)
-                        )
-                )
-            }
-            AnimatedVisibility(visible = navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
-                val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
-                ReplyBottomNavigationBar(
->>>>>>> aa61db6 ( avanzado 3.2)
                     currentTab = replyUiState.currentMailbox,
                     onTabPressed = onTabPressed,
-                    navigationItemContentList = navigationItemContentList,
-                    modifier = Modifier.testTag(navigationRailContentDescription)
+                    navigationItemContentList = navigationItemContentList
                 )
             }
             Column(
@@ -228,30 +158,22 @@ private fun ReplyAppContent(
                     ReplyListAndDetailContent(
                         replyUiState = replyUiState,
                         onEmailCardPressed = onEmailCardPressed,
-                        modifier = Modifier
-                            .statusBarsPadding()
-                            .weight(1f),
+                        modifier = Modifier.weight(1f).statusBarsPadding()
                     )
                 } else {
                     ReplyListOnlyContent(
                         replyUiState = replyUiState,
                         onEmailCardPressed = onEmailCardPressed,
-                        modifier = Modifier
-                            .weight(1f)
+                        modifier = Modifier.weight(1f)
                             .padding(horizontal = dimensionResource(R.dimen.email_list_only_horizontal_padding))
                     )
                 }
-                AnimatedVisibility(
-                    visible = navigationType == ReplyNavigationType.BOTTOM_NAVIGATION
-                ) {
-                    val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
+                AnimatedVisibility(visible = navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
                     ReplyBottomNavigationBar(
                         currentTab = replyUiState.currentMailbox,
                         onTabPressed = onTabPressed,
                         navigationItemContentList = navigationItemContentList,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .testTag(bottomNavigationContentDescription)
+                        modifier = Modifier.fillMaxWidth()
                     )
                 }
             }
@@ -313,11 +235,6 @@ private fun NavigationDrawerContent(
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
-        NavigationDrawerHeader(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(dimensionResource(R.dimen.profile_image_padding)),
-        )
         for (navItem in navigationItemContentList) {
             NavigationDrawerItem(
                 selected = selectedDestination == navItem.mailboxType,
@@ -339,24 +256,6 @@ private fun NavigationDrawerContent(
                 onClick = { onTabPressed(navItem.mailboxType) }
             )
         }
-    }
-}
-
-@Composable
-private fun NavigationDrawerHeader(
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        ReplyLogo(modifier = Modifier.size(dimensionResource(R.dimen.reply_logo_size)))
-        ReplyProfileImage(
-            drawableResource = LocalAccountsDataProvider.defaultAccount.avatar,
-            description = stringResource(id = R.string.profile),
-            modifier = Modifier.size(dimensionResource(R.dimen.profile_image_size))
-        )
     }
 }
 

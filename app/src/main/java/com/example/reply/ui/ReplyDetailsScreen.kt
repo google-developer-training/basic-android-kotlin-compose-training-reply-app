@@ -14,14 +14,13 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -106,7 +105,7 @@ private fun ReplyDetailsScreenTopBar(
                 .background(MaterialTheme.colorScheme.surface, shape = CircleShape),
         ) {
             Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                imageVector = Icons.Default.ArrowBack,
                 contentDescription = stringResource(id = R.string.navigation_back)
             )
         }
@@ -149,7 +148,6 @@ private fun ReplyEmailDetailsCard(
 
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.detail_content_padding_top)))
 
-            // Mostramos el ASUNTO solo si NO es full screen (para evitar duplicados en top bar)
             if (!isFullScreen) {
                 Text(
                     text = stringResource(email.subject),
@@ -161,7 +159,6 @@ private fun ReplyEmailDetailsCard(
                 )
             }
 
-            // El CUERPO y los BOTONES siempre se muestran
             Text(
                 text = stringResource(email.body),
                 style = MaterialTheme.typography.bodyLarge,
@@ -172,4 +169,86 @@ private fun ReplyEmailDetailsCard(
     }
 }
 
-// ... (DetailsScreenButtonBar, DetailsScreenHeader y ActionButton se mantienen igual)
+@Composable
+private fun DetailsScreenHeader(email: Email, modifier: Modifier = Modifier) {
+    Row(modifier = modifier) {
+        ReplyProfileImage(
+            drawableResource = email.sender.avatar,
+            description = stringResource(email.sender.firstName) + " " + stringResource(email.sender.lastName),
+            modifier = Modifier.size(dimensionResource(R.dimen.email_header_profile_size))
+        )
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(
+                    horizontal = dimensionResource(R.dimen.email_header_content_padding_horizontal),
+                    vertical = dimensionResource(R.dimen.email_header_content_padding_vertical)
+                ),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = stringResource(email.sender.firstName),
+                style = MaterialTheme.typography.labelMedium
+            )
+            Text(
+                text = stringResource(email.createdAt),
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.outline
+            )
+        }
+    }
+}
+
+@Composable
+private fun DetailsScreenButtonBar(
+    mailboxType: MailboxType,
+    displayToast: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Box(modifier = modifier) {
+        when (mailboxType) {
+            MailboxType.Drafts ->
+                ActionButton(
+                    text = stringResource(id = R.string.continue_composing),
+                    onButtonClicked = displayToast
+                )
+            MailboxType.Spam ->
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(vertical = dimensionResource(R.dimen.detail_button_bar_padding_vertical)),
+                    horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.detail_button_bar_item_spacing)),
+                ) {
+                    ActionButton(text = stringResource(id = R.string.move_to_inbox), onButtonClicked = displayToast, modifier = Modifier.weight(1f))
+                    ActionButton(text = stringResource(id = R.string.delete), onButtonClicked = displayToast, containIrreversibleAction = true, modifier = Modifier.weight(1f))
+                }
+            MailboxType.Sent, MailboxType.Inbox ->
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(vertical = dimensionResource(R.dimen.detail_button_bar_padding_vertical)),
+                    horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.detail_button_bar_item_spacing)),
+                ) {
+                    ActionButton(text = stringResource(id = R.string.reply), onButtonClicked = displayToast, modifier = Modifier.weight(1f))
+                    ActionButton(text = stringResource(id = R.string.reply_all), onButtonClicked = displayToast, modifier = Modifier.weight(1f))
+                }
+        }
+    }
+}
+
+@Composable
+private fun ActionButton(
+    text: String,
+    onButtonClicked: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    containIrreversibleAction: Boolean = false,
+) {
+    Button(
+        onClick = { onButtonClicked(text) },
+        modifier = modifier.fillMaxWidth().padding(vertical = dimensionResource(R.dimen.detail_action_button_padding_vertical)),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = if (containIrreversibleAction) MaterialTheme.colorScheme.onErrorContainer else MaterialTheme.colorScheme.primaryContainer
+        )
+    ) {
+        Text(
+            text = text,
+            color = if (containIrreversibleAction) MaterialTheme.colorScheme.onError else MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    }
+}
